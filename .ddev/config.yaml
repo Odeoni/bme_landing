@@ -1,0 +1,12 @@
+name: bme-landing
+type: drupal
+docroot: web
+php_version: "8.3"
+webserver_type: nginx-fpm
+database:
+  type: mariadb
+  version: "10.11"
+router_http_port: "80"
+router_https_port: "443"
+timezone: Europe/Budapest
+composer_version: "2"

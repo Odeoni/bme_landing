@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Generic fallback template for landing_page content type.
+ * Specific pages use alias-based templates (e.g. node--science-campus.html.twig).
+ */
+#}
+<section class="hero" style="background-image: url('{{ base_path ~ directory }}/images/hero-default.jpg');">
+  <div class="hero__content">
+    <h1 class="hero__title">{{ label }}</h1>
+  </div>
+</section>
+
+<section class="section section--white">
+  <div class="container">
+    <div class="description-section">
+      {{ content.body }}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+# Drupal core and vendor (installed via composer)
+/web/core/
+/web/modules/contrib/
+/web/themes/contrib/
+/web/profiles/contrib/
+/vendor/
+
+# Composer
+/composer.lock
+
+# Files directory
+/web/sites/default/files/
+
+# Settings (contains secrets)
+/web/sites/default/settings.php
+/web/sites/default/settings.local.php
+/web/sites/default/services.yml
+
+# DDEV
+.ddev/.ddev-docker-compose-*
+.ddev/db_snapshots/
+.ddev/.homeadditions/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp

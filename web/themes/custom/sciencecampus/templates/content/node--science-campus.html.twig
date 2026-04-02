@@ -1,0 +1,107 @@
+{#
+/**
+ * @file
+ * Landing page — Science Campus homepage.
+ *
+ * Editable fields:
+ *   field_hero_image       → Hero background
+ *   field_hero_title       → Hero heading
+ *   field_hero_subtitle    → Hero subtitle
+ *   body                   → "Mi a Science Campus?" section
+ *   field_section_image    → Image next to description
+ *   field_section_body_2   → "Mit kapsz diákként" section
+ *   field_section_image_2  → Image next to "Mit kapsz diákként"
+ *   field_cta_text         → Felvételi pont CTA description
+ *
+ * Structural (not editable, rarely changes):
+ *   Programjaink grid      → auto from Program nodes via view
+ *   Section headings       → fixed in template
+ *   Button labels          → fixed in template
+ */
+#}
+
+{% set hero_image_url = content.field_hero_image[0] ? file_url(content.field_hero_image[0]['#item'].entity.uri.value) : base_path ~ directory ~ '/images/hero-landing.jpg' %}
+
+<section class="hero" style="background-image: url('{{ hero_image_url }}');">
+  <div class="hero__content">
+    <h1 class="hero__title">{{ content.field_hero_title }}</h1>
+    <p class="hero__subtitle">
+      {{ content.field_hero_subtitle }}
+      <span class="felveteli-dot"></span>
+    </p>
+  </div>
+</section>
+
+<section class="section section--white">
+  <div class="container">
+    <div class="split">
+      <div class="split__text">
+        <h2>Mi a Science Campus?</h2>
+        {{ content.body }}
+      </div>
+      <div class="split__image">
+        {% if content.field_section_image[0] %}
+          {{ content.field_section_image }}
+        {% else %}
+          <img src="{{ base_path ~ directory }}/images/mi-a-sc.jpg" alt="Science Campus" loading="lazy">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--grey">
+  <div class="container">
+    <h2 class="section__title">Programjaink</h2>
+    <div style="max-width: var(--container-max); margin-inline: auto; display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+      <img src="{{ base_path ~ directory }}/images/sc-eloadasok-logo.png" alt="Science Campus előadások" style="width:60px;height:60px;object-fit:contain;">
+      <p><a href="/science-campus-eloadasok"><strong>Science Campus előadások</strong></a>, ahol a BME oktatói és kutatói mutatják be a természettudományok legizgalmasabb területeit.</p>
+    </div>
+
+    {{ drupal_view('programjaink', 'block_1') }}
+
+    <div style="text-align:center; margin-top: 2rem;">
+      <a href="https://luma.com/bme_sc" class="btn btn--outline" target="_blank" rel="noopener">Tovább a programnaptárra</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--white">
+  <div class="container">
+    <div class="split">
+      <div class="split__text">
+        <h2>Mit kapsz diákként, ha részt veszel a programokon?</h2>
+        {{ content.field_section_body_2 }}
+      </div>
+      <div class="split__image">
+        {% if content.field_section_image_2[0] %}
+          {{ content.field_section_image_2 }}
+        {% else %}
+          <img src="{{ base_path ~ directory }}/images/diak.jpg" alt="Diák a laborban" loading="lazy">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="felveteli-section">
+  <div class="felveteli-section__inner">
+    <div>
+      <h2 class="felveteli-section__title">
+        Szerezz 15 intézményi felvételi pontot a Science Campus programokkal!
+        <span class="felveteli-section__dot"></span>
+      </h2>
+    </div>
+    <div class="felveteli-section__text">
+      {{ content.field_cta_text }}
+      <a href="/felveteli-pontok" class="btn btn--primary" style="margin-top:1rem;">Felvételi pontok</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--grey" style="text-align:center;">
+  <div class="container">
+    <h2>Ha tetszenek programjaink, akkor ajánljuk több éves élményprogramjainkat a képzéseinken.</h2>
+    <a href="https://kepzesek.ttk.bme.hu/" class="btn btn--outline" style="margin-top:1.5rem;" target="_blank" rel="noopener">Képzéseink</a>
+  </div>
+</section>

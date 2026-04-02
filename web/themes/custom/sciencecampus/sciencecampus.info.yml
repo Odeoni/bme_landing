@@ -1,0 +1,19 @@
+name: Science Campus
+type: theme
+description: 'Custom theme for BME TTK Science Campus'
+core_version_requirement: ^10 || ^11
+base theme: false
+
+libraries:
+  - sciencecampus/global
+
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  hero: Hero
+  content: Content
+  sidebar: Sidebar
+  footer_first: 'Footer first'
+  footer_second: 'Footer second'
+  footer_third: 'Footer third'
+  footer_bottom: 'Footer bottom'

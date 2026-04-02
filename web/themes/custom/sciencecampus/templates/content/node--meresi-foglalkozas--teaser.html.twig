@@ -1,0 +1,28 @@
+<div{{ attributes.addClass('accordion__item') }}>
+  <button class="accordion__trigger" aria-expanded="false">
+    <span>{{ label }}</span>
+    <svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+
+  <div class="accordion__panel" role="region">
+    <div class="lab-detail">
+      {% if content.field_image|render %}
+        <img src="{{ file_url(content.field_image[0]['#item'].entity.uri.value) }}" alt="{{ label }}" class="lab-detail__image" loading="lazy">
+      {% endif %}
+
+      {% if content.body|render %}
+        <div class="lab-detail__body">{{ content.body }}</div>
+      {% endif %}
+
+      {% if content.field_detailed_description|render %}
+        <div class="lab-detail__body">{{ content.field_detailed_description }}</div>
+      {% endif %}
+
+      {% if url %}
+        <a href="{{ url }}" class="btn btn--primary">Mérés részletes leírása</a>
+      {% endif %}
+    </div>
+  </div>
+</div>

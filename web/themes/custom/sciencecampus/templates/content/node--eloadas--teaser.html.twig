@@ -1,0 +1,27 @@
+<article{{ attributes.addClass('event-row') }}>
+  {% if content.field_image|render %}
+    <img src="{{ file_url(content.field_image[0]['#item'].entity.uri.value) }}" alt="{{ label }}" class="event-row__image" loading="lazy">
+  {% endif %}
+
+  <div class="event-row__content">
+    {% if content.field_date|render %}
+      <time class="event-row__date">{{ content.field_date }}</time>
+    {% endif %}
+
+    <h3 class="event-row__title">{{ label }}</h3>
+
+    {% if content.field_speaker|render %}
+      <p class="event-row__speaker">{{ content.field_speaker }}</p>
+    {% endif %}
+
+    {% if content.body|render %}
+      <div class="event-row__body">{{ content.body }}</div>
+    {% endif %}
+
+    <div class="event-row__links">
+      {% if content.field_registration_link[0]['#url'] %}
+        <a href="{{ content.field_registration_link[0]['#url'] }}" class="btn btn--primary">Regisztráció</a>
+      {% endif %}
+    </div>
+  </div>
+</article>
