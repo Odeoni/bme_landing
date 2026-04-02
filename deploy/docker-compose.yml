@@ -11,7 +11,7 @@ services:
       - drupal_modules:/var/www/html/modules
       - drupal_profiles:/var/www/html/profiles
       - drupal_sites:/var/www/html/sites
-      - ./themes:/var/www/html/themes/custom
+      - ../web/themes/custom:/var/www/html/themes/custom
     depends_on:
       - db
     environment:
