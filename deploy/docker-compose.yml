@@ -12,6 +12,7 @@ services:
       - drupal_profiles:/var/www/html/profiles
       - drupal_sites:/var/www/html/sites
       - ../web/themes/custom:/var/www/html/themes/custom
+      - ../deploy:/opt/deploy:ro
     depends_on:
       - db
     environment:

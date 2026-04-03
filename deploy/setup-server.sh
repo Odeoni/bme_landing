@@ -43,14 +43,23 @@ docker exec sciencecampus-web drush config:set system.theme default sciencecampu
 echo "=== 8. Clear cache ==="
 docker exec sciencecampus-web drush cr
 
+echo "=== 9. Run content setup (types, fields, views, content) ==="
+docker exec sciencecampus-web bash /opt/deploy/setup-content.sh
+
 echo ""
 echo "============================================"
 echo "  Deployment complete!"
 echo "  Site: http://$(hostname -I | awk '{print $1}'):8081"
 echo "  Admin: admin / ChangeMeNow2026!"
+echo ""
+echo "  All content types, fields, views, and"
+echo "  sample content have been created."
+echo "  Edit content at /admin/content"
 echo "============================================"
 echo ""
 echo "Next steps:"
-echo "  1. Set up Nginx reverse proxy for dev.sciencecampus.bme.hu"
-echo "  2. Point DNS A record to this server's IP"
-echo "  3. Set up SSL with certbot"
+echo "  1. Replace placeholder images in themes/custom/sciencecampus/images/"
+echo "  2. Add Campton font files to themes/custom/sciencecampus/fonts/"
+echo "  3. Set up Nginx reverse proxy for dev.sciencecampus.bme.hu"
+echo "  4. Point DNS A record to this server's IP"
+echo "  5. Set up SSL with certbot"
