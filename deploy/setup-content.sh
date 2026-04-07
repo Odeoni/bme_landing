@@ -243,9 +243,384 @@ foreach ($view_configs as $bundle => $fields) {
 '
 $DRUSH cr
 
+# --- Views (so content appears on landing pages) ---
+echo "Creating views..."
+$DRUSH php:eval '
+use Drupal\views\Entity\View;
+
+// ---- programjaink: Program nodes sorted by weight ----
+if (!View::load("programjaink")) {
+  $view = View::create([
+    "id" => "programjaink",
+    "label" => "Programjaink",
+    "base_table" => "node_field_data",
+    "base_field" => "nid",
+    "core" => "10.x",
+    "display" => [
+      "default" => [
+        "id" => "default",
+        "display_title" => "Default",
+        "display_plugin" => "default",
+        "position" => 0,
+        "display_options" => [
+          "fields" => [
+            "rendered_entity" => [
+              "id" => "rendered_entity",
+              "table" => "node",
+              "field" => "rendered_entity",
+              "type" => "rendered_entity",
+              "settings" => ["view_mode" => "teaser"],
+              "plugin_id" => "rendered_entity",
+            ],
+          ],
+          "filters" => [
+            "type" => [
+              "id" => "type",
+              "table" => "node_field_data",
+              "field" => "type",
+              "value" => ["program" => "program"],
+              "plugin_id" => "bundle",
+            ],
+            "status" => [
+              "id" => "status",
+              "table" => "node_field_data",
+              "field" => "status",
+              "value" => "1",
+              "plugin_id" => "boolean",
+            ],
+          ],
+          "sorts" => [
+            "field_weight_value" => [
+              "id" => "field_weight_value",
+              "table" => "node__field_weight",
+              "field" => "field_weight_value",
+              "order" => "ASC",
+              "plugin_id" => "standard",
+            ],
+          ],
+          "style" => [
+            "type" => "default",
+          ],
+          "row" => [
+            "type" => "entity:node",
+            "options" => ["view_mode" => "teaser"],
+          ],
+        ],
+      ],
+      "block_1" => [
+        "id" => "block_1",
+        "display_title" => "Block",
+        "display_plugin" => "block",
+        "position" => 1,
+        "display_options" => [
+          "block_description" => "Programjaink",
+        ],
+      ],
+    ],
+  ]);
+  $view->save();
+  echo "  Created view: programjaink\n";
+} else {
+  echo "  Exists:  programjaink\n";
+}
+
+// ---- aktualis_eloadasok: Előadás nodes where archive = false ----
+if (!View::load("aktualis_eloadasok")) {
+  $view = View::create([
+    "id" => "aktualis_eloadasok",
+    "label" => "Aktuális előadások",
+    "base_table" => "node_field_data",
+    "base_field" => "nid",
+    "core" => "10.x",
+    "display" => [
+      "default" => [
+        "id" => "default",
+        "display_title" => "Default",
+        "display_plugin" => "default",
+        "position" => 0,
+        "display_options" => [
+          "fields" => [
+            "rendered_entity" => [
+              "id" => "rendered_entity",
+              "table" => "node",
+              "field" => "rendered_entity",
+              "type" => "rendered_entity",
+              "settings" => ["view_mode" => "teaser"],
+              "plugin_id" => "rendered_entity",
+            ],
+          ],
+          "filters" => [
+            "type" => [
+              "id" => "type",
+              "table" => "node_field_data",
+              "field" => "type",
+              "value" => ["eloadas" => "eloadas"],
+              "plugin_id" => "bundle",
+            ],
+            "status" => [
+              "id" => "status",
+              "table" => "node_field_data",
+              "field" => "status",
+              "value" => "1",
+              "plugin_id" => "boolean",
+            ],
+            "field_archive_value" => [
+              "id" => "field_archive_value",
+              "table" => "node__field_archive",
+              "field" => "field_archive_value",
+              "value" => ["0" => "0"],
+              "operator" => "or",
+              "plugin_id" => "list_field",
+            ],
+          ],
+          "sorts" => [
+            "field_date_value" => [
+              "id" => "field_date_value",
+              "table" => "node__field_date",
+              "field" => "field_date_value",
+              "order" => "DESC",
+              "plugin_id" => "standard",
+            ],
+          ],
+          "style" => [
+            "type" => "default",
+          ],
+          "row" => [
+            "type" => "entity:node",
+            "options" => ["view_mode" => "teaser"],
+          ],
+        ],
+      ],
+      "block_1" => [
+        "id" => "block_1",
+        "display_title" => "Block",
+        "display_plugin" => "block",
+        "position" => 1,
+        "display_options" => [
+          "block_description" => "Aktuális előadások",
+        ],
+      ],
+    ],
+  ]);
+  $view->save();
+  echo "  Created view: aktualis_eloadasok\n";
+} else {
+  echo "  Exists:  aktualis_eloadasok\n";
+}
+
+// ---- archivum: Előadás nodes where archive = true ----
+if (!View::load("archivum")) {
+  $view = View::create([
+    "id" => "archivum",
+    "label" => "Archívum",
+    "base_table" => "node_field_data",
+    "base_field" => "nid",
+    "core" => "10.x",
+    "display" => [
+      "default" => [
+        "id" => "default",
+        "display_title" => "Default",
+        "display_plugin" => "default",
+        "position" => 0,
+        "display_options" => [
+          "fields" => [
+            "rendered_entity" => [
+              "id" => "rendered_entity",
+              "table" => "node",
+              "field" => "rendered_entity",
+              "type" => "rendered_entity",
+              "settings" => ["view_mode" => "teaser"],
+              "plugin_id" => "rendered_entity",
+            ],
+          ],
+          "filters" => [
+            "type" => [
+              "id" => "type",
+              "table" => "node_field_data",
+              "field" => "type",
+              "value" => ["eloadas" => "eloadas"],
+              "plugin_id" => "bundle",
+            ],
+            "status" => [
+              "id" => "status",
+              "table" => "node_field_data",
+              "field" => "status",
+              "value" => "1",
+              "plugin_id" => "boolean",
+            ],
+            "field_archive_value" => [
+              "id" => "field_archive_value",
+              "table" => "node__field_archive",
+              "field" => "field_archive_value",
+              "value" => ["1" => "1"],
+              "operator" => "or",
+              "plugin_id" => "list_field",
+            ],
+          ],
+          "sorts" => [
+            "field_date_value" => [
+              "id" => "field_date_value",
+              "table" => "node__field_date",
+              "field" => "field_date_value",
+              "order" => "DESC",
+              "plugin_id" => "standard",
+            ],
+          ],
+          "style" => [
+            "type" => "default",
+          ],
+          "row" => [
+            "type" => "entity:node",
+            "options" => ["view_mode" => "teaser"],
+          ],
+        ],
+      ],
+      "block_1" => [
+        "id" => "block_1",
+        "display_title" => "Block",
+        "display_plugin" => "block",
+        "position" => 1,
+        "display_options" => [
+          "block_description" => "Archívum",
+        ],
+      ],
+    ],
+  ]);
+  $view->save();
+  echo "  Created view: archivum\n";
+} else {
+  echo "  Exists:  archivum\n";
+}
+
+// ---- meresi_foglalkozasok: Mérési foglalkozás nodes ----
+if (!View::load("meresi_foglalkozasok")) {
+  $view = View::create([
+    "id" => "meresi_foglalkozasok",
+    "label" => "Mérési foglalkozások",
+    "base_table" => "node_field_data",
+    "base_field" => "nid",
+    "core" => "10.x",
+    "display" => [
+      "default" => [
+        "id" => "default",
+        "display_title" => "Default",
+        "display_plugin" => "default",
+        "position" => 0,
+        "display_options" => [
+          "fields" => [
+            "rendered_entity" => [
+              "id" => "rendered_entity",
+              "table" => "node",
+              "field" => "rendered_entity",
+              "type" => "rendered_entity",
+              "settings" => ["view_mode" => "teaser"],
+              "plugin_id" => "rendered_entity",
+            ],
+          ],
+          "filters" => [
+            "type" => [
+              "id" => "type",
+              "table" => "node_field_data",
+              "field" => "type",
+              "value" => ["meresi_foglalkozas" => "meresi_foglalkozas"],
+              "plugin_id" => "bundle",
+            ],
+            "status" => [
+              "id" => "status",
+              "table" => "node_field_data",
+              "field" => "status",
+              "value" => "1",
+              "plugin_id" => "boolean",
+            ],
+          ],
+          "sorts" => [
+            "title" => [
+              "id" => "title",
+              "table" => "node_field_data",
+              "field" => "title",
+              "order" => "ASC",
+              "plugin_id" => "standard",
+            ],
+          ],
+          "style" => [
+            "type" => "default",
+          ],
+          "row" => [
+            "type" => "entity:node",
+            "options" => ["view_mode" => "teaser"],
+          ],
+        ],
+      ],
+      "block_1" => [
+        "id" => "block_1",
+        "display_title" => "Block",
+        "display_plugin" => "block",
+        "position" => 1,
+        "display_options" => [
+          "block_description" => "Mérési foglalkozások",
+        ],
+      ],
+    ],
+  ]);
+  $view->save();
+  echo "  Created view: meresi_foglalkozasok\n";
+} else {
+  echo "  Exists:  meresi_foglalkozasok\n";
+}
+'
+$DRUSH cr
+
+# --- Teaser view displays (so views render nodes correctly) ---
+echo "Configuring teaser view displays..."
+$DRUSH php:eval '
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+
+$teaser_configs = [
+  "program" => [
+    "body"                  => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
+    "field_logo"            => ["type" => "image",           "weight" => 0, "label" => "hidden", "settings" => ["image_style" => "medium", "image_link" => ""]],
+    "field_felveteli_pont"  => ["type" => "boolean",         "weight" => 2, "label" => "hidden"],
+    "field_link"            => ["type" => "link",            "weight" => 3, "label" => "hidden"],
+    "field_weight"          => ["type" => "number_integer",  "weight" => 4, "label" => "hidden"],
+  ],
+  "eloadas" => [
+    "body"                    => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
+    "field_image"             => ["type" => "image",           "weight" => 0, "label" => "hidden", "settings" => ["image_style" => "medium", "image_link" => ""]],
+    "field_speaker"           => ["type" => "string",          "weight" => 2, "label" => "hidden"],
+    "field_date"              => ["type" => "datetime_default", "weight" => 3, "label" => "hidden"],
+    "field_registration_link" => ["type" => "link",            "weight" => 4, "label" => "hidden"],
+    "field_archive"           => ["type" => "boolean",         "weight" => 5, "label" => "hidden"],
+  ],
+  "meresi_foglalkozas" => [
+    "body"                       => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
+    "field_image"                => ["type" => "image",           "weight" => 0, "label" => "hidden", "settings" => ["image_style" => "medium", "image_link" => ""]],
+    "field_detailed_description" => ["type" => "text_default",    "weight" => 2, "label" => "hidden"],
+  ],
+];
+
+foreach ($teaser_configs as $bundle => $fields) {
+  $display_id = "node.$bundle.teaser";
+  $view_display = EntityViewDisplay::load($display_id);
+  if (!$view_display) {
+    $view_display = EntityViewDisplay::create([
+      "targetEntityType" => "node",
+      "bundle" => $bundle,
+      "mode" => "teaser",
+      "status" => TRUE,
+    ]);
+  }
+  foreach ($fields as $field_name => $config) {
+    $view_display->setComponent($field_name, $config);
+    echo "  Teaser: $bundle.$field_name\n";
+  }
+  $view_display->save();
+}
+'
+$DRUSH cr
+
 echo ""
-echo "Content types and fields ready."
+echo "Content types, fields, displays, and views ready."
 echo "Use the Drupal admin UI for everything else:"
 echo "  /node/add           — create content"
-echo "  /admin/structure/views — create views"
+echo "  /admin/structure/views — manage views"
 echo "  /admin/structure/types — manage content types"
