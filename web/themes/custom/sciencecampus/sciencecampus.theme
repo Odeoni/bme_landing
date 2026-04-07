@@ -6,6 +6,7 @@
  */
 
 use Drupal\node\NodeInterface;
+use Drupal\file\Entity\File;
 
 /**
  * Implements hook_preprocess_page().
@@ -15,6 +16,26 @@ function sciencecampus_preprocess_page(&$variables) {
   if ($node instanceof NodeInterface) {
     $variables['node_type'] = $node->bundle();
     $variables['node_id'] = $node->id();
+  }
+
+  // Pass theme image URLs to page template.
+  $theme_path = \Drupal::theme()->getActiveTheme()->getPath();
+  $image_settings = [
+    'sc_logo_url' => ['setting' => 'sc_logo', 'fallback' => $theme_path . '/images/sc-logo.png'],
+    'bme_logo_url' => ['setting' => 'bme_logo', 'fallback' => $theme_path . '/images/bme-logo.png'],
+    'campus_map_url' => ['setting' => 'campus_map', 'fallback' => $theme_path . '/images/campus-map.png'],
+  ];
+
+  foreach ($image_settings as $var_name => $config) {
+    $fid = theme_get_setting($config['setting']);
+    if ($fid) {
+      $file = File::load($fid);
+      if ($file) {
+        $variables[$var_name] = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+        continue;
+      }
+    }
+    $variables[$var_name] = '/' . $config['fallback'];
   }
 }
 
