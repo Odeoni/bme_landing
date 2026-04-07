@@ -2,12 +2,16 @@
 # ============================================
 # BME Science Campus — Content Types & Fields
 #
-# Creates the 4 content types and their fields.
-# Everything else (views, content, displays) is
-# done manually via the Drupal admin UI.
+# Creates 6 content types with all fields,
+# form displays, view displays, teaser displays,
+# and 6 views (programjaink, aktualis_eloadasok,
+# archivum, meresi_foglalkozasok, temak,
+# program_tipusok).
 #
 # Run inside the Drupal container:
 #   docker exec sciencecampus-web bash /opt/deploy/setup-content.sh
+#
+# Idempotent: safe to re-run.
 # ============================================
 set +e
 
@@ -807,8 +811,18 @@ foreach ($teaser_configs as $bundle => $fields) {
 $DRUSH cr
 
 echo ""
+echo "============================================"
 echo "Content types, fields, displays, and views ready."
-echo "Use the Drupal admin UI for everything else:"
+echo ""
+echo "Content types: landing_page, program, eloadas,"
+echo "  meresi_foglalkozas, tema, program_tipus"
+echo ""
+echo "Views: programjaink, aktualis_eloadasok, archivum,"
+echo "  meresi_foglalkozasok, temak, program_tipusok"
+echo ""
+echo "Admin UI:"
 echo "  /node/add           — create content"
 echo "  /admin/structure/views — manage views"
 echo "  /admin/structure/types — manage content types"
+echo "  /admin/appearance/settings/sciencecampus — theme images"
+echo "============================================"
