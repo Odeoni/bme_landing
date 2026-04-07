@@ -1,21 +1,18 @@
 #!/bin/bash
 # ============================================
-# BME Science Campus — VPS Deployment Script
-# Run this on your VPS as root
+# BME Science Campus — VPS Setup
+# Run on VPS as root from /opt/sciencecampus/deploy
 # ============================================
 set -e
 
-echo "=== 1. Create project directory ==="
-mkdir -p /opt/sciencecampus/themes
-cd /opt/sciencecampus
+cd /opt/sciencecampus/deploy
 
-echo "=== 2. Start containers ==="
+echo "=== Starting containers ==="
 docker compose up -d
-
-echo "=== 3. Wait for containers to be ready ==="
+echo "Waiting for DB to be ready..."
 sleep 15
 
-echo "=== 4. Install required modules ==="
+echo "=== Installing dependencies ==="
 docker exec sciencecampus-web composer require \
   drush/drush \
   drupal/pathauto \
@@ -23,7 +20,7 @@ docker exec sciencecampus-web composer require \
   drupal/admin_toolbar \
   drupal/twig_tweak
 
-echo "=== 5. Install Drupal ==="
+echo "=== Installing Drupal ==="
 docker exec sciencecampus-web drush site:install standard \
   --db-url=mysql://drupal:drupal_sc_2026@db:3306/drupal \
   --site-name="BME TTK Science Campus" \
@@ -32,34 +29,35 @@ docker exec sciencecampus-web drush site:install standard \
   --account-pass=ChangeMeNow2026! \
   -y
 
-echo "=== 6. Enable modules ==="
+echo "=== Enabling modules ==="
 docker exec sciencecampus-web drush en -y \
   pathauto metatag admin_toolbar admin_toolbar_tools responsive_image twig_tweak
 
-echo "=== 7. Enable custom theme ==="
+echo "=== Enabling theme ==="
 docker exec sciencecampus-web drush theme:enable sciencecampus
 docker exec sciencecampus-web drush config:set system.theme default sciencecampus -y
 
-echo "=== 8. Clear cache ==="
-docker exec sciencecampus-web drush cr
-
-echo "=== 9. Run content setup (types, fields, views, content) ==="
+echo "=== Creating content types and fields ==="
 docker exec sciencecampus-web bash /opt/deploy/setup-content.sh
+
+echo "=== Final cache clear ==="
+docker exec sciencecampus-web drush cr
 
 echo ""
 echo "============================================"
-echo "  Deployment complete!"
+echo "  Setup complete!"
 echo "  Site: http://$(hostname -I | awk '{print $1}'):8081"
 echo "  Admin: admin / ChangeMeNow2026!"
 echo ""
-echo "  All content types, fields, views, and"
-echo "  sample content have been created."
-echo "  Edit content at /admin/content"
+echo "  Next steps (all via admin UI):"
+echo "    1. Log in at /user/login"
+echo "    2. Create landing pages at /node/add/landing_page"
+echo "       Set URL aliases manually: /science-campus,"
+echo "       /nobel-dijas-kiserletek, /science-campus-eloadasok"
+echo "    3. Create views at /admin/structure/views:"
+echo "       programjaink, aktualis_eloadasok, archivum,"
+echo "       meresi_foglalkozasok (each needs a block_1 display)"
+echo "    4. Set front page at /admin/config/system/site-information"
+echo "    5. Upload theme images to themes/custom/sciencecampus/images/"
+echo "    6. Add Campton fonts to themes/custom/sciencecampus/fonts/"
 echo "============================================"
-echo ""
-echo "Next steps:"
-echo "  1. Replace placeholder images in themes/custom/sciencecampus/images/"
-echo "  2. Add Campton font files to themes/custom/sciencecampus/fonts/"
-echo "  3. Set up Nginx reverse proxy for dev.sciencecampus.bme.hu"
-echo "  4. Point DNS A record to this server's IP"
-echo "  5. Set up SSL with certbot"
