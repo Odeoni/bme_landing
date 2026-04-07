@@ -1,0 +1,11 @@
+<div{{ attributes.addClass('type-card') }}>
+  {% if content.field_image|render %}
+    <img src="{{ file_url(content.field_image[0]['#item'].entity.uri.value) }}" alt="{{ label }}" class="type-card__image" loading="lazy">
+  {% endif %}
+  <div class="type-card__content">
+    <h3 class="type-card__title">{{ label }}</h3>
+    {% if content.body|render %}
+      <div class="type-card__body">{{ content.body }}</div>
+    {% endif %}
+  </div>
+</div>

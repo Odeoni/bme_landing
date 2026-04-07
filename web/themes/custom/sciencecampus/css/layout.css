@@ -219,6 +219,11 @@
   max-width: var(--container-max);
   margin-inline: auto;
 }
+.two-cards .views-element-container,
+.two-cards .views-element-container > div,
+.two-cards .views-row {
+  display: contents;
+}
 
 /* Topics grid — flatten all Drupal view wrappers */
 .topics-grid {

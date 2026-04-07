@@ -27,6 +27,7 @@ $types = [
   ["type" => "meresi_foglalkozas", "name" => "Mérési foglalkozás", "description" => "Nobel-díjas kísérletek mérési foglalkozás"],
   ["type" => "landing_page",       "name" => "Landing page",       "description" => "Szekció kezdőlap egyedi elrendezéssel"],
   ["type" => "tema",               "name" => "Téma",               "description" => "Nobel-díjas kísérletek téma"],
+  ["type" => "program_tipus",      "name" => "Program típus",      "description" => "Nobel-díjas kísérletek program típus"],
 ];
 foreach ($types as $t) {
   if (!\Drupal\node\Entity\NodeType::load($t["type"])) {
@@ -115,6 +116,10 @@ $fields = [
   // Téma
   ["bundle" => "tema", "field_name" => "field_image",  "label" => "Kép"],
   ["bundle" => "tema", "field_name" => "field_weight", "label" => "Sorrend"],
+  // Program típus
+  ["bundle" => "program_tipus", "field_name" => "body",          "label" => "Tartalom"],
+  ["bundle" => "program_tipus", "field_name" => "field_image",   "label" => "Kép"],
+  ["bundle" => "program_tipus", "field_name" => "field_weight",  "label" => "Sorrend"],
 ];
 
 foreach ($fields as $f) {
@@ -172,6 +177,11 @@ $form_configs = [
   "tema" => [
     "field_image"  => ["type" => "image_image", "weight" => 1, "settings" => ["preview_image_style" => "medium"]],
     "field_weight" => ["type" => "number",      "weight" => 2],
+  ],
+  "program_tipus" => [
+    "field_image"  => ["type" => "image_image",              "weight" => 1, "settings" => ["preview_image_style" => "medium"]],
+    "body"         => ["type" => "text_textarea_with_summary", "weight" => 2],
+    "field_weight" => ["type" => "number",                   "weight" => 3],
   ],
 ];
 
@@ -232,6 +242,11 @@ $view_configs = [
   ],
   "tema" => [
     "field_image"  => ["type" => "image",          "weight" => 1, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
+    "field_weight" => ["type" => "number_integer",  "weight" => 2, "label" => "hidden"],
+  ],
+  "program_tipus" => [
+    "body"         => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
+    "field_image"  => ["type" => "image",           "weight" => 0, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
     "field_weight" => ["type" => "number_integer",  "weight" => 2, "label" => "hidden"],
   ],
 ];
@@ -655,6 +670,82 @@ if (!View::load("temak")) {
 } else {
   echo "  Exists:  temak\n";
 }
+
+// ---- program_tipusok: Program típus nodes sorted by weight ----
+if (!View::load("program_tipusok")) {
+  $view = View::create([
+    "id" => "program_tipusok",
+    "label" => "Program típusok",
+    "base_table" => "node_field_data",
+    "base_field" => "nid",
+    "core" => "10.x",
+    "display" => [
+      "default" => [
+        "id" => "default",
+        "display_title" => "Default",
+        "display_plugin" => "default",
+        "position" => 0,
+        "display_options" => [
+          "fields" => [
+            "rendered_entity" => [
+              "id" => "rendered_entity",
+              "table" => "node",
+              "field" => "rendered_entity",
+              "type" => "rendered_entity",
+              "settings" => ["view_mode" => "teaser"],
+              "plugin_id" => "rendered_entity",
+            ],
+          ],
+          "filters" => [
+            "type" => [
+              "id" => "type",
+              "table" => "node_field_data",
+              "field" => "type",
+              "value" => ["program_tipus" => "program_tipus"],
+              "plugin_id" => "bundle",
+            ],
+            "status" => [
+              "id" => "status",
+              "table" => "node_field_data",
+              "field" => "status",
+              "value" => "1",
+              "plugin_id" => "boolean",
+            ],
+          ],
+          "sorts" => [
+            "field_weight_value" => [
+              "id" => "field_weight_value",
+              "table" => "node__field_weight",
+              "field" => "field_weight_value",
+              "order" => "ASC",
+              "plugin_id" => "standard",
+            ],
+          ],
+          "style" => [
+            "type" => "default",
+          ],
+          "row" => [
+            "type" => "entity:node",
+            "options" => ["view_mode" => "teaser"],
+          ],
+        ],
+      ],
+      "block_1" => [
+        "id" => "block_1",
+        "display_title" => "Block",
+        "display_plugin" => "block",
+        "position" => 1,
+        "display_options" => [
+          "block_description" => "Program típusok",
+        ],
+      ],
+    ],
+  ]);
+  $view->save();
+  echo "  Created view: program_tipusok\n";
+} else {
+  echo "  Exists:  program_tipusok\n";
+}
 '
 $DRUSH cr
 
@@ -687,6 +778,11 @@ $teaser_configs = [
   "tema" => [
     "field_image"  => ["type" => "image",          "weight" => 0, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
     "field_weight" => ["type" => "number_integer",  "weight" => 1, "label" => "hidden"],
+  ],
+  "program_tipus" => [
+    "body"         => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
+    "field_image"  => ["type" => "image",           "weight" => 0, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
+    "field_weight" => ["type" => "number_integer",  "weight" => 2, "label" => "hidden"],
   ],
 ];
 

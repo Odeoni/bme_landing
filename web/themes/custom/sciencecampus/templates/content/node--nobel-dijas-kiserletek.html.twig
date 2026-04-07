@@ -40,35 +40,7 @@
   <div class="container">
     <h2 class="section__title">Program típusai</h2>
     <div class="two-cards">
-      <div class="type-card">
-        <img src="{{ base_path ~ directory }}/images/type-heti.jpg" alt="Heti egy mérési alkalom" class="type-card__image" loading="lazy">
-        <div class="type-card__content">
-          <h3 class="type-card__title">Heti egy mérési alkalom októberben</h3>
-          <div class="type-card__body">
-            <p>Félévenként több alkalommal szervezett, kisebb csoportban szervezett, 3-4 órás laborfoglalkozások.</p>
-            <ul>
-              <li>Egy-egy Nobel-díjas tématerületre fókuszálunk</li>
-              <li>Egy mérés egy alkalommal</li>
-              <li>Önállóan is léphetsz be</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="type-card">
-        <img src="{{ base_path ~ directory }}/images/type-ketnapos.jpg" alt="Kétnapos szakkör" class="type-card__image" loading="lazy">
-        <div class="type-card__content">
-          <h3 class="type-card__title">Kétnapos szakkör az őszi szünetben</h3>
-          <div class="type-card__body">
-            <p>Évente egy alkalommal szervezett, kétnapos tudományos élményprogram.</p>
-            <ul>
-              <li>Elméleti bevezető előadás</li>
-              <li>Több választható mérési blokk</li>
-              <li>Közösségi program</li>
-              <li>Élménydús laborlátogatás</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      {{ drupal_view('program_tipusok', 'block_1') }}
     </div>
     <div style="text-align:center; margin-top:2rem;">
       <a href="https://luma.com/bme_sc" class="btn btn--outline" target="_blank" rel="noopener">Aktuális programjaink</a>
