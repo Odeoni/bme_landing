@@ -1,0 +1,6 @@
+<div{{ attributes.addClass('topic-card') }}>
+  {% if content.field_image|render %}
+    <img src="{{ file_url(content.field_image[0]['#item'].entity.uri.value) }}" alt="{{ label }}" class="topic-card__image" loading="lazy">
+  {% endif %}
+  <p class="topic-card__label">{{ label }}</p>
+</div>

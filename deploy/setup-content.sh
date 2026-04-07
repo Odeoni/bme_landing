@@ -26,6 +26,7 @@ $types = [
   ["type" => "eloadas",            "name" => "Előadás",            "description" => "Science Campus előadás"],
   ["type" => "meresi_foglalkozas", "name" => "Mérési foglalkozás", "description" => "Nobel-díjas kísérletek mérési foglalkozás"],
   ["type" => "landing_page",       "name" => "Landing page",       "description" => "Szekció kezdőlap egyedi elrendezéssel"],
+  ["type" => "tema",               "name" => "Téma",               "description" => "Nobel-díjas kísérletek téma"],
 ];
 foreach ($types as $t) {
   if (!\Drupal\node\Entity\NodeType::load($t["type"])) {
@@ -111,6 +112,9 @@ $fields = [
   ["bundle" => "landing_page", "field_name" => "field_section_image_2", "label" => "Második szekció kép"],
   ["bundle" => "landing_page", "field_name" => "field_section_body_2",  "label" => "Második szekció szöveg"],
   ["bundle" => "landing_page", "field_name" => "field_cta_text",        "label" => "CTA szöveg"],
+  // Téma
+  ["bundle" => "tema", "field_name" => "field_image",  "label" => "Kép"],
+  ["bundle" => "tema", "field_name" => "field_weight", "label" => "Sorrend"],
 ];
 
 foreach ($fields as $f) {
@@ -164,6 +168,10 @@ $form_configs = [
     "body"                       => ["type" => "text_textarea_with_summary", "weight" => 1],
     "field_image"                => ["type" => "image_image",     "weight" => 2,  "settings" => ["preview_image_style" => "medium"]],
     "field_detailed_description" => ["type" => "text_textarea",   "weight" => 3,  "settings" => ["rows" => 8]],
+  ],
+  "tema" => [
+    "field_image"  => ["type" => "image_image", "weight" => 1, "settings" => ["preview_image_style" => "medium"]],
+    "field_weight" => ["type" => "number",      "weight" => 2],
   ],
 ];
 
@@ -221,6 +229,10 @@ $view_configs = [
     "body"                       => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
     "field_image"                => ["type" => "image",           "weight" => 2, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
     "field_detailed_description" => ["type" => "text_default",    "weight" => 3, "label" => "hidden"],
+  ],
+  "tema" => [
+    "field_image"  => ["type" => "image",          "weight" => 1, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
+    "field_weight" => ["type" => "number_integer",  "weight" => 2, "label" => "hidden"],
   ],
 ];
 
@@ -567,6 +579,82 @@ if (!View::load("meresi_foglalkozasok")) {
 } else {
   echo "  Exists:  meresi_foglalkozasok\n";
 }
+
+// ---- temak: Téma nodes sorted by weight ----
+if (!View::load("temak")) {
+  $view = View::create([
+    "id" => "temak",
+    "label" => "Témák",
+    "base_table" => "node_field_data",
+    "base_field" => "nid",
+    "core" => "10.x",
+    "display" => [
+      "default" => [
+        "id" => "default",
+        "display_title" => "Default",
+        "display_plugin" => "default",
+        "position" => 0,
+        "display_options" => [
+          "fields" => [
+            "rendered_entity" => [
+              "id" => "rendered_entity",
+              "table" => "node",
+              "field" => "rendered_entity",
+              "type" => "rendered_entity",
+              "settings" => ["view_mode" => "teaser"],
+              "plugin_id" => "rendered_entity",
+            ],
+          ],
+          "filters" => [
+            "type" => [
+              "id" => "type",
+              "table" => "node_field_data",
+              "field" => "type",
+              "value" => ["tema" => "tema"],
+              "plugin_id" => "bundle",
+            ],
+            "status" => [
+              "id" => "status",
+              "table" => "node_field_data",
+              "field" => "status",
+              "value" => "1",
+              "plugin_id" => "boolean",
+            ],
+          ],
+          "sorts" => [
+            "field_weight_value" => [
+              "id" => "field_weight_value",
+              "table" => "node__field_weight",
+              "field" => "field_weight_value",
+              "order" => "ASC",
+              "plugin_id" => "standard",
+            ],
+          ],
+          "style" => [
+            "type" => "default",
+          ],
+          "row" => [
+            "type" => "entity:node",
+            "options" => ["view_mode" => "teaser"],
+          ],
+        ],
+      ],
+      "block_1" => [
+        "id" => "block_1",
+        "display_title" => "Block",
+        "display_plugin" => "block",
+        "position" => 1,
+        "display_options" => [
+          "block_description" => "Témák",
+        ],
+      ],
+    ],
+  ]);
+  $view->save();
+  echo "  Created view: temak\n";
+} else {
+  echo "  Exists:  temak\n";
+}
 '
 $DRUSH cr
 
@@ -595,6 +683,10 @@ $teaser_configs = [
     "body"                       => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
     "field_image"                => ["type" => "image",           "weight" => 0, "label" => "hidden", "settings" => ["image_style" => "medium", "image_link" => ""]],
     "field_detailed_description" => ["type" => "text_default",    "weight" => 2, "label" => "hidden"],
+  ],
+  "tema" => [
+    "field_image"  => ["type" => "image",          "weight" => 0, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
+    "field_weight" => ["type" => "number_integer",  "weight" => 1, "label" => "hidden"],
   ],
 ];
 

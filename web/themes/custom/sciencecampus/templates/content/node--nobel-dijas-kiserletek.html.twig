@@ -31,23 +31,7 @@
   <div class="container">
     <h2 class="section__title">Az alábbi témákban kísérletezhetsz</h2>
     <div class="topics-grid">
-      {% set topics = [
-        { name: 'Atomi nanovezetékek', image: 'topic-nanovezetekek.jpg' },
-        { name: 'Szupravezetés', image: 'topic-szupravezetes.jpg' },
-        { name: 'Holográfia', image: 'topic-holografia.jpg' },
-        { name: 'Atomreaktor', image: 'topic-atomreaktor.jpg' },
-        { name: 'Kvantum-kommunikáció', image: 'topic-kvantum.jpg' },
-        { name: 'Folyadékkristályok', image: 'topic-folyadek.jpg' },
-        { name: 'Félvezetőtechnológia', image: 'topic-felvezeto.jpg' },
-        { name: 'Michelson interferométer', image: 'topic-michelson.jpg' },
-        { name: 'Ultrarövid lézerimpulzusok', image: 'topic-lezer.jpg' },
-      ] %}
-      {% for topic in topics %}
-        <div class="topic-card">
-          <img src="{{ base_path ~ directory }}/images/{{ topic.image }}" alt="{{ topic.name }}" class="topic-card__image" loading="lazy">
-          <p class="topic-card__label">{{ topic.name }}</p>
-        </div>
-      {% endfor %}
+      {{ drupal_view('temak', 'block_1') }}
     </div>
   </div>
 </section>
