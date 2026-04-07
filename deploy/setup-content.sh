@@ -186,6 +186,63 @@ foreach ($form_configs as $bundle => $fields) {
 '
 $DRUSH cr
 
+# --- View displays (so fields render on the front end) ---
+echo "Configuring view displays..."
+$DRUSH php:eval '
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+
+$view_configs = [
+  "landing_page" => [
+    "field_hero_image"      => ["type" => "image",           "weight" => 1, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
+    "field_hero_title"      => ["type" => "string",          "weight" => 2, "label" => "hidden"],
+    "field_hero_subtitle"   => ["type" => "basic_string",    "weight" => 3, "label" => "hidden"],
+    "body"                  => ["type" => "text_default",    "weight" => 4, "label" => "hidden"],
+    "field_section_image"   => ["type" => "image",           "weight" => 5, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
+    "field_section_body_2"  => ["type" => "text_default",    "weight" => 6, "label" => "hidden"],
+    "field_section_image_2" => ["type" => "image",           "weight" => 7, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
+    "field_cta_text"        => ["type" => "text_default",    "weight" => 8, "label" => "hidden"],
+  ],
+  "program" => [
+    "body"                  => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
+    "field_logo"            => ["type" => "image",           "weight" => 2, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
+    "field_felveteli_pont"  => ["type" => "boolean",         "weight" => 3, "label" => "hidden"],
+    "field_link"            => ["type" => "link",            "weight" => 4, "label" => "hidden"],
+    "field_weight"          => ["type" => "number_integer",  "weight" => 5, "label" => "hidden"],
+  ],
+  "eloadas" => [
+    "body"                    => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
+    "field_image"             => ["type" => "image",           "weight" => 2, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
+    "field_speaker"           => ["type" => "string",          "weight" => 3, "label" => "hidden"],
+    "field_date"              => ["type" => "datetime_default", "weight" => 4, "label" => "hidden"],
+    "field_registration_link" => ["type" => "link",            "weight" => 5, "label" => "hidden"],
+    "field_archive"           => ["type" => "boolean",         "weight" => 6, "label" => "hidden"],
+  ],
+  "meresi_foglalkozas" => [
+    "body"                       => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
+    "field_image"                => ["type" => "image",           "weight" => 2, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
+    "field_detailed_description" => ["type" => "text_default",    "weight" => 3, "label" => "hidden"],
+  ],
+];
+
+foreach ($view_configs as $bundle => $fields) {
+  $view_display = EntityViewDisplay::load("node.$bundle.default");
+  if (!$view_display) {
+    $view_display = EntityViewDisplay::create([
+      "targetEntityType" => "node",
+      "bundle" => $bundle,
+      "mode" => "default",
+      "status" => TRUE,
+    ]);
+  }
+  foreach ($fields as $field_name => $config) {
+    $view_display->setComponent($field_name, $config);
+    echo "  View: $bundle.$field_name\n";
+  }
+  $view_display->save();
+}
+'
+$DRUSH cr
+
 echo ""
 echo "Content types and fields ready."
 echo "Use the Drupal admin UI for everything else:"
