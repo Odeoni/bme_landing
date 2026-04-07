@@ -229,8 +229,7 @@
   gap: var(--space-lg);
 }
 .topics-grid .views-element-container,
-.topics-grid .view,
-.topics-grid .view-content,
+.topics-grid .views-element-container > div,
 .topics-grid .views-row {
   display: contents;
 }
