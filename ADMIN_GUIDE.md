@@ -138,14 +138,17 @@ Ezek a Science Campus eloadasok oldal "Aktualis eloadasaink" vagy "Archivum" sze
 
 ### Aktiv vs. Archiv eloadasok
 
-Ket teljesen kulonbozo modon jelennek meg:
+A weboldal nem archivalja automatikusan az eloadasokat datum alapjan — csak akkor kerul archivumba, ha kezzel bejelolod az "Archiv" mezot.
 
-- **Aktiv** (Archiv = nem) — teljes kartya a foto, datum, eloado, leiras es Regisztracio gombbal. Az "Aktualis eloadasaink" szekcioban jelenik meg.
-- **Archiv** (Archiv = igen) — csak a foto kepe linkkent. Az olvaso ra tud kattintani es eljut a saját reszletes oldalara, ahol megnezheti az eloadas leirasat, beagyazott videokat, kepeket stb. Az "Archivum" lenyithato szekcioba kerul.
+**Process:**
 
-**Tip:** Amikor egy eloadas lezajlott:
-1. Szerkeszd a tartalmat es jelold be az "Archiv" mezot
-2. A **Tartalom** mezobe rakhatod be az utolagos anyagot — beagyazott YouTube linkeket, kepeket, jegyzokonyveket — barmit, amit az olvasok megnezhetnek a reszletes oldalon
+1. Eloadas letrehozasakor hagyd uresen az **Archiv** mezot. Az "Aktualis eloadasaink" szekcioban jelenik meg, a megszokott Regisztracio gombbal.
+2. Amikor az eloadas lezajlott:
+   - Szerkeszd a tartalmat (`/admin/content` → kerese az eloadast → Szerkesztes)
+   - Jelold be az **Archiv** mezot
+   - A **Tartalom** mezobe rakhatod be az utolagos anyagot — beagyazott YouTube videokat, kepeket, jegyzokonyveket
+   - Mentes
+3. Az eloadas atkerul az "Archivum" lenyithato szekcioba. A teljes kartya megmarad (datum, leiras, eloado), csak a "Regisztracio" gombja "Nezd vissza az eloadast" gombbal cserelodik, ami a sajat reszletes oldalra mutat (a 2. lepesben hozzadott videkkal stb.).
 
 ---
 
