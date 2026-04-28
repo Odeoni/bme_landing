@@ -37,17 +37,40 @@ docker exec sciencecampus-web composer install --no-interaction --optimize-autol
 echo "=== Applying pending Drupal database updates ==="
 docker exec sciencecampus-web drush updatedb -y
 
-echo "=== Clearing aggregated CSS/JS and rebuilding cache ==="
+echo "=== Clearing compiled Twig templates and aggregated assets ==="
+# drush cache:rebuild does not always remove the on-disk compiled Twig
+# templates, and it cannot reset OPcache in the Apache worker processes
+# (drush runs as a separate PHP process). Clear them explicitly.
+docker exec sciencecampus-web bash -c "find /var/www/html/sites/default/files/php -type f -delete 2>/dev/null || true"
 docker exec sciencecampus-web bash -c "rm -rf /var/www/html/sites/default/files/css/* /var/www/html/sites/default/files/js/* 2>/dev/null || true"
+
+echo "=== Rebuilding Drupal cache ==="
 docker exec sciencecampus-web drush cache:rebuild
+
+echo "=== Restarting web container to flush PHP OPcache ==="
+# Apache workers cache compiled PHP / Twig in OPcache, drush can't
+# invalidate it. A container restart is the reliable way to drop it.
+docker restart sciencecampus-web > /dev/null
+sleep 4
+
+# Wait for Apache to be responsive again before declaring success.
+for i in 1 2 3 4 5 6 7 8 9 10; do
+  if docker exec sciencecampus-web bash -c "ps -ef | grep -q [a]pache2"; then
+    break
+  fi
+  sleep 1
+done
 
 echo ""
 echo "============================================"
 echo "  Update complete."
 echo ""
-echo "  Code:    pulled from origin"
-echo "  Deps:    composer in sync"
-echo "  Schema:  pending update hooks applied"
-echo "  Cache:   rebuilt"
-echo "  Content: untouched"
+echo "  Code:     pulled from origin"
+echo "  Deps:     composer in sync"
+echo "  Schema:   pending update hooks applied"
+echo "  Twig:     compiled templates dropped"
+echo "  CSS/JS:   aggregated bundles dropped"
+echo "  Cache:    rebuilt"
+echo "  OPcache:  flushed via container restart"
+echo "  Content:  untouched"
 echo "============================================"
