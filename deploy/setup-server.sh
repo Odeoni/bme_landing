@@ -1,7 +1,13 @@
 #!/bin/bash
 # ============================================
-# BME Science Campus — VPS Setup
+# BME Science Campus — INITIAL VPS install ONLY
 # Run on VPS as root from /opt/sciencecampus/deploy
+#
+# WARNING: this script wipes the database and recreates content
+# types from scratch. It is for a brand-new server only.
+#
+# To deploy code/theme updates to an existing site, use update.sh
+# instead — it is non-destructive and preserves all content.
 # ============================================
 set -e
 
@@ -11,6 +17,30 @@ echo "=== Starting containers ==="
 docker compose up -d
 echo "Waiting for DB to be ready..."
 sleep 15
+
+# --------------------------------------------
+# Safety guard: refuse to run on a populated DB
+# --------------------------------------------
+TABLE_COUNT=$(docker exec sciencecampus-db mysql -u root -proot_sc_2026 -N -B \
+  -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='drupal';" 2>/dev/null || echo "0")
+
+if [ "$TABLE_COUNT" -gt "0" ]; then
+  echo ""
+  echo "============================================"
+  echo "  ABORT: database 'drupal' already has $TABLE_COUNT tables."
+  echo ""
+  echo "  This script would WIPE the existing database and reset"
+  echo "  all content types. Refusing to proceed."
+  echo ""
+  echo "  To deploy code updates, run:  bash deploy/update.sh"
+  echo ""
+  echo "  If you really intend a full reinstall, take a backup,"
+  echo "  then drop the DB manually and re-run this script:"
+  echo "    docker exec sciencecampus-db mysql -u root -proot_sc_2026 \\"
+  echo "      -e 'DROP DATABASE drupal; CREATE DATABASE drupal;'"
+  echo "============================================"
+  exit 1
+fi
 
 echo "=== Installing dependencies ==="
 docker exec sciencecampus-web composer require \
@@ -50,9 +80,12 @@ docker exec sciencecampus-web drush cr
 
 echo ""
 echo "============================================"
-echo "  Setup complete!"
+echo "  Initial setup complete!"
 echo "  Site: http://$(hostname -I | awk '{print $1}'):8081"
 echo "  Admin: admin / ChangeMeNow2026!"
+echo ""
+echo "  From now on, deploy updates with:  bash deploy/update.sh"
+echo "  (do NOT re-run this script — it wipes the DB)"
 echo ""
 echo "  Next steps (all via admin UI):"
 echo "    1. Log in at /user/login"
