@@ -399,9 +399,8 @@ if (!View::load("aktualis_eloadasok")) {
               "id" => "field_archive_value",
               "table" => "node__field_archive",
               "field" => "field_archive_value",
-              "value" => ["0" => "0"],
-              "operator" => "or",
-              "plugin_id" => "list_field",
+              "value" => "0",
+              "plugin_id" => "boolean",
             ],
           ],
           "sorts" => [
@@ -483,9 +482,8 @@ if (!View::load("archivum")) {
               "id" => "field_archive_value",
               "table" => "node__field_archive",
               "field" => "field_archive_value",
-              "value" => ["1" => "1"],
-              "operator" => "or",
-              "plugin_id" => "list_field",
+              "value" => "1",
+              "plugin_id" => "boolean",
             ],
           ],
           "sorts" => [
