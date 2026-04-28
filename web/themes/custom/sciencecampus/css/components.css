@@ -315,6 +315,62 @@
 
 .accordion__item.is-open .accordion__panel { display: block; }
 
+/* Science Campus előadások CTA card */
+.eloadasok-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+  background: var(--color-white);
+  border: 2px solid var(--color-blue);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  max-width: 880px;
+  margin: 0 auto var(--space-xl);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.eloadasok-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  color: inherit;
+}
+
+.eloadasok-cta__logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.eloadasok-cta__body { flex: 1; }
+
+.eloadasok-cta__title {
+  margin: 0 0 var(--space-xs);
+  font-size: var(--font-size-xl);
+  color: var(--color-blue);
+}
+
+.eloadasok-cta__desc {
+  margin: 0;
+  color: var(--color-text-light);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+}
+
+.eloadasok-cta__action { flex-shrink: 0; }
+
+@media (min-width: 768px) {
+  .eloadasok-cta {
+    flex-direction: row;
+    text-align: left;
+    gap: var(--space-lg);
+  }
+}
+
 /* Felveteli section */
 .felveteli-section {
   background: var(--color-white);

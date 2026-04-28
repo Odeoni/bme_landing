@@ -53,10 +53,15 @@
 <section class="section section--grey">
   <div class="container">
     <h2 class="section__title">Science Campus Programjaink</h2>
-    <div style="max-width: var(--container-max); margin-inline: auto; display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
-      <img src="{{ base_path ~ directory }}/images/sc-eloadasok-logo.png" alt="Science Campus előadások" style="width:60px;height:60px;object-fit:contain;">
-      <p><a href="/science-campus-eloadasok"><strong>Science Campus előadások</strong></a>, ahol a BME oktatói és kutatói mutatják be a természettudományok legizgalmasabb területeit.</p>
-    </div>
+
+    <a href="/science-campus-eloadasok" class="eloadasok-cta">
+      <img src="{{ base_path ~ directory }}/images/sc-eloadasok-logo.png" alt="" class="eloadasok-cta__logo">
+      <div class="eloadasok-cta__body">
+        <h3 class="eloadasok-cta__title">Science Campus előadások</h3>
+        <p class="eloadasok-cta__desc">A BME oktatói és kutatói mutatják be a természettudományok legizgalmasabb területeit.</p>
+      </div>
+      <span class="eloadasok-cta__action btn btn--primary">Science Campus előadásaink</span>
+    </a>
 
     <div class="program-grid program-grid--main">
       {{ drupal_view('programjaink', 'block_1') }}
