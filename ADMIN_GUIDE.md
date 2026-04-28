@@ -44,7 +44,7 @@ A landing page-ek ugyanazokkal a mezokkel rendelkeznek, de az egyes oldalak sabl
 | **Szekcio kep** | A "Mi a Science Campus?" szoveg melletti kep |
 | **Masodik szekcio szoveg** | A "Mit kapsz diakkent..." szekcioba kerul |
 | **Masodik szekcio kep** | A "Mit kapsz diakkent..." szoveg melletti kep |
-| **CTA szoveg** | A "Felveteli pont" piros pontokos szekcioba kerul |
+| **CTA szoveg** | A "Felveteli pont" szekcio leiro szovege (a "p" badge alatt) |
 
 #### Science Campus eloadasok (`/science-campus-eloadasok`)
 
@@ -90,7 +90,12 @@ A tobbi szekcioja automatikusan jelenik meg:
 
 ## 2. Programok (fooldal racs)
 
-Ezek a Science Campus fooldal "Programjaink" szekcioban jelennek meg.
+A fooldalon a programok ket szekcioban jelennek meg, a **Sorrend** mezo alapjan:
+
+- **Science Campus Programjaink** — az elso 3 program (legkisebb sorrend ertek)
+- **Tovabbi Programjaink** — a tobbi program
+
+Ha at akarod rendezni, hogy egy program melyik szekcioban jelenjen meg, csak modosisd a **Sorrend** szamot (1 = elso, 2 = masodik, stb.).
 
 ### Uj program letrehozasa
 
@@ -102,9 +107,9 @@ Ezek a Science Campus fooldal "Programjaink" szekcioban jelennek meg.
 | **Cim** | A program neve |
 | **Tartalom** | Rovid leiras |
 | **Logo** | A program logoja/ikonja |
-| **Felveteli pontot ad** | Jelold be, ha felveteli pontot ad (piros pont jelenik meg) |
+| **Felveteli pontot ad** | Jelold be, ha felveteli pontot ad (zold "p" badge jelenik meg) |
 | **Link** | A program reszletes oldalara vezeto link |
-| **Sorrend** | Szam, ami a megjelenesi sorrendet hatarozza meg (1 = elso) |
+| **Sorrend** | Szam, ami a megjelenesi sorrendet es szekciot hatarozza meg (1-3 = "Science Campus Programjaink", 4+ = "Tovabbi Programjaink") |
 
 3. Kattints a **Mentes** gombra — a program automatikusan megjelenik a fooldalon
 
@@ -122,16 +127,25 @@ Ezek a Science Campus eloadasok oldal "Aktualis eloadasaink" vagy "Archivum" sze
 | Mezo | Leiras |
 |---|---|
 | **Cim** | Az eloadas cime |
-| **Tartalom** | Az eloadas leirasa |
-| **Kep** | Az eloadashoz tartozo kep |
+| **Tartalom** | Az eloadas leirasa (videok, kepek, reszletes szoveg ide is keruhetnek) |
+| **Kep** | Az eloadashoz tartozo plakat / illusztracio (ajanlott max. 800×600 pixel) |
 | **Eloado neve** | Az eloado neve |
 | **Datum** | Az eloadas idopontja |
-| **Regisztracios link** | Link a regisztracios oldalra |
+| **Regisztracios link** | Egyedi regisztracios link az eseményhez (luma, Google Form, stb.) |
 | **Archiv** | Jelold be, ha az eloadas mar lezajlott — atkerul az Archivumba |
 
 3. Kattints a **Mentes** gombra
 
-**Tip:** Amikor egy eloadas lezajlott, szerkeszd es jelold be az "Archiv" mezot — automatikusan atkerul az Archivum szekcio ala.
+### Aktiv vs. Archiv eloadasok
+
+Ket teljesen kulonbozo modon jelennek meg:
+
+- **Aktiv** (Archiv = nem) — teljes kartya a foto, datum, eloado, leiras es Regisztracio gombbal. Az "Aktualis eloadasaink" szekcioban jelenik meg.
+- **Archiv** (Archiv = igen) — csak a foto kepe linkkent. Az olvaso ra tud kattintani es eljut a saját reszletes oldalara, ahol megnezheti az eloadas leirasat, beagyazott videokat, kepeket stb. Az "Archivum" lenyithato szekcioba kerul.
+
+**Tip:** Amikor egy eloadas lezajlott:
+1. Szerkeszd a tartalmat es jelold be az "Archiv" mezot
+2. A **Tartalom** mezobe rakhatod be az utolagos anyagot — beagyazott YouTube linkeket, kepeket, jegyzokonyveket — barmit, amit az olvasok megnezhetnek a reszletes oldalon
 
 ---
 
@@ -194,21 +208,27 @@ Ezek a Nobel-dijas kiserletek oldal "Meresi foglalkozasaink reszletesen" szekcio
 
 ---
 
-## 7. Fejlec es lablec kepek modositasa
+## 7. Tema beallitasai (kepek + szovegek)
 
-A fejlecben es a lablecben levo kepek (logok, terkep) a tema beallitasain keresztul modosithatoak.
+A weboldal kepei es nehany szerkesztheto szovege a tema beallitasain keresztul modosithatoak.
 
 ### Hol talalom?
 
 **Megjelenes > Beallitasok > Science Campus**
 vagy kozvetlenul: `/admin/appearance/settings/sciencecampus`
 
+### Szerkesztheto szovegek
+
+| Mezo | Hol jelenik meg |
+|---|---|
+| **Felveteli pont szekcio cime** | A fooldal "Mit kapsz diakkent?" szekcioja alatti nagy felirat ("Szerezz 15 intezmenyi felveteli pontot...") |
+
 ### Feltoltheto kepek
 
 | Mezo | Hol jelenik meg | Megjegyzes |
 |---|---|---|
 | **Science Campus logo (fejlec)** | Fejlec bal oldalan | Ajanlott: PNG, atlatszo hatterrel |
-| **BME logo (fejlec)** | Fejlec jobb oldalan | Ajanlott: PNG, atlatszo hatterrel |
+| **BME logo (lablec)** | Lablec bal oldalan, a kozossegi ikonok felett | Ajanlott: PNG, atlatszo hatterrel |
 | **Campus terkep (lablec)** | Lablec jobb oldalan | Max 5 MB |
 
 Ha nem toltsz fel kepet, az alapertelmezett kep jelenik meg.
@@ -236,7 +256,7 @@ Ha az oldal frissen telepitett, be kell allitani, melyik landing page legyen a f
 | Uj tema | `/node/add/tema` |
 | Uj program tipus | `/node/add/program_tipus` |
 | Uj meresi foglalkozas | `/node/add/meresi_foglalkozas` |
-| Fejlec/lablec kepek | `/admin/appearance/settings/sciencecampus` |
+| Tema beallitasai (kepek + szovegek) | `/admin/appearance/settings/sciencecampus` |
 | Fooldal beallitasa | `/admin/config/system/site-information` |
 | Tartalomtipusok kezelese | `/admin/structure/types` |
 | Nezetek kezelese | `/admin/structure/views` |
@@ -248,13 +268,14 @@ Ha az oldal frissen telepitett, be kell allitani, melyik landing page legyen a f
 ```
 Science Campus fooldal (/science-campus)
 ├── [Landing page mezoi: hero, tartalom, szekcio kepek, CTA]
-├── Programjaink racs ← Program tipusu tartalmak
-└── Felveteli pont szekció ← Landing page CTA mezo
+├── Science Campus Programjaink ← Program tipusu, sorrend 1-3
+├── Tovabbi Programjaink ← Program tipusu, sorrend 4+
+└── Felveteli pont szekció ← Landing page CTA + tema beallitas (cim)
 
 Science Campus eloadasok (/science-campus-eloadasok)
 ├── [Landing page mezoi: hero, tartalom]
-├── Aktualis eloadasaink ← Eloadas tartalmak (Archiv = nem)
-└── Archivum ← Eloadas tartalmak (Archiv = igen)
+├── Aktualis eloadasaink ← Eloadas tartalmak (Archiv = nem) — teljes kartya
+└── Archivum (lenyithato) ← Eloadas tartalmak (Archiv = igen) — csak foto, sajat oldalra mutat
 
 Nobel-dijas kiserletek (/nobel-dijas-kiserletek)
 ├── [Landing page mezoi: hero, tartalom]
