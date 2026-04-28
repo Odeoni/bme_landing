@@ -18,14 +18,14 @@
 }
 
 .btn--primary {
-  background: var(--color-red);
+  background: var(--color-blue);
   color: var(--color-white);
-  border-color: var(--color-red);
+  border-color: var(--color-blue);
 }
 
 .btn--primary:hover {
-  background: #9a0310;
-  border-color: #9a0310;
+  background: var(--color-blue-hover);
+  border-color: var(--color-blue-hover);
   color: var(--color-white);
 }
 
@@ -74,14 +74,38 @@
   gap: var(--space-sm);
 }
 
-.program-card__dot {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  background: var(--color-red);
+/* "p" badge — marks programs/events that grant felvételi pontok */
+.program-card__dot,
+.felveteli-section__dot,
+.felveteli-dot,
+.p-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-teal);
+  color: var(--color-blue);
   border-radius: 50%;
+  font-family: var(--font-family);
+  font-weight: 800;
+  line-height: 1;
   flex-shrink: 0;
+  vertical-align: middle;
 }
+
+.program-card__dot::before,
+.felveteli-section__dot::before,
+.felveteli-dot::before,
+.p-badge::before {
+  content: "p";
+  display: block;
+  transform: translateY(-0.05em);
+}
+
+/* Size variants */
+.program-card__dot { width: 22px; height: 22px; font-size: 14px; }
+.felveteli-section__dot { width: 36px; height: 36px; font-size: 22px; }
+.felveteli-dot { width: 22px; height: 22px; font-size: 14px; }
+.p-badge { width: 22px; height: 22px; font-size: 14px; }
 
 .program-card__description {
   font-size: var(--font-size-sm);
@@ -102,8 +126,8 @@
 
 .event-row__image {
   width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
+  height: auto;
+  display: block;
 }
 
 .event-row__content {
@@ -144,8 +168,12 @@
 }
 
 @media (min-width: 768px) {
-  .event-row { flex-direction: row; }
-  .event-row__image { width: 280px; flex-shrink: 0; aspect-ratio: auto; }
+  .event-row { flex-direction: row; align-items: flex-start; }
+  .event-row__image {
+    max-width: 320px;
+    width: auto;
+    flex-shrink: 0;
+  }
 }
 
 /* Topic Card */
@@ -272,15 +300,6 @@
 .felveteli-section__title {
   font-size: var(--font-size-2xl);
   color: var(--color-blue);
-}
-
-.felveteli-section__dot {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background: var(--color-red);
-  border-radius: 50%;
-  vertical-align: middle;
 }
 
 .felveteli-section__text {

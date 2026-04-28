@@ -41,7 +41,9 @@
 
 :root {
   --color-blue: #022346;
-  --color-red: #BF0414;
+  --color-blue-hover: #033a73;
+  --color-teal: #06C997;
+  --color-teal-hover: #05a87f;
   --color-bg: #f3f3f3;
   --color-white: #ffffff;
   --color-text: #333333;
@@ -112,7 +114,7 @@ a {
 }
 
 a:hover {
-  color: var(--color-red);
+  color: var(--color-teal);
 }
 
 h1, h2, h3, h4, h5, h6 {
