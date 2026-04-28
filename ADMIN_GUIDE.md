@@ -221,6 +221,7 @@ vagy kozvetlenul: `/admin/appearance/settings/sciencecampus`
 
 | Mezo | Hol jelenik meg |
 |---|---|
+| **"Science Campus Programjaink" szekcio bevezetoje** | A fooldal "Science Campus Programjaink" cim alatt megjeleno rovid szoveg, a "p" badge mellett ("Vegyél részt a pöttyel ellátott programokon...") |
 | **Felveteli pont szekcio cime** | A fooldal "Mit kapsz diakkent?" szekcioja alatti nagy felirat ("Szerezz 15 intezmenyi felveteli pontot...") |
 
 ### Feltoltheto kepek

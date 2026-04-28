@@ -54,6 +54,8 @@ function sciencecampus_preprocess_node(&$variables) {
   if ($node->bundle() === 'landing_page') {
     $variables['felveteli_heading'] = theme_get_setting('felveteli_heading')
       ?: 'Szerezz 15 intézményi felvételi pontot a Science Campus programokkal!';
+    $variables['programjaink_intro_text'] = theme_get_setting('programjaink_intro_text')
+      ?: 'Vegyél részt a pöttyel ellátott programokon, és szerezz intézményi felvételi pontokat.';
   }
 }
 

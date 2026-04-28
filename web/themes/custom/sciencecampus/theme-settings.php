@@ -27,6 +27,14 @@ function sciencecampus_form_system_theme_settings_alter(&$form, \Drupal\Core\For
     '#maxlength' => 255,
   ];
 
+  $form['sciencecampus_text']['programjaink_intro_text'] = [
+    '#type' => 'textarea',
+    '#title' => t('"Science Campus Programjaink" szekció bevezetője'),
+    '#description' => t('A "Science Campus Programjaink" cím alatt megjelenő rövid szöveg, ami a "p" badge mellett áll.'),
+    '#default_value' => theme_get_setting('programjaink_intro_text') ?: 'Vegyél részt a pöttyel ellátott programokon, és szerezz intézményi felvételi pontokat.',
+    '#rows' => 2,
+  ];
+
   $form['sciencecampus_images'] = [
     '#type' => 'details',
     '#title' => t('Weboldal képek'),
