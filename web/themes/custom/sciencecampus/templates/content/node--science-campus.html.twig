@@ -58,7 +58,19 @@
       <p><a href="/science-campus-eloadasok"><strong>Science Campus előadások</strong></a>, ahol a BME oktatói és kutatói mutatják be a természettudományok legizgalmasabb területeit.</p>
     </div>
 
-    {{ drupal_view('programjaink', 'block_1') }}
+    <div class="program-grid program-grid--main">
+      {{ drupal_view('programjaink', 'block_1') }}
+    </div>
+  </div>
+</section>
+
+<section class="section section--white">
+  <div class="container">
+    <h2 class="section__title">További Programjaink</h2>
+
+    <div class="program-grid program-grid--extra">
+      {{ drupal_view('programjaink', 'block_1') }}
+    </div>
 
     <div style="text-align:center; margin-top: 2rem;">
       <a href="https://luma.com/bme_sc" class="btn btn--outline" target="_blank" rel="noopener">Tovább a programnaptárra</a>

@@ -191,6 +191,19 @@
   margin-inline: auto;
 }
 
+/* Flatten Drupal view wrappers so cards become real grid children */
+.program-grid .views-element-container,
+.program-grid .views-element-container > div,
+.program-grid .views-row {
+  display: contents;
+}
+
+/* Split: --main shows the first 3 (Science Campus Programjaink),
+   --extra shows the rest (További Programjaink). Editor controls
+   order via the "Sorrend" weight field on each Program. */
+.program-grid--main .views-row:nth-child(n+4) { display: none; }
+.program-grid--extra .views-row:nth-child(-n+3) { display: none; }
+
 /* Event list */
 .event-list {
   display: flex;
