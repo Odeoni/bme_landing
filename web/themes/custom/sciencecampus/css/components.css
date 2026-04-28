@@ -101,11 +101,15 @@
   transform: translateY(-0.05em);
 }
 
-/* Size variants */
-.program-card__dot { width: 22px; height: 22px; font-size: 14px; }
-.felveteli-section__dot { width: 36px; height: 36px; font-size: 22px; }
-.felveteli-dot { width: 22px; height: 22px; font-size: 14px; }
-.p-badge { width: 22px; height: 22px; font-size: 14px; }
+/* One consistent size everywhere */
+.program-card__dot,
+.felveteli-section__dot,
+.felveteli-dot,
+.p-badge {
+  width: 24px;
+  height: 24px;
+  font-size: 15px;
+}
 
 .program-card__description {
   font-size: var(--font-size-sm);
@@ -127,6 +131,8 @@
 .event-row__image {
   width: 100%;
   height: auto;
+  max-height: 600px;
+  object-fit: contain;
   display: block;
 }
 
@@ -171,9 +177,33 @@
   .event-row { flex-direction: row; align-items: flex-start; }
   .event-row__image {
     max-width: 320px;
+    max-height: 480px;
     width: auto;
     flex-shrink: 0;
   }
+}
+
+/* Archived event: image-only thumbnail linking to the event page */
+.event-row--archived {
+  display: block;
+  text-decoration: none;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.event-row--archived:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.event-row--archived .event-row__image {
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .event-row--archived .event-row__image { max-height: 320px; }
 }
 
 /* Topic Card */

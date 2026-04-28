@@ -12,6 +12,21 @@ use Drupal\file\Entity\File;
  */
 function sciencecampus_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
 
+  $form['sciencecampus_text'] = [
+    '#type' => 'details',
+    '#title' => t('Weboldal szövegek'),
+    '#description' => t('Szerkeszthető szövegek a kezdőlapon.'),
+    '#open' => TRUE,
+  ];
+
+  $form['sciencecampus_text']['felveteli_heading'] = [
+    '#type' => 'textfield',
+    '#title' => t('Felvételi pont szekció címe'),
+    '#description' => t('A "Mit kapsz diákként?" szekció alatti, felvételi pontokra felhívó cím szövege.'),
+    '#default_value' => theme_get_setting('felveteli_heading') ?: 'Szerezz 15 intézményi felvételi pontot a Science Campus programokkal!',
+    '#maxlength' => 255,
+  ];
+
   $form['sciencecampus_images'] = [
     '#type' => 'details',
     '#title' => t('Weboldal képek'),

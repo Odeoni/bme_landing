@@ -144,9 +144,6 @@
 
 .hero__subtitle .felveteli-dot {
   margin-left: var(--space-xs);
-  width: 22px;
-  height: 22px;
-  font-size: 14px;
 }
 
 /* Sections */

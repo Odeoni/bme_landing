@@ -47,6 +47,14 @@ function sciencecampus_preprocess_node(&$variables) {
   if ($node->bundle() === 'program' && $node->hasField('field_felveteli_pont')) {
     $variables['has_felveteli_pont'] = (bool) $node->get('field_felveteli_pont')->value;
   }
+  if ($node->bundle() === 'eloadas' && $node->hasField('field_archive')) {
+    $variables['is_archived'] = (bool) $node->get('field_archive')->value;
+    $variables['node_url'] = $node->toUrl()->toString();
+  }
+  if ($node->bundle() === 'landing_page') {
+    $variables['felveteli_heading'] = theme_get_setting('felveteli_heading')
+      ?: 'Szerezz 15 intézményi felvételi pontot a Science Campus programokkal!';
+  }
 }
 
 /**
@@ -56,6 +64,24 @@ function sciencecampus_theme_suggestions_page_alter(array &$suggestions, array $
   $node = \Drupal::routeMatch()->getParameter('node');
   if ($node instanceof NodeInterface) {
     $suggestions[] = 'page__node__' . $node->bundle();
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Add editor-facing guidance on Eloadas image upload to avoid layouts
+ * being broken by oversized images.
+ */
+function sciencecampus_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if ($form_id === 'node_eloadas_form' || $form_id === 'node_eloadas_edit_form') {
+    if (isset($form['field_image']['widget'])) {
+      $hint = t('Ajánlott maximális méret: 800×600 pixel. A nagyobb képek a megjelenítéskor le lesznek vágva (max. 600 pixel magas mobilon, 480 pixel asztali nézetben).');
+      $form['field_image']['widget']['#description'] = $hint;
+      if (isset($form['field_image']['widget'][0])) {
+        $form['field_image']['widget'][0]['#description'] = $hint;
+      }
+    }
   }
 }
 
