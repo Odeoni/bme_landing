@@ -6,26 +6,37 @@
 #}
 
 <header class="site-header">
-  <div class="site-header__inner">
-    <a href="{{ path('<front>') }}" class="site-header__logo" rel="home">
-      <img src="{{ sc_logo_url }}" alt="Science Campus">
-      <span class="site-header__logo-text">BME TTK Science Campus</span>
-    </a>
+  <div class="site-header__top">
+    <div class="container site-header__top-inner">
+      <span class="site-header__title">BME TTK Science Campus</span>
+      <a href="https://www.bme.hu" target="_blank" rel="noopener" class="site-header__bme">
+        <img src="{{ bme_logo_url }}" alt="" class="site-header__bme-logo">
+        <span class="site-header__bme-text">BME</span>
+      </a>
+    </div>
+  </div>
 
-    <button class="menu-toggle" aria-label="Menü" aria-expanded="false">
-      <span class="menu-toggle__bar"></span>
-      <span class="menu-toggle__bar"></span>
-      <span class="menu-toggle__bar"></span>
-    </button>
+  <div class="site-header__main">
+    <div class="container site-header__main-inner">
+      <a href="{{ path('<front>') }}" class="site-header__sc-logo" rel="home" aria-label="Science Campus — Főoldal">
+        <img src="{{ sc_logo_url }}" alt="Science Campus">
+      </a>
 
-    <nav class="main-nav" id="main-nav" aria-label="Fő navigáció">
-      <ul class="main-nav__list">
-        <li><a href="/osszes-program" class="main-nav__link">Összes program</a></li>
-        <li><a href="https://luma.com/bme_sc" class="main-nav__link" target="_blank" rel="noopener">Programnaptár</a></li>
-        <li><a href="https://kepzesek.ttk.bme.hu/" class="main-nav__link" target="_blank" rel="noopener">Képzéseink</a></li>
-        <li><a href="/felveteli-pontok" class="main-nav__link">Felvételi pontok</a></li>
-      </ul>
-    </nav>
+      <button class="menu-toggle" aria-label="Menü" aria-expanded="false">
+        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span>
+      </button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Fő navigáció">
+        <ul class="main-nav__list">
+          <li><a href="/osszes-program" class="main-nav__link">Összes program</a></li>
+          <li><a href="https://luma.com/bme_sc" class="main-nav__link" target="_blank" rel="noopener">Programnaptár</a></li>
+          <li><a href="https://kepzesek.ttk.bme.hu/" class="main-nav__link" target="_blank" rel="noopener">Képzéseink</a></li>
+          <li><a href="/felveteli-pontok" class="main-nav__link">Felvételi pontok</a></li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -41,7 +52,8 @@
   <div class="site-footer__inner container">
     <div class="site-footer__col">
       <a href="https://www.bme.hu" target="_blank" rel="noopener" class="site-footer__bme-link">
-        <img src="{{ bme_logo_url }}" alt="BME" class="site-footer__bme-logo">
+        <img src="{{ bme_logo_url }}" alt="" class="site-footer__bme-logo">
+        <span class="site-footer__bme-text">BME</span>
       </a>
       <div class="site-footer__social">
         <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
@@ -61,14 +73,11 @@
         <li><a href="https://luma.com/bme_sc" target="_blank" rel="noopener">Programnaptár</a></li>
         <li><a href="https://kepzesek.ttk.bme.hu/" target="_blank" rel="noopener">Képzéseink</a></li>
         <li><a href="/felveteli-pontok">Felvételi pontok</a></li>
+      </ul>
+      <ul class="site-footer__nav site-footer__nav--legal">
         <li><a href="/adatvedelem">Adatvédelem</a></li>
         <li><a href="/impresszum">Impresszum</a></li>
       </ul>
-    </div>
-    <div class="site-footer__col">
-      <div class="site-footer__map">
-        <img src="{{ campus_map_url }}" alt="BME campus térkép" loading="lazy">
-      </div>
     </div>
   </div>
 </footer>

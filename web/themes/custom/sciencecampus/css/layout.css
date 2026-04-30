@@ -11,33 +11,67 @@
   z-index: 100;
 }
 
-.site-header__inner {
+/* Top bar: BME TTK Science Campus title + BME logo */
+.site-header__top {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__top-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding: var(--space-md) var(--container-padding);
+  padding-block: var(--space-sm);
   gap: var(--space-md);
 }
 
-.site-header__logo {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  flex-shrink: 0;
+.site-header__title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-blue);
+  letter-spacing: 0.02em;
 }
 
-.site-header__logo img {
-  height: 48px;
+.site-header__bme {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  text-decoration: none;
+  color: var(--color-blue);
+}
+
+.site-header__bme-logo {
+  height: 24px;
   width: auto;
 }
 
-.site-header__logo-text {
-  font-size: var(--font-size-sm);
-  font-weight: 600;
+.site-header__bme-text {
+  font-size: var(--font-size-base);
+  font-weight: 700;
   color: var(--color-blue);
-  line-height: 1.2;
+  border-left: 1px solid var(--color-border);
+  padding-left: var(--space-xs);
+}
+
+/* Main bar: SC logo + nav */
+.site-header__main-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-sm);
+  gap: var(--space-md);
+  position: relative;
+}
+
+.site-header__sc-logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.site-header__sc-logo img {
+  height: 56px;
+  width: auto;
 }
 
 
@@ -54,9 +88,11 @@
   left: 0;
   right: 0;
   background: var(--color-white);
+  border-top: 1px solid var(--color-border);
   border-bottom: 2px solid var(--color-blue);
-  padding: var(--space-md);
+  padding: var(--space-md) var(--container-padding);
   box-shadow: var(--shadow);
+  z-index: 99;
 }
 
 .main-nav__list {
@@ -271,14 +307,26 @@
 }
 
 .site-footer__bme-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  text-decoration: none;
+  color: var(--color-blue);
   margin-bottom: var(--space-md);
 }
 
 .site-footer__bme-logo {
-  height: 56px;
+  height: 32px;
   width: auto;
   display: block;
+}
+
+.site-footer__bme-text {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-blue);
+  border-left: 1px solid var(--color-border);
+  padding-left: var(--space-xs);
 }
 
 .site-footer__social {
@@ -306,6 +354,7 @@
 .site-footer__nav {
   list-style: none;
   padding: 0;
+  margin-bottom: var(--space-md);
 }
 
 .site-footer__nav li {
@@ -317,23 +366,30 @@
   color: var(--color-text);
 }
 
-.site-footer__map img {
-  border-radius: var(--radius);
-  max-width: 300px;
+.site-footer__nav--legal a {
+  text-decoration: underline;
 }
 
 /* TABLET (768px+) */
 @media (min-width: 768px) {
-  .main-nav { display: flex; }
+  .main-nav { display: flex; flex: 1; justify-content: flex-end; }
   .main-nav__list { flex-direction: row; gap: var(--space-md); }
   .menu-toggle { display: none; }
+  .main-nav.is-open {
+    position: static;
+    flex-direction: row;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    box-shadow: none;
+  }
   .hero { min-height: 400px; }
   .split { flex-direction: row; align-items: center; }
   .program-grid { grid-template-columns: repeat(3, 1fr); }
   .two-cards { grid-template-columns: repeat(2, 1fr); }
   .topics-grid { grid-template-columns: repeat(3, 1fr); }
   .cta-section__inner { flex-direction: row; align-items: center; }
-  .site-footer__inner { grid-template-columns: 1fr 1fr 1fr; }
+  .site-footer__inner { grid-template-columns: 1fr 1fr; }
 }
 
 /* DESKTOP (1024px+) */

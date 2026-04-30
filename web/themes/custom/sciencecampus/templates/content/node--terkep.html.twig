@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * Térkép a termeinkhez page.
+ * Editor creates a Landing page node with URL alias /terkep and fills:
+ *   - field_hero_title  → nagy cím (default: "Térkép a termeinkhez")
+ *   - body              → leírás + beágyazott térképkép(ek)
+ *
+ * A térképkép(ek) a body mezőbe kerülnek (Drupal képbeágyazó eszközzel),
+ * így könnyen cserélhetők új útbaigazítás esetén.
+ */
+#}
+
+<section class="section section--white" style="padding-top: var(--space-2xl);">
+  <div class="container">
+    <h1 class="terkep-page__title">
+      {{ content.field_hero_title|render ? content.field_hero_title : label }}
+    </h1>
+
+    <div class="terkep-page__body description-section">
+      {{ content.body }}
+    </div>
+  </div>
+</section>

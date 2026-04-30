@@ -1,0 +1,71 @@
+{#
+/**
+ * @file
+ * Full-page view of an Előadás (event) — what visitors see when they
+ * click an event from the Aktuális or Archívum listing.
+ *
+ * Inherits the Science Campus előadások hero so the page reads as a
+ * sub-page of the lectures section.
+ *
+ * Editor fields used directly:
+ *   - label (title)
+ *   - field_speaker (előadó név)
+ *   - field_date (dátum)
+ *   - field_image (poszter / kép, jelenik meg jobb oldalt)
+ *   - body (kivonat / előadó intézmény / beágyazott videó / minden
+ *           egyéb tartalom — rich text)
+ *   - field_registration_link (csak aktív eseménynél jelenik meg)
+ *
+ * Helyszín linkje statikus: minden esemény a /terkep oldalra mutat.
+ */
+#}
+
+<section class="hero" style="background-image: url('{{ base_path ~ directory }}/images/hero-eloadasok.jpg');">
+  <div class="hero__content">
+    <h1 class="hero__title">Science Campus előadások</h1>
+    <p class="hero__subtitle">Ismeretterjesztő előadások a Műegyetemen</p>
+  </div>
+</section>
+
+<section class="section section--white">
+  <div class="container">
+    <article class="eloadas-detail{{ is_archived ? ' eloadas-detail--archived' : '' }}">
+      <h2 class="eloadas-detail__title">{{ label }}</h2>
+
+      <div class="eloadas-detail__layout">
+        <div class="eloadas-detail__main">
+          {% if content.field_speaker|render %}
+            <p class="eloadas-detail__speaker">{{ content.field_speaker }}</p>
+          {% endif %}
+
+          {% if content.field_date|render %}
+            <p class="eloadas-detail__date">{{ content.field_date }}</p>
+          {% endif %}
+
+          <p class="eloadas-detail__location">
+            <strong>Helyszín:</strong> <a href="/terkep">Térkép a termeinkhez</a>
+          </p>
+
+          {% if content.body|render %}
+            <div class="eloadas-detail__body">{{ content.body }}</div>
+          {% endif %}
+        </div>
+
+        {% if content.field_image|render %}
+          <aside class="eloadas-detail__sidebar">
+            <img src="{{ file_url(content.field_image[0]['#item'].entity.uri.value) }}" alt="{{ label }}" class="eloadas-detail__image" loading="lazy">
+          </aside>
+        {% endif %}
+      </div>
+
+      <div class="eloadas-detail__cta">
+        {% if is_archived %}
+          {# Archive: registration is closed, send people back to the listing #}
+          <a href="/science-campus-eloadasok" class="btn btn--outline">Vissza az előadásokhoz</a>
+        {% elseif content.field_registration_link[0]['#url'] %}
+          <a href="{{ content.field_registration_link[0]['#url'] }}" class="btn btn--primary">Regisztráció</a>
+        {% endif %}
+      </div>
+    </article>
+  </div>
+</section>

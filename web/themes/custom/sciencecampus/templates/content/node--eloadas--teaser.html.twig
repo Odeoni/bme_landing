@@ -1,6 +1,8 @@
 <article{{ attributes.addClass('event-row', is_archived ? 'event-row--archived' : '') }}>
   {% if content.field_image|render %}
-    <img src="{{ file_url(content.field_image[0]['#item'].entity.uri.value) }}" alt="{{ label }}" class="event-row__image" loading="lazy">
+    <a href="{{ node_url }}" class="event-row__image-link" aria-label="{{ label }}">
+      <img src="{{ file_url(content.field_image[0]['#item'].entity.uri.value) }}" alt="{{ label }}" class="event-row__image" loading="lazy">
+    </a>
   {% endif %}
 
   <div class="event-row__content">
@@ -8,11 +10,17 @@
       <time class="event-row__date">{{ content.field_date }}</time>
     {% endif %}
 
-    <h3 class="event-row__title">{{ label }}</h3>
+    <h3 class="event-row__title">
+      <a href="{{ node_url }}">{{ label }}</a>
+    </h3>
 
     {% if content.field_speaker|render %}
       <p class="event-row__speaker">{{ content.field_speaker }}</p>
     {% endif %}
+
+    <p class="event-row__location">
+      <strong>Helyszín:</strong> <a href="/terkep">Térkép a termeinkhez</a>
+    </p>
 
     {% if content.body|render %}
       <div class="event-row__body">{{ content.body }}</div>

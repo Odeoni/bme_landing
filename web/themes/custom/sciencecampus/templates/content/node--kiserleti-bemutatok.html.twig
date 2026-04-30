@@ -1,0 +1,31 @@
+{#
+/**
+ * @file
+ * Kísérleti bemutatók page.
+ * Editor creates a Landing page node with URL alias /kiserleti-bemutatok
+ * and fills in:
+ *   - field_hero_image  → hero háttérkép
+ *   - field_hero_title  → hero cím (vagy üres → label használata)
+ *   - field_hero_subtitle → hero alcím
+ *   - body              → fő tartalom (szöveg, listák, beágyazott videók, képek)
+ */
+#}
+
+{% set hero_image_url = content.field_hero_image[0] ? file_url(content.field_hero_image[0]['#item'].entity.uri.value) : base_path ~ directory ~ '/images/hero-default.jpg' %}
+
+<section class="hero" style="background-image: url('{{ hero_image_url }}');">
+  <div class="hero__content">
+    <h1 class="hero__title">{{ content.field_hero_title|render ? content.field_hero_title : label }}</h1>
+    {% if content.field_hero_subtitle|render %}
+      <p class="hero__subtitle">{{ content.field_hero_subtitle }}</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section section--white">
+  <div class="container">
+    <div class="description-section">
+      {{ content.body }}
+    </div>
+  </div>
+</section>

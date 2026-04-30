@@ -12,13 +12,16 @@ Ez az utmutato leirja, hogyan lehet szerkeszteni es feltolteni tartalmat a Scien
 
 ## Az oldal felepitese
 
-A weboldalnak 3 fo oldala van (landing page-ek), es 5 tovabbi tartalomtipus, amelyek dinamikusan jelennek meg az oldalakon:
+A weboldalnak tobb fo oldala van (landing page-ek), es 5 tovabbi tartalomtipus, amelyek dinamikusan jelennek meg az oldalakon:
 
 | Oldal | URL alias (webcimalnev) | Leiras |
 |---|---|---|
 | Science Campus fooldal | `/science-campus` | A fo landing page |
 | Science Campus eloadasok | `/science-campus-eloadasok` | Eloadasok aloldal |
 | Nobel-dijas kiserletek | `/nobel-dijas-kiserletek` | Nobel program aloldal |
+| Kiserleti bemutatok | `/kiserleti-bemutatok` | Latvanyos fizikai kiserletek aloldal |
+| Felveteli pontok | `/felveteli-pontok` | Reszletes informacio a felveteli pontokrol (a cim mellett "p" badge jelenik meg) |
+| Terkep | `/terkep` | Termek terkepe + utbaigazitas (eloadasok "Helyszin" linkje ide mutat) |
 
 ---
 
@@ -77,14 +80,31 @@ A tobbi szekcioja automatikusan jelenik meg:
 
 1. Menj: `/node/add/landing_page`
 2. Ird be a cimet (pl. "Science Campus")
-3. Toltsd ki a mezoket
-4. A jobb oldalon a **Webcimalnev** szekcioban ird be az aliast:
+3. Toltsd ki a mezoket (Hero cim, Hero alcim, Tartalom, stb.)
+4. A jobb oldalon a **Webcimalnev** szekcioban ird be az aliast valamelyik tamogatott ertekre:
    - `/science-campus`
    - `/science-campus-eloadasok`
    - `/nobel-dijas-kiserletek`
+   - `/kiserleti-bemutatok`
+   - `/felveteli-pontok`
+   - `/terkep`
 5. Kattints a **Mentes** gombra
 
 **Fontos:** A webcimalnev hatarozza meg, melyik sablont hasznalja az oldal. Ha az alias nem egyezik a fentiekkel, egy egyszeru alap sablon jelenik meg.
+
+### Egyszeru aloldalak (Kiserleti bemutatok / Felveteli pontok / Terkep)
+
+Ezek a /kiserleti-bemutatok, /felveteli-pontok es /terkep aliasokon levo Landing page-ek. Mind a harom egyszeru "cim + szovegtartalom" sablon, csak a stilus ter el:
+
+- **Kiserleti bemutatok:** standard hero (Hero cim, Hero alcim, Hero hatterkep) + Tartalom mezo
+- **Felveteli pontok:** csak nagy cim + Tartalom mezo. A cim mellett automatikusan megjelenik a "p" badge.
+- **Terkep:** csak nagy cim + Tartalom mezo. A terkepkep(ek) a Tartalom mezoben legyenek (Drupal kepbeagyazo eszkozzel) — igy konnyen cserelhetok.
+
+Letrehozas mindharomnal:
+1. `/node/add/landing_page`
+2. Cim, hero mezok (ha vannak), Tartalom (szoveg + kepek + linkek)
+3. Webcimalnev: `/kiserleti-bemutatok` vagy `/felveteli-pontok` vagy `/terkep`
+4. Mentes
 
 ---
 

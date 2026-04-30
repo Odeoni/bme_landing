@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * Felvételi pontok page.
+ * Editor creates a Landing page node with URL alias /felveteli-pontok
+ * and fills in:
+ *   - field_hero_title    → nagy cím (default: a node neve)
+ *   - body                → részletes leírás (több bekezdés, listák, linkek)
+ *
+ * A címhez automatikusan hozzákerül a "p" badge a végére.
+ */
+#}
+
+<section class="section section--white" style="padding-top: var(--space-3xl);">
+  <div class="container">
+    <h1 class="felveteli-page__title">
+      {{ content.field_hero_title|render ? content.field_hero_title : label }}
+      <span class="p-badge" aria-hidden="true"></span>
+    </h1>
+
+    <div class="felveteli-page__body description-section">
+      {{ content.body }}
+    </div>
+  </div>
+</section>
