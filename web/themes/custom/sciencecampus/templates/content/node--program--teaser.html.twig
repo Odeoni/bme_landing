@@ -1,4 +1,6 @@
-<article{{ attributes.addClass('program-card') }}>
+{% set link_url = content.field_link[0]['#url'] %}
+
+<article{{ attributes.addClass('program-card', link_url ? 'program-card--linked' : '') }}>
   {% if content.field_logo|render %}
     <img src="{{ file_url(content.field_logo[0]['#item'].entity.uri.value) }}" alt="{{ label }}" class="program-card__logo" loading="lazy">
   {% endif %}
@@ -7,14 +9,16 @@
     {% if has_felveteli_pont %}
       <span class="program-card__dot" aria-label="Felvételi pontot adó program"></span>
     {% endif %}
-    {% if content.field_link[0]['#url'] %}
-      <a href="{{ content.field_link[0]['#url'] }}">{{ label }}</a>
-    {% else %}
-      {{ label }}
-    {% endif %}
+    {{ label }}
   </h3>
 
   {% if content.body|render %}
     <p class="program-card__description">{{ content.body }}</p>
+  {% endif %}
+
+  {% if link_url %}
+    <a href="{{ link_url }}" class="program-card__stretched-link">
+      <span class="visually-hidden">{{ label }}</span>
+    </a>
   {% endif %}
 </article>

@@ -42,6 +42,7 @@
 
 /* Program Card */
 .program-card {
+  position: relative;
   background: var(--color-white);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
@@ -54,9 +55,33 @@
   gap: var(--space-md);
 }
 
-.program-card:hover {
+/* Hover lift only on cards that actually link somewhere */
+.program-card--linked { cursor: pointer; }
+
+.program-card--linked:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+}
+
+.program-card--linked:hover .program-card__title {
+  color: var(--color-teal);
+}
+
+.program-card__title {
+  transition: color var(--transition);
+}
+
+/* Stretched link: invisible <a> covering the whole card */
+.program-card__stretched-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: var(--radius-lg);
+}
+
+.program-card__stretched-link:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
 }
 
 .program-card__logo {
