@@ -164,13 +164,14 @@ A weboldal nem archivalja automatikusan az eloadasokat datum alapjan — csak ak
 **Process:**
 
 1. Eloadas letrehozasakor hagyd uresen az **Archiv** mezot. Az "Aktualis eloadasaink" szekcioban jelenik meg, a megszokott Regisztracio gombbal.
+   - Ha lesz elo kozvetites, mar most berakhatod a **Video URL** mezobe a YouTube live (vagy Vimeo) linket — az eloadas oldalan automatikusan megjelenik a beagyazott lejatszo, ami a kozvetites elindultaval onmagatol elindul a nezok szamara.
 2. Amikor az eloadas lezajlott:
    - Szerkeszd a tartalmat (`/admin/content` → kerese az eloadast → Szerkesztes)
    - Jelold be az **Archiv** mezot
-   - A **Video URL** mezobe rakhatod be a felveteli linket (YouTube vagy Vimeo) — automatikusan beagyazott lejatszokent jelenik meg az eloadas oldalan
+   - A **Video URL** mezobe rakhatod be a felveteli linket (YouTube vagy Vimeo) — ha eloleg az elo URL volt benn, csak cserelod ki a felvetel linkjere. Automatikusan beagyazott lejatszokent jelenik meg az eloadas oldalan.
    - A **Tartalom** mezoben kiegeszitheted egyeb anyaggal (kepek, jegyzokonyvek, jegyzetek)
    - Mentes
-3. Az eloadas atkerul az "Archivum" lenyithato szekcioba. A teljes kartya megmarad (datum, leiras, eloado), csak a "Regisztracio" gombja "Nezd vissza az eloadast" gombbal cserelodik, ami a sajat reszletes oldalra mutat (a 2. lepesben hozzadott videoval stb.).
+3. Az eloadas atkerul az "Archivum" lenyithato szekcioba. A teljes kartya megmarad (datum, leiras, eloado), csak a "Regisztracio" gombja "Nezd vissza az eloadast" gombbal cserelodik, ami a sajat reszletes oldalra mutat (a beagyazott felvetellel stb.).
 
 ---
 
@@ -300,6 +301,9 @@ Science Campus eloadasok (/science-campus-eloadasok)
 ├── [Landing page mezoi: hero, tartalom]
 ├── Aktualis eloadasaink ← Eloadas tartalmak (Archiv = nem) — teljes kartya
 └── Archivum (lenyithato) ← Eloadas tartalmak (Archiv = igen) — csak foto, sajat oldalra mutat
+                                   (a sajat oldalon a Video URL mezo
+                                    automatikusan beagyazott YouTube/Vimeo
+                                    lejatszokent jelenik meg)
 
 Nobel-dijas kiserletek (/nobel-dijas-kiserletek)
 ├── [Landing page mezoi: hero, tartalom]
