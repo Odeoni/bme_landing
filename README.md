@@ -46,12 +46,12 @@ ddev drush cr
 
 | Type | Where it appears | Editor field of note |
 |---|---|---|
-| **Landing page** | Three site pages with custom templates: `/science-campus`, `/science-campus-eloadasok`, `/nobel-dijas-kiserletek` | Hero, body, CTA |
-| **Program** | Landing page grid — split into "Science Campus Programjaink" (first 3 by weight) and "További Programjaink" (rest) | `field_weight` (Sorrend) controls order/section, `field_felveteli_pont` shows the teal "p" badge |
-| **Eloadas** | Előadások page — "Aktuális" or "Archívum" depending on `field_archive` | When archived, renders as image-only thumbnail linking to its own node page |
+| **Landing page** | Site pages with custom templates: `/science-campus`, `/science-campus-eloadasok`, `/nobel-dijas-kiserletek`, `/kiserleti-bemutatok`, `/felveteli-pontok`, `/terkep` | Hero, body |
+| **Program** | Landing page grid — `field_is_science_campus` (Science Campus program checkbox) routes to "Science Campus Programjaink" or "További Programjaink"; `field_weight` (Sorrend) is the within-grid order only | `field_felveteli_pont` shows the teal "p" badge |
+| **Eloadas** | Előadások page — "Aktuális" or "Archívum" depending on `field_archive` | `field_video_url` (YouTube/Vimeo) auto-embeds as iframe on the node page |
 | **Meresi foglalkozas** | Nobel page accordion | Detailed lab descriptions |
 | **Tema** | Nobel page topic grid | Image cards |
-| **Program tipus** | Nobel page program type cards | Heti / kétnapos session formats |
+| **Program tipus** (admin label: "Nobel program forma") | Nobel page "Program típusai" section | Participation formats (e.g. weekly sessions) |
 
 See [ADMIN_GUIDE.md](ADMIN_GUIDE.md) for editor-facing details.
 

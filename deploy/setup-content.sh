@@ -22,23 +22,62 @@ if ! command -v $DRUSH &> /dev/null; then
   exit 1
 fi
 
+# --- Remove unused Drupal Standard-profile content types ---
+# Drupal ships with Article ("Cikk") and Basic page ("Egyszerű oldal").
+# We do not use either — they only clutter /node/add. Strip them out
+# (and any nodes of those types) so the admin UI shows just our 6.
+echo "Removing unused default content types..."
+$DRUSH php:eval '
+foreach (["article", "page"] as $unused) {
+  $type = \Drupal\node\Entity\NodeType::load($unused);
+  if (!$type) {
+    echo "  Already gone: $unused\n";
+    continue;
+  }
+  $nids = \Drupal::entityQuery("node")
+    ->condition("type", $unused)
+    ->accessCheck(FALSE)
+    ->execute();
+  if ($nids) {
+    $nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
+    \Drupal::entityTypeManager()->getStorage("node")->delete($nodes);
+    echo "  Deleted " . count($nodes) . " '\''$unused'\'' node(s)\n";
+  }
+  $type->delete();
+  echo "  Removed content type: $unused\n";
+}
+'
+$DRUSH cr
+
 # --- Content types ---
-echo "Creating content types..."
+# NOTE: labels and descriptions are refreshed on every run so doc tweaks
+# in this script land on the live admin UI without manual edits.
+echo "Creating / refreshing content types..."
 $DRUSH php:eval '
 $types = [
-  ["type" => "program",            "name" => "Program",            "description" => "Science Campus program"],
-  ["type" => "eloadas",            "name" => "Előadás",            "description" => "Science Campus előadás"],
-  ["type" => "meresi_foglalkozas", "name" => "Mérési foglalkozás", "description" => "Nobel-díjas kísérletek mérési foglalkozás"],
-  ["type" => "landing_page",       "name" => "Landing page",       "description" => "Szekció kezdőlap egyedi elrendezéssel"],
-  ["type" => "tema",               "name" => "Téma",               "description" => "Nobel-díjas kísérletek téma"],
-  ["type" => "program_tipus",      "name" => "Program típus",      "description" => "Nobel-díjas kísérletek program típus"],
+  ["type" => "program",            "name" => "Program",
+   "description" => "Programkártya a főoldal rácsaihoz. A \"Science Campus program\" pipa dönti el, melyik rácsba kerül (Science Campus Programjaink / További Programjaink)."],
+  ["type" => "eloadas",            "name" => "Előadás",
+   "description" => "A Science Campus előadások aloldal aktuális vagy archív listáján megjelenő esemény."],
+  ["type" => "meresi_foglalkozas", "name" => "Mérési foglalkozás",
+   "description" => "A Nobel-díjas kísérletek aloldal harmonikájában megjelenő részletes leírás."],
+  ["type" => "landing_page",       "name" => "Landing page",
+   "description" => "Szekció kezdőlap egyedi elrendezéssel (Science Campus főoldal, Nobel-díjas kísérletek, Előadások stb.)."],
+  ["type" => "tema",               "name" => "Téma",
+   "description" => "A Nobel-díjas kísérletek aloldal \"Az alábbi témákban kísérletezhetsz\" rácsában megjelenő téma kép."],
+  ["type" => "program_tipus",      "name" => "Nobel program forma",
+   "description" => "A Nobel-díjas kísérletek aloldal \"Program típusai\" szekciójában megjelenő részvételi forma (pl. heti mérés, kurzus)."],
 ];
 foreach ($types as $t) {
-  if (!\Drupal\node\Entity\NodeType::load($t["type"])) {
+  $existing = \Drupal\node\Entity\NodeType::load($t["type"]);
+  if (!$existing) {
     \Drupal\node\Entity\NodeType::create($t)->save();
     echo "  Created: " . $t["type"] . "\n";
   } else {
-    echo "  Exists:  " . $t["type"] . "\n";
+    $existing->set("name", $t["name"]);
+    $existing->set("description", $t["description"]);
+    $existing->save();
+    echo "  Refreshed: " . $t["type"] . "\n";
   }
 }
 '

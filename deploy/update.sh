@@ -37,6 +37,20 @@ docker exec sciencecampus-web composer install --no-interaction --optimize-autol
 echo "=== Applying pending Drupal database updates ==="
 docker exec sciencecampus-web drush updatedb -y
 
+# --------------------------------------------
+# Re-run the content scaffolding script.
+#
+# `drush updatedb` only runs Drupal update hooks, NOT arbitrary
+# config changes. setup-content.sh creates / refreshes content
+# types, fields, form & view displays, and views — and is written
+# to be idempotent (existing things are skipped or refreshed in
+# place, never duplicated). Running it on every update is what
+# makes a `git pull` + `bash update.sh` actually apply schema
+# changes that were committed alongside the code.
+# --------------------------------------------
+echo "=== Syncing content types, fields, displays & views ==="
+docker exec sciencecampus-web bash /opt/deploy/setup-content.sh
+
 echo "=== Clearing compiled Twig templates and aggregated assets ==="
 # drush cache:rebuild does not always remove the on-disk compiled Twig
 # templates, and it cannot reset OPcache in the Apache worker processes
@@ -68,9 +82,10 @@ echo ""
 echo "  Code:     pulled from origin"
 echo "  Deps:     composer in sync"
 echo "  Schema:   pending update hooks applied"
+echo "  Content:  types/fields/views synced from setup-content.sh"
 echo "  Twig:     compiled templates dropped"
 echo "  CSS/JS:   aggregated bundles dropped"
 echo "  Cache:    rebuilt"
 echo "  OPcache:  flushed via container restart"
-echo "  Content:  untouched"
+echo "  Nodes:    untouched"
 echo "============================================"

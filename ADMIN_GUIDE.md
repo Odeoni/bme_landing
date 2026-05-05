@@ -72,7 +72,7 @@ A tobbi szekcioja automatikusan jelenik meg:
 
 A tobbi szekcioja automatikusan jelenik meg:
 - "Az alabbi temakban kiserletezhetsz" — a **Tema** tipusu tartalmakbol
-- "Program tipusai" — a **Program tipus** tipusu tartalmakbol
+- "Program tipusai" — a **Nobel program forma** tipusu tartalmakbol
 - "Meresi foglalkozasaink reszletesen" — a **Meresi foglalkozas** tipusu tartalmakbol
 
 ### Uj landing page letrehozasa
@@ -192,18 +192,18 @@ Ezek a Nobel-dijas kiserletek oldal "Az alabbi temakban kiserletezhetsz" szekcio
 
 ---
 
-## 5. Program tipusok (Nobel oldal kartyak)
+## 5. Nobel program forma (Nobel oldal kartyak)
 
-Ezek a Nobel-dijas kiserletek oldal "Program tipusai" szekcioban jelennek meg.
+A Nobel-dijas kiserletek aloldal "Program tipusai" szekciojaban megjeleno reszveteli formak (pl. heti meres, kurzus). Az adminban ezt a tartalomtipust **"Nobel program forma"** neven talalod — ne kevern össze a sima **"Program"**-mal, ami a fooldali racsok kartyaja.
 
-### Uj program tipus letrehozasa
+### Uj Nobel program forma letrehozasa
 
 1. Menj: `/node/add/program_tipus`
 2. Toltsd ki:
 
 | Mezo | Leiras |
 |---|---|
-| **Cim** | A program tipus neve (pl. "Heti egy meresi alkalom oktoberben") |
+| **Cim** | A reszveteli forma neve (pl. "Heti egy meresi alkalom oktoberben") |
 | **Kep** | A kartyahoz tartozo kep |
 | **Tartalom** | Reszletes leiras (lehet felsorolas is: hasznald a szovegszerkeszto listazas gombját) |
 | **Sorrend** | Szam a megjelenesi sorrendhez |
@@ -278,7 +278,7 @@ Ha az oldal frissen telepitett, be kell allitani, melyik landing page legyen a f
 | Uj program | `/node/add/program` |
 | Uj eloadas | `/node/add/eloadas` |
 | Uj tema | `/node/add/tema` |
-| Uj program tipus | `/node/add/program_tipus` |
+| Uj Nobel program forma | `/node/add/program_tipus` |
 | Uj meresi foglalkozas | `/node/add/meresi_foglalkozas` |
 | Tema beallitasai (kepek + szovegek) | `/admin/appearance/settings/sciencecampus` |
 | Fooldal beallitasa | `/admin/config/system/site-information` |
@@ -306,6 +306,6 @@ Science Campus eloadasok (/science-campus-eloadasok)
 Nobel-dijas kiserletek (/nobel-dijas-kiserletek)
 ├── [Landing page mezoi: hero, tartalom]
 ├── Temak racs ← Tema tartalmak
-├── Program tipusai ← Program tipus tartalmak
+├── Program tipusai ← Nobel program forma tartalmak
 └── Meresi foglalkozasok ← Meresi foglalkozas tartalmak
 ```
