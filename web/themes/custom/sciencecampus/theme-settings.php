@@ -19,14 +19,6 @@ function sciencecampus_form_system_theme_settings_alter(&$form, \Drupal\Core\For
     '#open' => TRUE,
   ];
 
-  $form['sciencecampus_text']['felveteli_heading'] = [
-    '#type' => 'textfield',
-    '#title' => t('Felvételi pont szekció címe'),
-    '#description' => t('A "Mit kapsz diákként?" szekció alatti, felvételi pontokra felhívó cím szövege.'),
-    '#default_value' => theme_get_setting('felveteli_heading') ?: 'Szerezz 15 intézményi felvételi pontot a Science Campus programokkal!',
-    '#maxlength' => 255,
-  ];
-
   $form['sciencecampus_text']['programjaink_intro_text'] = [
     '#type' => 'textarea',
     '#title' => t('"Science Campus Programjaink" szekció bevezetője'),

@@ -11,7 +11,6 @@
  *   field_section_image    → Image next to description
  *   field_section_body_2   → "Mit kapsz diákként" section
  *   field_section_image_2  → Image next to "Mit kapsz diákként"
- *   field_cta_text         → Felvételi pont CTA description
  *
  * Structural (not editable, rarely changes):
  *   Programjaink grid      → auto from Program nodes via view
@@ -64,7 +63,7 @@
     </div>
 
     <div class="programs-cta">
-      <a href="/science-campus-eloadasok" class="btn btn--primary">Science Campus előadásaink</a>
+      <a href="https://luma.com/bme_sc" class="btn btn--primary" target="_blank" rel="noopener">Programnaptár</a>
     </div>
   </div>
 </section>
@@ -74,7 +73,7 @@
     <h2 class="section__title">További Programjaink</h2>
 
     <div class="program-grid program-grid--extra">
-      {{ drupal_view('programjaink', 'block_1') }}
+      {{ drupal_view('tovabbi_programok', 'block_1') }}
     </div>
   </div>
 </section>
@@ -93,21 +92,6 @@
           <img src="{{ base_path ~ directory }}/images/diak.jpg" alt="Diák a laborban" loading="lazy">
         {% endif %}
       </div>
-    </div>
-  </div>
-</section>
-
-<section class="felveteli-section">
-  <div class="felveteli-section__inner">
-    <div>
-      <h2 class="felveteli-section__title">
-        {{ felveteli_heading }}
-        <span class="felveteli-section__dot"></span>
-      </h2>
-    </div>
-    <div class="felveteli-section__text">
-      {{ content.field_cta_text }}
-      <a href="/felveteli-pontok" class="btn btn--primary" style="margin-top:1rem;">Felvételi pontok</a>
     </div>
   </div>
 </section>

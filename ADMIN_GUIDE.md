@@ -47,7 +47,6 @@ A landing page-ek ugyanazokkal a mezokkel rendelkeznek, de az egyes oldalak sabl
 | **Szekcio kep** | A "Mi a Science Campus?" szoveg melletti kep |
 | **Masodik szekcio szoveg** | A "Mit kapsz diakkent..." szekcioba kerul |
 | **Masodik szekcio kep** | A "Mit kapsz diakkent..." szoveg melletti kep |
-| **CTA szoveg** | A "Felveteli pont" szekcio leiro szovege (a "p" badge alatt) |
 
 #### Science Campus eloadasok (`/science-campus-eloadasok`)
 
@@ -110,12 +109,12 @@ Letrehozas mindharomnal:
 
 ## 2. Programok (fooldal racs)
 
-A fooldalon a programok ket szekcioban jelennek meg, a **Sorrend** mezo alapjan:
+A fooldalon a programok ket szekcioban jelennek meg, a **Science Campus program** pipa alapjan:
 
-- **Science Campus Programjaink** — az elso 3 program (legkisebb sorrend ertek)
-- **Tovabbi Programjaink** — a tobbi program
+- **Science Campus Programjaink** — azok a programok, amelyeknel a "Science Campus program" pipa be van jelolve
+- **Tovabbi Programjaink** — minden mas program
 
-Ha at akarod rendezni, hogy egy program melyik szekcioban jelenjen meg, csak modosisd a **Sorrend** szamot (1 = elso, 2 = masodik, stb.).
+A **Sorrend** mezo csak az adott szekcion belul hatarozza meg a sorrendet — nem allitja at, hogy melyik szekcioban jelenjen meg.
 
 ### Uj program letrehozasa
 
@@ -127,9 +126,10 @@ Ha at akarod rendezni, hogy egy program melyik szekcioban jelenjen meg, csak mod
 | **Cim** | A program neve |
 | **Tartalom** | Rovid leiras |
 | **Logo** | A program logoja/ikonja |
+| **Science Campus program** | Jelold be, ha ez a program a "Science Campus Programjaink" szekcioban jelenjen meg. Ha nincs bejelolve, a "Tovabbi Programjaink" alatt jelenik meg. |
 | **Felveteli pontot ad** | Jelold be, ha felveteli pontot ad (zold "p" badge jelenik meg) |
 | **Link** | A program reszletes oldalara vezeto link |
-| **Sorrend** | Szam, ami a megjelenesi sorrendet es szekciot hatarozza meg (1-3 = "Science Campus Programjaink", 4+ = "Tovabbi Programjaink") |
+| **Sorrend** | A megjelenesi sorrend a szekcion belul (1 = elso, 2 = masodik, stb.) |
 
 3. Kattints a **Mentes** gombra — a program automatikusan megjelenik a fooldalon
 
@@ -147,11 +147,12 @@ Ezek a Science Campus eloadasok oldal "Aktualis eloadasaink" vagy "Archivum" sze
 | Mezo | Leiras |
 |---|---|
 | **Cim** | Az eloadas cime |
-| **Tartalom** | Az eloadas leirasa (videok, kepek, reszletes szoveg ide is keruhetnek) |
+| **Tartalom** | Az eloadas leirasa (kivonat, eloado intezmenye, egyeb szoveg) |
 | **Kep** | Az eloadashoz tartozo plakat / illusztracio (ajanlott max. 800×600 pixel) |
 | **Eloado neve** | Az eloado neve |
 | **Datum** | Az eloadas idopontja |
-| **Regisztracios link** | Egyedi regisztracios link az eseményhez (luma, Google Form, stb.) |
+| **Regisztracios link** | Egyedi regisztracios link az esemenyhez (luma, Google Form, stb.) |
+| **Video URL** | YouTube vagy Vimeo link. Az esemeny elott elo kozvetiteshez, utana a felvetelhez — automatikusan beagyazott lejatszokent jelenik meg az eloadas oldalan a leiras felett. |
 | **Archiv** | Jelold be, ha az eloadas mar lezajlott — atkerul az Archivumba |
 
 3. Kattints a **Mentes** gombra
@@ -166,9 +167,10 @@ A weboldal nem archivalja automatikusan az eloadasokat datum alapjan — csak ak
 2. Amikor az eloadas lezajlott:
    - Szerkeszd a tartalmat (`/admin/content` → kerese az eloadast → Szerkesztes)
    - Jelold be az **Archiv** mezot
-   - A **Tartalom** mezobe rakhatod be az utolagos anyagot — beagyazott YouTube videokat, kepeket, jegyzokonyveket
+   - A **Video URL** mezobe rakhatod be a felveteli linket (YouTube vagy Vimeo) — automatikusan beagyazott lejatszokent jelenik meg az eloadas oldalan
+   - A **Tartalom** mezoben kiegeszitheted egyeb anyaggal (kepek, jegyzokonyvek, jegyzetek)
    - Mentes
-3. Az eloadas atkerul az "Archivum" lenyithato szekcioba. A teljes kartya megmarad (datum, leiras, eloado), csak a "Regisztracio" gombja "Nezd vissza az eloadast" gombbal cserelodik, ami a sajat reszletes oldalra mutat (a 2. lepesben hozzadott videkkal stb.).
+3. Az eloadas atkerul az "Archivum" lenyithato szekcioba. A teljes kartya megmarad (datum, leiras, eloado), csak a "Regisztracio" gombja "Nezd vissza az eloadast" gombbal cserelodik, ami a sajat reszletes oldalra mutat (a 2. lepesben hozzadott videoval stb.).
 
 ---
 
@@ -245,7 +247,6 @@ vagy kozvetlenul: `/admin/appearance/settings/sciencecampus`
 | Mezo | Hol jelenik meg |
 |---|---|
 | **"Science Campus Programjaink" szekcio bevezetoje** | A fooldal "Science Campus Programjaink" cim alatt megjeleno rovid szoveg, a "p" badge mellett ("Vegyél részt a pöttyel ellátott programokon...") |
-| **Felveteli pont szekcio cime** | A fooldal "Mit kapsz diakkent?" szekcioja alatti nagy felirat ("Szerezz 15 intezmenyi felveteli pontot...") |
 
 ### Feltoltheto kepek
 
@@ -291,10 +292,9 @@ Ha az oldal frissen telepitett, be kell allitani, melyik landing page legyen a f
 
 ```
 Science Campus fooldal (/science-campus)
-├── [Landing page mezoi: hero, tartalom, szekcio kepek, CTA]
-├── Science Campus Programjaink ← Program tipusu, sorrend 1-3
-├── Tovabbi Programjaink ← Program tipusu, sorrend 4+
-└── Felveteli pont szekció ← Landing page CTA + tema beallitas (cim)
+├── [Landing page mezoi: hero, tartalom, szekcio kepek]
+├── Science Campus Programjaink ← Program tipusu, "Science Campus program" pipa BE
+└── Tovabbi Programjaink ← Program tipusu, "Science Campus program" pipa KI
 
 Science Campus eloadasok (/science-campus-eloadasok)
 ├── [Landing page mezoi: hero, tartalom]

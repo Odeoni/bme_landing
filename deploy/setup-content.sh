@@ -52,11 +52,13 @@ use Drupal\field\Entity\FieldStorageConfig;
 $storages = [
   ["field_name" => "field_logo",                  "type" => "image"],
   ["field_name" => "field_felveteli_pont",        "type" => "boolean"],
+  ["field_name" => "field_is_science_campus",     "type" => "boolean"],
   ["field_name" => "field_link",                  "type" => "link"],
   ["field_name" => "field_weight",                "type" => "integer"],
   ["field_name" => "field_speaker",               "type" => "string"],
   ["field_name" => "field_date",                  "type" => "datetime", "settings" => ["datetime_type" => "datetime"]],
   ["field_name" => "field_registration_link",     "type" => "link"],
+  ["field_name" => "field_video_url",             "type" => "link"],
   ["field_name" => "field_archive",               "type" => "boolean"],
   ["field_name" => "field_detailed_description",  "type" => "text_long"],
   ["field_name" => "field_hero_image",            "type" => "image"],
@@ -92,17 +94,22 @@ use Drupal\field\Entity\FieldConfig;
 
 $fields = [
   // Program
-  ["bundle" => "program", "field_name" => "body",                 "label" => "Tartalom"],
-  ["bundle" => "program", "field_name" => "field_logo",           "label" => "Logó"],
-  ["bundle" => "program", "field_name" => "field_felveteli_pont", "label" => "Felvételi pontot ad"],
-  ["bundle" => "program", "field_name" => "field_link",           "label" => "Link"],
-  ["bundle" => "program", "field_name" => "field_weight",         "label" => "Sorrend"],
+  ["bundle" => "program", "field_name" => "body",                    "label" => "Tartalom"],
+  ["bundle" => "program", "field_name" => "field_logo",              "label" => "Logó"],
+  ["bundle" => "program", "field_name" => "field_felveteli_pont",    "label" => "Felvételi pontot ad"],
+  ["bundle" => "program", "field_name" => "field_is_science_campus", "label" => "Science Campus program",
+   "description" => "Ha ki van pipálva, a program a 'Science Campus Programjaink' szekcióban jelenik meg. Ha nincs, a 'További Programjaink' alatt."],
+  ["bundle" => "program", "field_name" => "field_link",              "label" => "Link"],
+  ["bundle" => "program", "field_name" => "field_weight",            "label" => "Sorrend"],
   // Előadás
   ["bundle" => "eloadas", "field_name" => "body",                    "label" => "Tartalom"],
   ["bundle" => "eloadas", "field_name" => "field_image",             "label" => "Kép"],
   ["bundle" => "eloadas", "field_name" => "field_speaker",           "label" => "Előadó neve"],
   ["bundle" => "eloadas", "field_name" => "field_date",              "label" => "Dátum"],
   ["bundle" => "eloadas", "field_name" => "field_registration_link", "label" => "Regisztrációs link"],
+  ["bundle" => "eloadas", "field_name" => "field_video_url",         "label" => "Videó URL",
+   "description" => "YouTube vagy Vimeo link. Élő közvetítésnél az esemény előtt is bekerülhet, utólag pedig ide kerül a felvétel. A linket a rendszer automatikusan beágyazott lejátszóvá alakítja.",
+   "settings" => ["title" => 0, "link_type" => 16]],
   ["bundle" => "eloadas", "field_name" => "field_archive",           "label" => "Archív"],
   // Mérési foglalkozás
   ["bundle" => "meresi_foglalkozas", "field_name" => "body",                       "label" => "Tartalom"],
@@ -159,11 +166,12 @@ $form_configs = [
     "field_cta_text"        => ["type" => "text_textarea",   "weight" => 8,  "settings" => ["rows" => 4]],
   ],
   "program" => [
-    "body"                  => ["type" => "text_textarea_with_summary", "weight" => 1],
-    "field_logo"            => ["type" => "image_image",     "weight" => 2,  "settings" => ["preview_image_style" => "medium"]],
-    "field_felveteli_pont"  => ["type" => "boolean_checkbox", "weight" => 3],
-    "field_link"            => ["type" => "link_default",    "weight" => 4],
-    "field_weight"          => ["type" => "number",          "weight" => 5],
+    "body"                       => ["type" => "text_textarea_with_summary", "weight" => 1],
+    "field_logo"                 => ["type" => "image_image",     "weight" => 2,  "settings" => ["preview_image_style" => "medium"]],
+    "field_is_science_campus"    => ["type" => "boolean_checkbox", "weight" => 3],
+    "field_felveteli_pont"       => ["type" => "boolean_checkbox", "weight" => 4],
+    "field_link"                 => ["type" => "link_default",    "weight" => 5],
+    "field_weight"               => ["type" => "number",          "weight" => 6],
   ],
   "eloadas" => [
     "body"                    => ["type" => "text_textarea_with_summary", "weight" => 1],
@@ -171,7 +179,8 @@ $form_configs = [
     "field_speaker"           => ["type" => "string_textfield", "weight" => 3],
     "field_date"              => ["type" => "datetime_default", "weight" => 4],
     "field_registration_link" => ["type" => "link_default",    "weight" => 5],
-    "field_archive"           => ["type" => "boolean_checkbox", "weight" => 6],
+    "field_video_url"         => ["type" => "link_default",    "weight" => 6, "settings" => ["placeholder_url" => "https://www.youtube.com/watch?v=..."]],
+    "field_archive"           => ["type" => "boolean_checkbox", "weight" => 7],
   ],
   "meresi_foglalkozas" => [
     "body"                       => ["type" => "text_textarea_with_summary", "weight" => 1],
@@ -225,11 +234,12 @@ $view_configs = [
     "field_cta_text"        => ["type" => "text_default",    "weight" => 8, "label" => "hidden"],
   ],
   "program" => [
-    "body"                  => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
-    "field_logo"            => ["type" => "image",           "weight" => 2, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
-    "field_felveteli_pont"  => ["type" => "boolean",         "weight" => 3, "label" => "hidden"],
-    "field_link"            => ["type" => "link",            "weight" => 4, "label" => "hidden"],
-    "field_weight"          => ["type" => "number_integer",  "weight" => 5, "label" => "hidden"],
+    "body"                    => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
+    "field_logo"              => ["type" => "image",           "weight" => 2, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
+    "field_felveteli_pont"    => ["type" => "boolean",         "weight" => 3, "label" => "hidden"],
+    "field_is_science_campus" => ["type" => "boolean",         "weight" => 4, "label" => "hidden"],
+    "field_link"              => ["type" => "link",            "weight" => 5, "label" => "hidden"],
+    "field_weight"            => ["type" => "number_integer",  "weight" => 6, "label" => "hidden"],
   ],
   "eloadas" => [
     "body"                    => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
@@ -237,7 +247,8 @@ $view_configs = [
     "field_speaker"           => ["type" => "string",          "weight" => 3, "label" => "hidden"],
     "field_date"              => ["type" => "datetime_default", "weight" => 4, "label" => "hidden"],
     "field_registration_link" => ["type" => "link",            "weight" => 5, "label" => "hidden"],
-    "field_archive"           => ["type" => "boolean",         "weight" => 6, "label" => "hidden"],
+    "field_video_url"         => ["type" => "link",            "weight" => 6, "label" => "hidden"],
+    "field_archive"           => ["type" => "boolean",         "weight" => 7, "label" => "hidden"],
   ],
   "meresi_foglalkozas" => [
     "body"                       => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
@@ -279,80 +290,98 @@ echo "Creating views..."
 $DRUSH php:eval '
 use Drupal\views\Entity\View;
 
-// ---- programjaink: Program nodes sorted by weight ----
-if (!View::load("programjaink")) {
-  $view = View::create([
-    "id" => "programjaink",
-    "label" => "Programjaink",
-    "base_table" => "node_field_data",
-    "base_field" => "nid",
-    "core" => "10.x",
-    "display" => [
-      "default" => [
-        "id" => "default",
-        "display_title" => "Default",
-        "display_plugin" => "default",
-        "position" => 0,
-        "display_options" => [
-          "fields" => [
-            "rendered_entity" => [
-              "id" => "rendered_entity",
-              "table" => "node",
-              "field" => "rendered_entity",
-              "type" => "rendered_entity",
-              "settings" => ["view_mode" => "teaser"],
-              "plugin_id" => "rendered_entity",
-            ],
-          ],
-          "filters" => [
-            "type" => [
-              "id" => "type",
-              "table" => "node_field_data",
-              "field" => "type",
-              "value" => ["program" => "program"],
-              "plugin_id" => "bundle",
-            ],
-            "status" => [
-              "id" => "status",
-              "table" => "node_field_data",
-              "field" => "status",
-              "value" => "1",
-              "plugin_id" => "boolean",
-            ],
-          ],
-          "sorts" => [
-            "field_weight_value" => [
-              "id" => "field_weight_value",
-              "table" => "node__field_weight",
-              "field" => "field_weight_value",
-              "order" => "ASC",
-              "plugin_id" => "standard",
-            ],
-          ],
-          "style" => [
-            "type" => "default",
-          ],
-          "row" => [
-            "type" => "entity:node",
-            "options" => ["view_mode" => "teaser"],
-          ],
-        ],
-      ],
-      "block_1" => [
-        "id" => "block_1",
-        "display_title" => "Block",
-        "display_plugin" => "block",
-        "position" => 1,
-        "display_options" => [
-          "block_description" => "Programjaink",
-        ],
+// ---- programjaink: Program nodes where field_is_science_campus = TRUE ----
+// ---- tovabbi_programok: Program nodes where field_is_science_campus = FALSE ----
+$program_views = [
+  "programjaink"      => ["label" => "Science Campus Programjaink", "filter_value" => "1"],
+  "tovabbi_programok" => ["label" => "További Programjaink",         "filter_value" => "0"],
+];
+
+foreach ($program_views as $view_id => $cfg) {
+  $existing = View::load($view_id);
+  $display_options_default = [
+    "fields" => [
+      "rendered_entity" => [
+        "id" => "rendered_entity",
+        "table" => "node",
+        "field" => "rendered_entity",
+        "type" => "rendered_entity",
+        "settings" => ["view_mode" => "teaser"],
+        "plugin_id" => "rendered_entity",
       ],
     ],
-  ]);
-  $view->save();
-  echo "  Created view: programjaink\n";
-} else {
-  echo "  Exists:  programjaink\n";
+    "filters" => [
+      "type" => [
+        "id" => "type",
+        "table" => "node_field_data",
+        "field" => "type",
+        "value" => ["program" => "program"],
+        "plugin_id" => "bundle",
+      ],
+      "status" => [
+        "id" => "status",
+        "table" => "node_field_data",
+        "field" => "status",
+        "value" => "1",
+        "plugin_id" => "boolean",
+      ],
+      "field_is_science_campus_value" => [
+        "id" => "field_is_science_campus_value",
+        "table" => "node__field_is_science_campus",
+        "field" => "field_is_science_campus_value",
+        "value" => $cfg["filter_value"],
+        "plugin_id" => "boolean",
+      ],
+    ],
+    "sorts" => [
+      "field_weight_value" => [
+        "id" => "field_weight_value",
+        "table" => "node__field_weight",
+        "field" => "field_weight_value",
+        "order" => "ASC",
+        "plugin_id" => "standard",
+      ],
+    ],
+    "style" => ["type" => "default"],
+    "row" => [
+      "type" => "entity:node",
+      "options" => ["view_mode" => "teaser"],
+    ],
+  ];
+
+  if (!$existing) {
+    View::create([
+      "id" => $view_id,
+      "label" => $cfg["label"],
+      "base_table" => "node_field_data",
+      "base_field" => "nid",
+      "core" => "10.x",
+      "display" => [
+        "default" => [
+          "id" => "default",
+          "display_title" => "Default",
+          "display_plugin" => "default",
+          "position" => 0,
+          "display_options" => $display_options_default,
+        ],
+        "block_1" => [
+          "id" => "block_1",
+          "display_title" => "Block",
+          "display_plugin" => "block",
+          "position" => 1,
+          "display_options" => ["block_description" => $cfg["label"]],
+        ],
+      ],
+    ])->save();
+    echo "  Created view: $view_id\n";
+  } else {
+    // Patch the filter on an existing view so a re-run picks up the new
+    // field_is_science_campus split.
+    $display = &$existing->getDisplay("default");
+    $display["display_options"]["filters"]["field_is_science_campus_value"] = $display_options_default["filters"]["field_is_science_campus_value"];
+    $existing->save();
+    echo "  Patched view: $view_id (filter is_science_campus = " . $cfg["filter_value"] . ")\n";
+  }
 }
 
 // ---- aktualis_eloadasok: Előadás nodes where archive = false ----
@@ -805,6 +834,30 @@ foreach ($teaser_configs as $bundle => $fields) {
   }
   $view_display->save();
 }
+'
+$DRUSH cr
+
+# --- Backfill field_is_science_campus on existing program nodes ---
+# New field defaults to FALSE for new entities, but existing programs have no
+# row in the field table at all — those would be filtered out of both views
+# until each is opened and saved. Backfill them once with FALSE so they show
+# up in "További Programjaink" by default.
+echo "Backfilling field_is_science_campus on existing programs..."
+$DRUSH php:eval '
+$nids = \Drupal::entityQuery("node")
+  ->condition("type", "program")
+  ->accessCheck(FALSE)
+  ->execute();
+$updated = 0;
+foreach ($nids as $nid) {
+  $node = \Drupal\node\Entity\Node::load($nid);
+  if ($node && $node->hasField("field_is_science_campus") && $node->get("field_is_science_campus")->isEmpty()) {
+    $node->set("field_is_science_campus", FALSE);
+    $node->save();
+    $updated++;
+  }
+}
+echo "  Backfilled $updated program node(s).\n";
 '
 $DRUSH cr
 

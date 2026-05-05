@@ -12,8 +12,9 @@
  *   - field_speaker (előadó név)
  *   - field_date (dátum)
  *   - field_image (poszter / kép, jelenik meg jobb oldalt)
- *   - body (kivonat / előadó intézmény / beágyazott videó / minden
- *           egyéb tartalom — rich text)
+ *   - field_video_url (YouTube/Vimeo URL — élő közvetítés vagy felvétel,
+ *                      automatikusan beágyazott lejátszóként jelenik meg)
+ *   - body (kivonat / előadó intézmény / minden egyéb tartalom — rich text)
  *   - field_registration_link (csak aktív eseménynél jelenik meg)
  *
  * Helyszín linkje statikus: minden esemény a /terkep oldalra mutat.
@@ -45,6 +46,17 @@
           <p class="eloadas-detail__location">
             <strong>Helyszín:</strong> <a href="/terkep">Térkép a termeinkhez</a>
           </p>
+
+          {% if video_embed_url %}
+            <div class="video-embed">
+              <iframe src="{{ video_embed_url }}"
+                      title="{{ label }}"
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allowfullscreen></iframe>
+            </div>
+          {% endif %}
 
           {% if content.body|render %}
             <div class="eloadas-detail__body">{{ content.body }}</div>

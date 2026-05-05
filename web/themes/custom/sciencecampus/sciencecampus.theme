@@ -51,12 +51,36 @@ function sciencecampus_preprocess_node(&$variables) {
     $variables['is_archived'] = (bool) $node->get('field_archive')->value;
     $variables['node_url'] = $node->toUrl()->toString();
   }
+  if ($node->bundle() === 'eloadas' && $node->hasField('field_video_url')) {
+    $url = $node->get('field_video_url')->uri ?? '';
+    $variables['video_embed_url'] = _sciencecampus_video_embed_url($url);
+  }
   if ($node->bundle() === 'landing_page') {
-    $variables['felveteli_heading'] = theme_get_setting('felveteli_heading')
-      ?: 'Szerezz 15 intézményi felvételi pontot a Science Campus programokkal!';
     $variables['programjaink_intro_text'] = theme_get_setting('programjaink_intro_text')
       ?: 'Vegyél részt a pöttyel ellátott programokon, és szerezz intézményi felvételi pontokat.';
   }
+}
+
+/**
+ * Convert a YouTube or Vimeo watch URL into an embeddable player URL.
+ * Returns NULL for unrecognised URLs so the template can skip rendering.
+ */
+function _sciencecampus_video_embed_url($url) {
+  if (empty($url)) {
+    return NULL;
+  }
+
+  // YouTube: watch?v=, youtu.be/, embed/, live/, shorts/
+  if (preg_match('#(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/|live/|shorts/)|youtu\.be/)([A-Za-z0-9_-]{6,})#', $url, $m)) {
+    return 'https://www.youtube.com/embed/' . $m[1];
+  }
+
+  // Vimeo: vimeo.com/ID or vimeo.com/video/ID
+  if (preg_match('#vimeo\.com/(?:video/)?(\d+)#', $url, $m)) {
+    return 'https://player.vimeo.com/video/' . $m[1];
+  }
+
+  return NULL;
 }
 
 /**

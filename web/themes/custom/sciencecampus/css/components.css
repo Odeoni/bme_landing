@@ -55,15 +55,14 @@
   gap: var(--space-md);
 }
 
-/* Hover lift only on cards that actually link somewhere */
 .program-card--linked { cursor: pointer; }
 
-.program-card--linked:hover {
+.program-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
-.program-card--linked:hover .program-card__title {
+.program-card:hover .program-card__title {
   color: var(--color-teal);
 }
 
@@ -101,7 +100,6 @@
 
 /* "p" badge — marks programs/events that grant felvételi pontok */
 .program-card__dot,
-.felveteli-section__dot,
 .felveteli-dot,
 .p-badge {
   display: inline-flex;
@@ -118,7 +116,6 @@
 }
 
 .program-card__dot::before,
-.felveteli-section__dot::before,
 .felveteli-dot::before,
 .p-badge::before {
   content: "p";
@@ -128,7 +125,6 @@
 
 /* One consistent size everywhere */
 .program-card__dot,
-.felveteli-section__dot,
 .felveteli-dot,
 .p-badge {
   width: 24px;
@@ -283,6 +279,25 @@
 
 .eloadas-detail__body p { margin-bottom: var(--space-md); }
 
+/* Responsive 16:9 wrapper for embedded YouTube/Vimeo players */
+.video-embed {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  margin-top: var(--space-md);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #000;
+}
+
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 .eloadas-detail__sidebar {
   display: flex;
   justify-content: center;
@@ -435,34 +450,6 @@
   display: flex;
   justify-content: center;
   margin-top: var(--space-xl);
-}
-
-/* Felveteli section */
-.felveteli-section {
-  background: var(--color-white);
-  padding: var(--space-2xl) var(--container-padding);
-}
-
-.felveteli-section__inner {
-  max-width: var(--container-max);
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-}
-
-.felveteli-section__title {
-  font-size: var(--font-size-2xl);
-  color: var(--color-blue);
-}
-
-.felveteli-section__text {
-  color: var(--color-text);
-  line-height: 1.6;
-}
-
-@media (min-width: 768px) {
-  .felveteli-section__inner { flex-direction: row; align-items: center; }
 }
 
 /* Benefits list */
