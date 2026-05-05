@@ -1,311 +1,248 @@
-# BME Science Campus - Weboldal szerkesztesi utmutato
+BME SCIENCE CAMPUS - WEBOLDAL SZERKESZTESI UTMUTATO
+====================================================
 
-Ez az utmutato leirja, hogyan lehet szerkeszteni es feltolteni tartalmat a Science Campus weboldalra a Drupal admin feluletrol.
+BEJELENTKEZES
+- Cim: http://[szerver-cim]:8081/user/login
+- Felhasznalonev: admin
+- Jelszo: ChangeMeNow2026! (az elso bejelentkezes utan valtoztasd meg)
 
-## Bejelentkezes
 
-1. Nyisd meg a bongeszoben: `http://[szerver-cim]:8081/user/login`
-2. Felhasznalonev: `admin`
-3. Jelszo: `ChangeMeNow2026!` (az elso bejelentkezes utan valtoztasd meg!)
+AZ OLDAL FELEPITESE
+====================================================
 
----
+A weboldalon 6 landing page tipusu tartalom van. Az oldal kinezetet a "webcimalnev"
+(URL alias) hatarozza meg.
 
-## Az oldal felepitese
+Fo oldalak (egyedi sablonok):
+- Science Campus fooldal      = /science-campus
+- Science Campus eloadasok    = /science-campus-eloadasok
+- Nobel-dijas kiserletek      = /nobel-dijas-kiserletek
 
-A weboldalnak tobb fo oldala van (landing page-ek), es 5 tovabbi tartalomtipus, amelyek dinamikusan jelennek meg az oldalakon:
+Egyszeru aloldalak (cim + tartalom sablon):
+- Kiserleti bemutatok         = /kiserleti-bemutatok
+- Felveteli pontok            = /felveteli-pontok (a cim mellett "p" badge jelenik meg)
+- Terkep                      = /terkep (eloadasok "Helyszin" linkje ide mutat)
 
-| Oldal | URL alias (webcimalnev) | Leiras |
-|---|---|---|
-| Science Campus fooldal | `/science-campus` | A fo landing page |
-| Science Campus eloadasok | `/science-campus-eloadasok` | Eloadasok aloldal |
-| Nobel-dijas kiserletek | `/nobel-dijas-kiserletek` | Nobel program aloldal |
-| Kiserleti bemutatok | `/kiserleti-bemutatok` | Latvanyos fizikai kiserletek aloldal |
-| Felveteli pontok | `/felveteli-pontok` | Reszletes informacio a felveteli pontokrol (a cim mellett "p" badge jelenik meg) |
-| Terkep | `/terkep` | Termek terkepe + utbaigazitas (eloadasok "Helyszin" linkje ide mutat) |
+Az oldalak egyes szekcioi automatikusan feltoltodnek mas tartalomtipusokbol (lasd lentebb).
 
----
 
-## 1. Landing page-ek szerkesztese
+LANDING PAGE-EK SZERKESZTESE
+====================================================
 
-### Hol talalom?
+Osszes tartalom listaja: /admin/content
+Uj landing page:         /node/add/landing_page
 
-- **Osszes tartalom listaja:** `/admin/content`
-- **Szerkesztes:** Kattints a kivalasztott landing page cimenre, majd a "Szerkesztes" fulre
+Amikor letrehozol egy landing page-et, a jobb oldalon a "Webcimalnev" szekcioban
+ird be az aliast (pl. /science-campus). Ez hatarozza meg, milyen kinezetet kap az oldal.
+Ha nem adsz meg aliast vagy nem egyezik a tamogatottak egyikevel sem, egy egyszeru alap
+sablon jelenik meg.
 
-### Melyik mezo mit jelent?
+MELYIK MEZO MIT VALTOZTAT:
 
-A landing page-ek ugyanazokkal a mezokkel rendelkeznek, de az egyes oldalak sablonjai mas-mas mezoket hasznalnak:
+Science Campus fooldal (/science-campus):
+- Hero hatterkep         = a nagy kep az oldal tetejen
+- Hero cim               = a fejlecben levo nagy felirat
+- Hero alcim             = a fejlecben levo kisebb szoveg
+- Tartalom               = a "Mi a Science Campus?" szekcioba kerul
+- Szekcio kep            = a "Mi a Science Campus?" szoveg melletti kep
+- Masodik szekcio szoveg = a "Mit kapsz diakkent..." szekcioba kerul
+- Masodik szekcio kep    = a "Mit kapsz diakkent..." szoveg melletti kep
+- A "Science Campus Programjaink" es "Tovabbi Programjaink" racsok automatikusan
+  jelennek meg a Program tartalmakbol (lasd PROGRAMOK)
 
-#### Science Campus fooldal (`/science-campus`)
+Science Campus eloadasok (/science-campus-eloadasok):
+- Hero hatterkep, Hero cim, Hero alcim = ugyanaz mint fent
+- Tartalom = az "Az eloadasokrol" szekcioba kerul
+- "Aktualis eloadasaink" automatikusan jelenik meg az Eloadas tartalmakbol (Archiv NINCS bejelolve)
+- "Archivum" automatikusan jelenik meg az Eloadas tartalmakbol (Archiv BE VAN jelolve)
 
-| Mezo neve az urlapon | Mit valtoztat az oldalon |
-|---|---|
-| **Hero hatterkep** | A nagy fejleckep az oldal tetejen |
-| **Hero cim** | A fejlecben levo nagy felirat |
-| **Hero alcim** | A fejlecben levo kisebb szoveg |
-| **Tartalom** | A "Mi a Science Campus?" szekcioba kerul |
-| **Szekcio kep** | A "Mi a Science Campus?" szoveg melletti kep |
-| **Masodik szekcio szoveg** | A "Mit kapsz diakkent..." szekcioba kerul |
-| **Masodik szekcio kep** | A "Mit kapsz diakkent..." szoveg melletti kep |
+Nobel-dijas kiserletek (/nobel-dijas-kiserletek):
+- Hero hatterkep, Hero cim, Hero alcim = ugyanaz mint fent
+- Tartalom = a "A programrol" szekcioba kerul
+- "Az alabbi temakban kiserletezhetsz" racs automatikusan jelenik meg a Tema tartalmakbol
+- "Program tipusai" kartyak automatikusan jelennek meg a Nobel program forma tartalmakbol
+- "Meresi foglalkozasaink" harmonika automatikusan jelenik meg a Meresi foglalkozas tartalmakbol
 
-#### Science Campus eloadasok (`/science-campus-eloadasok`)
+Egyszeru aloldalak (Kiserleti bemutatok / Felveteli pontok / Terkep):
+- Hero mezok (Hero cim, Hero alcim, Hero hatterkep) - csak a Kiserleti bemutatok-nal hasznaltak
+- Tartalom = a foszoveg (kepek, listak, linkek a szovegszerkesztoben)
+- A Felveteli pontok cime mellett automatikusan megjelenik a "p" badge
+- A Terkep oldalon a terkepkep(ek) a Tartalom mezoben legyenek (Drupal kepbeagyazo
+  eszkozzel) - igy konnyen cserelhetok
 
-| Mezo neve az urlapon | Mit valtoztat az oldalon |
-|---|---|
-| **Hero hatterkep** | A nagy fejleckep az oldal tetejen |
-| **Hero cim** | A fejlecben levo nagy felirat |
-| **Hero alcim** | A fejlecben levo kisebb szoveg |
-| **Tartalom** | Az "Az eloadasokrol" szekcioba kerul |
 
-A tobbi szekcioja automatikusan jelenik meg:
-- "Aktualis eloadasaink" — az **Eloadas** tipusu tartalmakbol (ahol Archiv = nem)
-- "Archivum" — az **Eloadas** tipusu tartalmakbol (ahol Archiv = igen)
+PROGRAMOK (fooldal racsok)
+====================================================
 
-#### Nobel-dijas kiserletek (`/nobel-dijas-kiserletek`)
+Letrehozas: /node/add/program
 
-| Mezo neve az urlapon | Mit valtoztat az oldalon |
-|---|---|
-| **Hero hatterkep** | A nagy fejleckep az oldal tetejen |
-| **Hero cim** | A fejlecben levo nagy felirat |
-| **Hero alcim** | A fejlecben levo kisebb szoveg |
-| **Tartalom** | A "A programrol" szekcioba kerul |
+A fooldali ket racs kozul a "Science Campus program" pipa donti el, melyikbe kerul a program:
+- Pipa BE -> "Science Campus Programjaink" racs
+- Pipa KI -> "Tovabbi Programjaink" racs
 
-A tobbi szekcioja automatikusan jelenik meg:
-- "Az alabbi temakban kiserletezhetsz" — a **Tema** tipusu tartalmakbol
-- "Program tipusai" — a **Nobel program forma** tipusu tartalmakbol
-- "Meresi foglalkozasaink reszletesen" — a **Meresi foglalkozas** tipusu tartalmakbol
+A Sorrend szam csak a sajat racsan beluli megjelenesi sorrendet allitja - nem
+befolyasolja, hogy melyik racsba kerul a program.
 
-### Uj landing page letrehozasa
+Mezok:
+- Cim = a program neve
+- Tartalom = rovid leiras
+- Logo = a program logoja/ikonja (kep feltoltes)
+- Science Campus program = pipa BE = "Science Campus Programjaink" racs.
+                           Pipa KI = "Tovabbi Programjaink" racs.
+- Felveteli pontot ad = jelold be ha felveteli pontot ad (zold "p" badge jelenik meg a kartyan)
+- Link = a program reszletes oldalara vezeto link (opcionalis)
+- Sorrend = szam a sajat racsan beluli sorrendhez (1 = elso, 2 = masodik, stb.)
 
-1. Menj: `/node/add/landing_page`
-2. Ird be a cimet (pl. "Science Campus")
-3. Toltsd ki a mezoket (Hero cim, Hero alcim, Tartalom, stb.)
-4. A jobb oldalon a **Webcimalnev** szekcioban ird be az aliast valamelyik tamogatott ertekre:
-   - `/science-campus`
-   - `/science-campus-eloadasok`
-   - `/nobel-dijas-kiserletek`
-   - `/kiserleti-bemutatok`
-   - `/felveteli-pontok`
-   - `/terkep`
-5. Kattints a **Mentes** gombra
 
-**Fontos:** A webcimalnev hatarozza meg, melyik sablont hasznalja az oldal. Ha az alias nem egyezik a fentiekkel, egy egyszeru alap sablon jelenik meg.
+ELOADASOK (eloadasok oldal)
+====================================================
 
-### Egyszeru aloldalak (Kiserleti bemutatok / Felveteli pontok / Terkep)
+Letrehozas: /node/add/eloadas
 
-Ezek a /kiserleti-bemutatok, /felveteli-pontok es /terkep aliasokon levo Landing page-ek. Mind a harom egyszeru "cim + szovegtartalom" sablon, csak a stilus ter el:
+Mezok:
+- Cim = az eloadas cime
+- Tartalom = az eloadas leirasa (kivonat, eloado intezmenye, egyeb szoveg)
+- Kep = az eloadashoz tartozo plakat / illusztracio (ajanlott max. 800x600 pixel)
+- Eloado neve = az eloado neve
+- Datum = az eloadas idopontja
+- Regisztracios link = link a regisztracios oldalra (luma, Google Form, stb.)
+- Video URL = YouTube vagy Vimeo link. Az esemeny elott elo kozvetiteshez,
+              utana a felvetelhez. Automatikusan beagyazott lejatszokent
+              jelenik meg az eloadas oldalan a leiras felett.
+- Archiv = jelold be ha az eloadas mar lezajlott
 
-- **Kiserleti bemutatok:** standard hero (Hero cim, Hero alcim, Hero hatterkep) + Tartalom mezo
-- **Felveteli pontok:** csak nagy cim + Tartalom mezo. A cim mellett automatikusan megjelenik a "p" badge.
-- **Terkep:** csak nagy cim + Tartalom mezo. A terkepkep(ek) a Tartalom mezoben legyenek (Drupal kepbeagyazo eszkozzel) — igy konnyen cserelhetok.
+Ha az "Archiv" mezo NINCS bejelolve, az eloadas az "Aktualis eloadasaink" szekcioban jelenik meg.
+Ha az "Archiv" mezo BE VAN jelolve, atkerul az "Archivum" szekcio ala.
 
-Letrehozas mindharomnal:
-1. `/node/add/landing_page`
-2. Cim, hero mezok (ha vannak), Tartalom (szoveg + kepek + linkek)
-3. Webcimalnev: `/kiserleti-bemutatok` vagy `/felveteli-pontok` vagy `/terkep`
-4. Mentes
+ELO KOZVETITES + ARCHIVALAS:
 
----
+1. Eloadas letrehozasakor hagyd uresen az Archiv mezot.
+   Ha lesz elo kozvetites, mar most berakhatod a Video URL mezobe a YouTube live
+   (vagy Vimeo) linket - az eloadas oldalan automatikusan megjelenik a beagyazott
+   lejatszo, ami a kozvetites elindultaval onmagatol elindul a nezok szamara.
 
-## 2. Program letrehozasa
-
-Minden programot ugyanazon az urlapon hozol letre. A **Science Campus program** jelolonegyzet donti el, hogy a fooldalon melyik racsba kerul:
-
-- **Pipa BE** → "Science Campus Programjaink" racs
-- **Pipa KI** → "Tovabbi Programjaink" racs
-
-### Lepesek
-
-1. Menj: `/node/add/program`
-2. Toltsd ki:
-
-| Mezo | Leiras |
-|---|---|
-| **Cim** | A program neve |
-| **Tartalom** | Rovid leiras |
-| **Logo** | A program logoja/ikonja |
-| **Science Campus program** | Pipa BE = "Science Campus Programjaink" racs. Pipa KI = "Tovabbi Programjaink" racs. Ennyi. |
-| **Felveteli pontot ad** | Pipa BE, ha a program felveteli pontot ad (zold "p" badge kerul a kartyara) |
-| **Link** | A program reszletes oldalara vezeto link (opcionalis) |
-| **Sorrend** | A megjelenesi sorrend a sajat racsan belul (1 = elso, 2 = masodik). Nem befolyasolja, hogy melyik racsba kerul. |
-
-3. Kattints a **Mentes** gombra — a program automatikusan megjelenik a megfelelo racson.
-
----
-
-## 3. Eloadasok (eloadasok oldal)
-
-Ezek a Science Campus eloadasok oldal "Aktualis eloadasaink" vagy "Archivum" szekcioban jelennek meg.
-
-### Uj eloadas letrehozasa
-
-1. Menj: `/node/add/eloadas`
-2. Toltsd ki:
-
-| Mezo | Leiras |
-|---|---|
-| **Cim** | Az eloadas cime |
-| **Tartalom** | Az eloadas leirasa (kivonat, eloado intezmenye, egyeb szoveg) |
-| **Kep** | Az eloadashoz tartozo plakat / illusztracio (ajanlott max. 800×600 pixel) |
-| **Eloado neve** | Az eloado neve |
-| **Datum** | Az eloadas idopontja |
-| **Regisztracios link** | Egyedi regisztracios link az esemenyhez (luma, Google Form, stb.) |
-| **Video URL** | YouTube vagy Vimeo link. Az esemeny elott elo kozvetiteshez, utana a felvetelhez — automatikusan beagyazott lejatszokent jelenik meg az eloadas oldalan a leiras felett. |
-| **Archiv** | Jelold be, ha az eloadas mar lezajlott — atkerul az Archivumba |
-
-3. Kattints a **Mentes** gombra
-
-### Aktiv vs. Archiv eloadasok
-
-A weboldal nem archivalja automatikusan az eloadasokat datum alapjan — csak akkor kerul archivumba, ha kezzel bejelolod az "Archiv" mezot.
-
-**Process:**
-
-1. Eloadas letrehozasakor hagyd uresen az **Archiv** mezot. Az "Aktualis eloadasaink" szekcioban jelenik meg, a megszokott Regisztracio gombbal.
-   - Ha lesz elo kozvetites, mar most berakhatod a **Video URL** mezobe a YouTube live (vagy Vimeo) linket — az eloadas oldalan automatikusan megjelenik a beagyazott lejatszo, ami a kozvetites elindultaval onmagatol elindul a nezok szamara.
 2. Amikor az eloadas lezajlott:
-   - Szerkeszd a tartalmat (`/admin/content` → kerese az eloadast → Szerkesztes)
-   - Jelold be az **Archiv** mezot
-   - A **Video URL** mezobe rakhatod be a felveteli linket (YouTube vagy Vimeo) — ha eloleg az elo URL volt benn, csak cserelod ki a felvetel linkjere. Automatikusan beagyazott lejatszokent jelenik meg az eloadas oldalan.
-   - A **Tartalom** mezoben kiegeszitheted egyeb anyaggal (kepek, jegyzokonyvek, jegyzetek)
+   - Szerkeszd a tartalmat (/admin/content -> kerese az eloadast -> Szerkesztes)
+   - Jelold be az Archiv mezot
+   - A Video URL mezobe rakhatod be a felveteli linket. Ha eloleg az elo URL volt
+     benn, csak cserelod ki a felvetel linkjere. Automatikusan beagyazott
+     lejatszokent jelenik meg.
+   - A Tartalom mezoben kiegeszitheted egyeb anyaggal (kepek, jegyzokonyvek, jegyzetek)
    - Mentes
-3. Az eloadas atkerul az "Archivum" lenyithato szekcioba. A teljes kartya megmarad (datum, leiras, eloado), csak a "Regisztracio" gombja "Nezd vissza az eloadast" gombbal cserelodik, ami a sajat reszletes oldalra mutat (a beagyazott felvetellel stb.).
 
----
+3. Az eloadas atkerul az "Archivum" lenyithato szekcioba. A teljes kartya megmarad
+   (datum, leiras, eloado), csak a "Regisztracio" gombja "Nezd vissza az eloadast"
+   gombbal cserelodik, ami a sajat reszletes oldalra mutat (a beagyazott felvetellel).
 
-## 4. Temak (Nobel oldal racs)
 
-Ezek a Nobel-dijas kiserletek oldal "Az alabbi temakban kiserletezhetsz" szekcioban jelennek meg kepes kartyakent.
+TEMAK (Nobel oldal kepes racs)
+====================================================
 
-### Uj tema letrehozasa
+Letrehozas: /node/add/tema
 
-1. Menj: `/node/add/tema`
-2. Toltsd ki:
+Mezok:
+- Cim = a tema neve (pl. "Szupravezetes", "Holografia")
+- Kep = a temahoz tartozo kep
+- Sorrend = szam a megjelenesi sorrendhez (1 = elso)
 
-| Mezo | Leiras |
-|---|---|
-| **Cim** | A tema neve (pl. "Szupravezetes") |
-| **Kep** | A temahoz tartozo kep |
-| **Sorrend** | Szam a megjelenesi sorrendhez (1 = elso) |
+Ezek a Nobel-dijas kiserletek oldal "Az alabbi temakban kiserletezhetsz" szekcioban jelennek meg.
 
-3. Kattints a **Mentes** gombra
 
----
+NOBEL PROGRAM FORMA (Nobel oldal kartyak)
+====================================================
 
-## 5. Nobel program forma (Nobel oldal kartyak)
+Letrehozas: /node/add/program_tipus
 
-A Nobel-dijas kiserletek aloldal "Program tipusai" szekciojaban megjeleno reszveteli formak (pl. heti meres, kurzus). Az adminban ezt a tartalomtipust **"Nobel program forma"** neven talalod — ne kevern össze a sima **"Program"**-mal, ami a fooldali racsok kartyaja.
+Az adminban "Nobel program forma" neven talalod. NE keverd ossze a sima "Program"-mal,
+ami a fooldali racsok kartyaja - ez a Nobel-dijas aloldal "Program tipusai" szekciojanak
+reszveteli formai (pl. heti meres, kurzus).
 
-### Uj Nobel program forma letrehozasa
+Mezok:
+- Cim = a reszveteli forma neve (pl. "Heti egy meresi alkalom oktoberben")
+- Kep = a kartyahoz tartozo kep
+- Tartalom = reszletes leiras, lehet benne felsorolas is (hasznald a szovegszerkeszto
+             listazas gombjat)
+- Sorrend = szam a megjelenesi sorrendhez
 
-1. Menj: `/node/add/program_tipus`
-2. Toltsd ki:
 
-| Mezo | Leiras |
-|---|---|
-| **Cim** | A reszveteli forma neve (pl. "Heti egy meresi alkalom oktoberben") |
-| **Kep** | A kartyahoz tartozo kep |
-| **Tartalom** | Reszletes leiras (lehet felsorolas is: hasznald a szovegszerkeszto listazas gombját) |
-| **Sorrend** | Szam a megjelenesi sorrendhez |
+MERESI FOGLALKOZASOK (Nobel oldal harmonika)
+====================================================
 
-3. Kattints a **Mentes** gombra
+Letrehozas: /node/add/meresi_foglalkozas
 
----
+Mezok:
+- Cim = a foglalkozas neve
+- Tartalom = rovid leiras
+- Kep = a foglalkozashoz tartozo kep
+- Reszletes leiras = bovebb leiras (a lenyithato szekcioban jelenik meg)
 
-## 6. Meresi foglalkozasok (Nobel oldal harmonika)
+Ezek a Nobel-dijas kiserletek oldalon lenyithato harmonikakent jelennek meg.
 
-Ezek a Nobel-dijas kiserletek oldal "Meresi foglalkozasaink reszletesen" szekcioban jelennek meg, lenyithato harmonikaként.
 
-### Uj meresi foglalkozas letrehozasa
+TEMA BEALLITASAI (kepek + szovegek)
+====================================================
 
-1. Menj: `/node/add/meresi_foglalkozas`
-2. Toltsd ki:
+Hol: /admin/appearance/settings/sciencecampus
+(vagy: Megjelenes > Beallitasok > Science Campus)
 
-| Mezo | Leiras |
-|---|---|
-| **Cim** | A foglalkozas neve |
-| **Tartalom** | Rovid leiras |
-| **Kep** | A foglalkozashoz tartozo kep |
-| **Reszletes leiras** | Bovebb leiras (a lenyithato szekcioban jelenik meg) |
+Szerkesztheto szoveg:
+- "Science Campus Programjaink" szekcio bevezetoje = a fooldal "Science Campus
+  Programjaink" cim alatt megjeleno rovid szoveg, a "p" badge mellett
+  ("Vegyel reszt a pottyel ellatott programokon...")
 
-3. Kattints a **Mentes** gombra
-
----
-
-## 7. Tema beallitasai (kepek + szovegek)
-
-A weboldal kepei es nehany szerkesztheto szovege a tema beallitasain keresztul modosithatoak.
-
-### Hol talalom?
-
-**Megjelenes > Beallitasok > Science Campus**
-vagy kozvetlenul: `/admin/appearance/settings/sciencecampus`
-
-### Szerkesztheto szovegek
-
-| Mezo | Hol jelenik meg |
-|---|---|
-| **"Science Campus Programjaink" szekcio bevezetoje** | A fooldal "Science Campus Programjaink" cim alatt megjeleno rovid szoveg, a "p" badge mellett ("Vegyél részt a pöttyel ellátott programokon...") |
-
-### Feltoltheto kepek
-
-| Mezo | Hol jelenik meg | Megjegyzes |
-|---|---|---|
-| **Science Campus logo (fejlec)** | Fejlec bal oldalan | Ajanlott: PNG, atlatszo hatterrel |
-| **BME logo (lablec)** | Lablec bal oldalan, a kozossegi ikonok felett | Ajanlott: PNG, atlatszo hatterrel |
-| **Campus terkep (lablec)** | Lablec jobb oldalan | Max 5 MB |
+Feltoltheto kepek:
+- Science Campus logo (fejlec) = a fejlec bal oldalan jelenik meg.
+                                 Ajanlott: PNG, atlatszo hatterrel.
+- BME logo                     = a fejlec jobb oldalan ES a lablec bal oldalan is
+                                 megjelenik (ugyanaz a kep).
+                                 Ajanlott: PNG, atlatszo hatterrel.
+- Campus terkep (lablec)       = a lablec jobb oldalan jelenik meg. Max 5 MB.
 
 Ha nem toltsz fel kepet, az alapertelmezett kep jelenik meg.
 
----
 
-## 8. Fooldal beallitasa
+FOOLDAL BEALLITASA
+====================================================
 
-Ha az oldal frissen telepitett, be kell allitani, melyik landing page legyen a fooldal:
+Ha az oldal frissen telepitett, be kell allitani melyik oldal legyen a fooldal:
+1. Menj: /admin/config/system/site-information
+2. A "Default front page" mezoben ird be: /science-campus
+3. Kattints a Mentes gombra
 
-1. Menj: `/admin/config/system/site-information`
-2. A "Default front page" mezoben ird be: `/science-campus`
-3. Kattints a **Mentes** gombra
 
----
+GYORS LINKEK
+====================================================
 
-## Hasznos admin linkek osszefoglalasa
+Osszes tartalom listaja:      /admin/content
+Uj landing page:              /node/add/landing_page
+Uj program:                   /node/add/program
+Uj eloadas:                   /node/add/eloadas
+Uj tema:                      /node/add/tema
+Uj Nobel program forma:       /node/add/program_tipus
+Uj meresi foglalkozas:        /node/add/meresi_foglalkozas
+Tema beallitasai:             /admin/appearance/settings/sciencecampus
+Fooldal beallitasa:           /admin/config/system/site-information
+Tartalomtipusok kezelese:     /admin/structure/types
+Nezetek kezelese:             /admin/structure/views
 
-| Mit szeretnek? | Hova menjek? |
-|---|---|
-| Osszes tartalom listaja | `/admin/content` |
-| Uj landing page | `/node/add/landing_page` |
-| Uj program | `/node/add/program` |
-| Uj eloadas | `/node/add/eloadas` |
-| Uj tema | `/node/add/tema` |
-| Uj Nobel program forma | `/node/add/program_tipus` |
-| Uj meresi foglalkozas | `/node/add/meresi_foglalkozas` |
-| Tema beallitasai (kepek + szovegek) | `/admin/appearance/settings/sciencecampus` |
-| Fooldal beallitasa | `/admin/config/system/site-information` |
-| Tartalomtipusok kezelese | `/admin/structure/types` |
-| Nezetek kezelese | `/admin/structure/views` |
 
----
+HOL JELENIK MEG AZ EGYES TARTALOM
+====================================================
 
-## Hol jelenik meg az egyes tartalom?
-
-```
 Science Campus fooldal (/science-campus)
-├── [Landing page mezoi: hero, tartalom, szekcio kepek]
-├── Science Campus Programjaink ← Program tipusu, "Science Campus program" pipa BE
-└── Tovabbi Programjaink ← Program tipusu, "Science Campus program" pipa KI
+- Landing page mezoi: hero, tartalom, szekcio kepek
+- Science Campus Programjaink racs <- Program tartalmak, "Science Campus program" pipa BE
+- Tovabbi Programjaink racs        <- Program tartalmak, "Science Campus program" pipa KI
 
 Science Campus eloadasok (/science-campus-eloadasok)
-├── [Landing page mezoi: hero, tartalom]
-├── Aktualis eloadasaink ← Eloadas tartalmak (Archiv = nem) — teljes kartya
-└── Archivum (lenyithato) ← Eloadas tartalmak (Archiv = igen) — csak foto, sajat oldalra mutat
-                                   (a sajat oldalon a Video URL mezo
-                                    automatikusan beagyazott YouTube/Vimeo
-                                    lejatszokent jelenik meg)
+- Landing page mezoi: hero, tartalom
+- Aktualis eloadasaink     <- Eloadas tartalmak (Archiv = nem) - teljes kartya
+- Archivum (lenyithato)    <- Eloadas tartalmak (Archiv = igen) - csak foto, sajat oldalra mutat
+                              (a sajat oldalon a Video URL mezo automatikusan beagyazott
+                              YouTube/Vimeo lejatszokent jelenik meg)
 
 Nobel-dijas kiserletek (/nobel-dijas-kiserletek)
-├── [Landing page mezoi: hero, tartalom]
-├── Temak racs ← Tema tartalmak
-├── Program tipusai ← Nobel program forma tartalmak
-└── Meresi foglalkozasok ← Meresi foglalkozas tartalmak
-```
+- Landing page mezoi: hero, tartalom
+- Temak racs               <- Tema tartalmak
+- Program tipusai kartyak  <- Nobel program forma tartalmak
+- Meresi foglalkozasok     <- Meresi foglalkozas tartalmak
