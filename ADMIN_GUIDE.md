@@ -107,16 +107,14 @@ Letrehozas mindharomnal:
 
 ---
 
-## 2. Programok (fooldal racs)
+## 2. Program letrehozasa
 
-A fooldalon a programok ket szekcioban jelennek meg, a **Science Campus program** pipa alapjan:
+Minden programot ugyanazon az urlapon hozol letre. A **Science Campus program** jelolonegyzet donti el, hogy a fooldalon melyik racsba kerul:
 
-- **Science Campus Programjaink** — azok a programok, amelyeknel a "Science Campus program" pipa be van jelolve
-- **Tovabbi Programjaink** — minden mas program
+- **Pipa BE** → "Science Campus Programjaink" racs
+- **Pipa KI** → "Tovabbi Programjaink" racs
 
-A **Sorrend** mezo csak az adott szekcion belul hatarozza meg a sorrendet — nem allitja at, hogy melyik szekcioban jelenjen meg.
-
-### Uj program letrehozasa
+### Lepesek
 
 1. Menj: `/node/add/program`
 2. Toltsd ki:
@@ -126,12 +124,12 @@ A **Sorrend** mezo csak az adott szekcion belul hatarozza meg a sorrendet — ne
 | **Cim** | A program neve |
 | **Tartalom** | Rovid leiras |
 | **Logo** | A program logoja/ikonja |
-| **Science Campus program** | Jelold be, ha ez a program a "Science Campus Programjaink" szekcioban jelenjen meg. Ha nincs bejelolve, a "Tovabbi Programjaink" alatt jelenik meg. |
-| **Felveteli pontot ad** | Jelold be, ha felveteli pontot ad (zold "p" badge jelenik meg) |
-| **Link** | A program reszletes oldalara vezeto link |
-| **Sorrend** | A megjelenesi sorrend a szekcion belul (1 = elso, 2 = masodik, stb.) |
+| **Science Campus program** | Pipa BE = "Science Campus Programjaink" racs. Pipa KI = "Tovabbi Programjaink" racs. Ennyi. |
+| **Felveteli pontot ad** | Pipa BE, ha a program felveteli pontot ad (zold "p" badge kerul a kartyara) |
+| **Link** | A program reszletes oldalara vezeto link (opcionalis) |
+| **Sorrend** | A megjelenesi sorrend a sajat racsan belul (1 = elso, 2 = masodik). Nem befolyasolja, hogy melyik racsba kerul. |
 
-3. Kattints a **Mentes** gombra — a program automatikusan megjelenik a fooldalon
+3. Kattints a **Mentes** gombra — a program automatikusan megjelenik a megfelelo racson.
 
 ---
 
