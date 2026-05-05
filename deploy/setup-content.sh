@@ -137,7 +137,7 @@ $fields = [
   ["bundle" => "program", "field_name" => "field_logo",              "label" => "Logó"],
   ["bundle" => "program", "field_name" => "field_felveteli_pont",    "label" => "Felvételi pontot ad"],
   ["bundle" => "program", "field_name" => "field_is_science_campus", "label" => "Science Campus program",
-   "description" => "Ha ki van pipálva, a program a 'Science Campus Programjaink' szekcióban jelenik meg. Ha nincs, a 'További Programjaink' alatt."],
+   "description" => "Ha ki van pipálva, a program a \"Science Campus Programjaink\" szekcióban jelenik meg. Ha nincs, a \"További Programjaink\" alatt."],
   ["bundle" => "program", "field_name" => "field_link",              "label" => "Link"],
   ["bundle" => "program", "field_name" => "field_weight",            "label" => "Sorrend"],
   // Előadás
