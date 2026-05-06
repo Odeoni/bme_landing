@@ -375,7 +375,10 @@
      The 2nd card auto-flows into cols 4-5. */
   .program-grid--2 { grid-template-columns: repeat(6, 1fr); }
   .program-grid--2 .program-card { grid-column: span 2; }
-  .program-grid--2 .views-row:nth-of-type(odd) .program-card { grid-column-start: 2; }
+  /* Use the full grid-column shorthand so the span isn't lost — setting
+     just grid-column-start would reset grid-column-end to auto (span 1)
+     and odd cards would shrink to 1/6 width. */
+  .program-grid--2 .views-row:nth-of-type(odd) .program-card { grid-column: 2 / span 2; }
   .two-cards { grid-template-columns: repeat(2, 1fr); }
   .topics-grid { grid-template-columns: repeat(3, 1fr); }
   .cta-section__inner { flex-direction: row; align-items: center; }
