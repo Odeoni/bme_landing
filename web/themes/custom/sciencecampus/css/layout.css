@@ -371,6 +371,10 @@
   .program-grid { grid-template-columns: repeat(6, 1fr); }
   .program-grid .program-card { grid-column: span 2; }
   .program-grid:has(.views-row:nth-child(3n+4):last-child) .views-row:nth-last-child(-n+4) .program-card { grid-column: span 3; }
+  /* Center trailing row of 2 (n%3==2: 2, 5, 8, 11, …) by pushing it 1 col right */
+  .program-grid:has(.views-row:nth-child(3n+2):last-child) .views-row:nth-last-child(2) .program-card { grid-column-start: 2; }
+  /* Center a lone card (n=1) */
+  .program-grid:has(.views-row:nth-child(1):last-child) .program-card { grid-column-start: 3; }
   .two-cards { grid-template-columns: repeat(2, 1fr); }
   .topics-grid { grid-template-columns: repeat(3, 1fr); }
   .cta-section__inner { flex-direction: row; align-items: center; }
