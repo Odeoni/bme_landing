@@ -4,10 +4,8 @@
  * Térkép a termeinkhez page.
  * Editor creates a Landing page node with URL alias /terkep and fills:
  *   - field_hero_title  → nagy cím (default: "Térkép a termeinkhez")
- *   - body              → leírás + beágyazott térképkép(ek)
- *
- * A térképkép(ek) a body mezőbe kerülnek (Drupal képbeágyazó eszközzel),
- * így könnyen cserélhetők új útbaigazítás esetén.
+ *   - field_hero_image  → térképkép (a "Hero image" mezőben töltsd fel)
+ *   - body              → leírás (és további beágyazott képek, ha kellenek)
  */
 #}
 
@@ -16,6 +14,15 @@
     <h1 class="terkep-page__title">
       {{ content.field_hero_title|render ? content.field_hero_title : label }}
     </h1>
+
+    {% if content.field_hero_image[0] %}
+      <figure class="terkep-page__map">
+        <img src="{{ file_url(content.field_hero_image[0]['#item'].entity.uri.value) }}"
+             alt="{{ content.field_hero_image[0]['#item'].alt|default('Térkép a Science Campus termeihez') }}"
+             class="terkep-page__map-image"
+             loading="lazy">
+      </figure>
+    {% endif %}
 
     <div class="terkep-page__body description-section">
       {{ content.body }}

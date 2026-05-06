@@ -226,11 +226,10 @@
   display: contents;
 }
 
-/* Split: --main shows the first 3 (Science Campus Programjaink),
-   --extra shows the rest (További Programjaink). Editor controls
-   order via the "Sorrend" weight field on each Program. */
-.program-grid--main .views-row:nth-child(n+4) { display: none; }
-.program-grid--extra .views-row:nth-child(-n+3) { display: none; }
+/* Symmetric arrangement (tablet+, see media query below):
+   3→3, 4→2+2, 5→3+2, 6→3+3, 7→3+2+2, 8→3+3+2, 9→3+3+3, 10→3+3+2+2, …
+   Cards are auto-sized inside a 6-col track so the last row never
+   contains a single orphan card (n%3==1 cases redistribute). */
 
 /* Event list */
 .event-list {
@@ -369,7 +368,9 @@
   }
   .hero { min-height: 400px; }
   .split { flex-direction: row; align-items: center; }
-  .program-grid { grid-template-columns: repeat(3, 1fr); }
+  .program-grid { grid-template-columns: repeat(6, 1fr); }
+  .program-grid .program-card { grid-column: span 2; }
+  .program-grid:has(.views-row:nth-child(3n+4):last-child) .views-row:nth-last-child(-n+4) .program-card { grid-column: span 3; }
   .two-cards { grid-template-columns: repeat(2, 1fr); }
   .topics-grid { grid-template-columns: repeat(3, 1fr); }
   .cta-section__inner { flex-direction: row; align-items: center; }

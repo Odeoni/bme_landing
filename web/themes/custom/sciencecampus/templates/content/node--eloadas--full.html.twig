@@ -47,17 +47,6 @@
             <strong>Helyszín:</strong> <a href="/terkep">Térkép a termeinkhez</a>
           </p>
 
-          {% if video_embed_url %}
-            <div class="video-embed">
-              <iframe src="{{ video_embed_url }}"
-                      title="{{ label }}"
-                      loading="lazy"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerpolicy="strict-origin-when-cross-origin"
-                      allowfullscreen></iframe>
-            </div>
-          {% endif %}
-
           {% if content.body|render %}
             <div class="eloadas-detail__body">{{ content.body }}</div>
           {% endif %}
@@ -69,6 +58,17 @@
           </aside>
         {% endif %}
       </div>
+
+      {% if video_embed_url %}
+        <div class="video-embed">
+          <iframe src="{{ video_embed_url }}"
+                  title="{{ label }}"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen></iframe>
+        </div>
+      {% endif %}
 
       <div class="eloadas-detail__cta">
         {% if is_archived %}

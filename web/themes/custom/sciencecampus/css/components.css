@@ -500,6 +500,18 @@
   max-width: 100%;
 }
 
+.terkep-page__map {
+  margin: 0 0 var(--space-xl);
+}
+
+.terkep-page__map-image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  display: block;
+}
+
 /* Lab detail */
 .lab-detail {
   display: flex;
