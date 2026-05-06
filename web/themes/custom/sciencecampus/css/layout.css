@@ -210,7 +210,11 @@
   object-fit: cover;
 }
 
-/* Program grid */
+/* Program grid — base styles shared by --3 and --2 modifiers.
+   The view template (views-view-unformatted--{view}--block-1.html.twig)
+   splits Program rows into two stacked grids so each grid only has to
+   handle one row-width. --3 holds rows of 3 cards; --2 holds rows of 2
+   centered cards. Cards keep the same width in both. */
 .program-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -219,18 +223,14 @@
   margin-inline: auto;
 }
 
-/* Flatten Drupal view wrappers so cards become real grid children */
-.program-grid .views-element-container,
-.program-grid .views-element-container > div,
-.program-grid .view-content,
+/* Flatten the .views-row wrapper so .program-card is the real grid item */
 .program-grid .views-row {
   display: contents;
 }
 
-/* Symmetric arrangement (tablet+, see media query below):
-   3→3, 4→2+2, 5→3+2, 6→3+3, 7→3+2+2, 8→3+3+2, 9→3+3+3, 10→3+3+2+2, …
-   Cards are auto-sized inside a 6-col track so the last row never
-   contains a single orphan card (n%3==1 cases redistribute). */
+/* When both grids stack (e.g. 8 cards = --3 with 6 + --2 with 2), match
+   the same vertical rhythm as the gap inside each grid. */
+.program-grid + .program-grid { margin-top: var(--space-lg); }
 
 /* Event list */
 .event-list {
@@ -369,19 +369,13 @@
   }
   .hero { min-height: 400px; }
   .split { flex-direction: row; align-items: center; }
-  .program-grid { grid-template-columns: repeat(6, 1fr); }
-  /* Cards always span 2 cols (= 1/3 container) — fixed size regardless of row count */
-  .program-grid .program-card { grid-column: span 2; }
-  /* Selectors use :nth-of-type / :last-of-type so they survive an extra
-     sibling element (e.g. a "More" link or pager) being rendered after
-     the .views-rows inside .view-content. */
-  /* n%3==2 (2, 5, 8, 11, …): center the trailing pair (push 1st of pair to col 2) */
-  .program-grid:has(.views-row:nth-of-type(3n+2):last-of-type) .views-row:nth-last-of-type(2) .program-card { grid-column-start: 2; }
-  /* n%3==1, n>=4 (4, 7, 10, …): the last 4 cards form 2 centered pairs of 2 */
-  .program-grid:has(.views-row:nth-of-type(3n+4):last-of-type) .views-row:nth-last-of-type(4) .program-card,
-  .program-grid:has(.views-row:nth-of-type(3n+4):last-of-type) .views-row:nth-last-of-type(2) .program-card { grid-column-start: 2; }
-  /* n=1: center the lone card */
-  .program-grid:has(.views-row:nth-of-type(1):last-of-type) .program-card { grid-column-start: 3; }
+  .program-grid--3 { grid-template-columns: repeat(3, 1fr); }
+  /* --2 uses a 6-col track so each card can stay 1/3 width (span 2),
+     and the 2-card row is centered by pushing the 1st card to col 2.
+     The 2nd card auto-flows into cols 4-5. */
+  .program-grid--2 { grid-template-columns: repeat(6, 1fr); }
+  .program-grid--2 .program-card { grid-column: span 2; }
+  .program-grid--2 .views-row:nth-of-type(odd) .program-card { grid-column-start: 2; }
   .two-cards { grid-template-columns: repeat(2, 1fr); }
   .topics-grid { grid-template-columns: repeat(3, 1fr); }
   .cta-section__inner { flex-direction: row; align-items: center; }

@@ -1,0 +1,47 @@
+{#
+/**
+ * @file
+ * Splits Program rows into two separate, independently-styled grid
+ * containers so each container only ever holds rows of one fixed
+ * card-count. This avoids :nth-child / :has() trickery on a single
+ * grid (which broke whenever Drupal added an extra sibling element
+ * inside .view-content).
+ *
+ *   .program-grid--3  → full rows of 3 cards each (1/3 width)
+ *   .program-grid--2  → rows of 2 cards each, centered (cards stay 1/3 width)
+ *
+ * Distribution:
+ *   n % 3 == 0       → all in --3
+ *   n % 3 == 2       → (n−2) in --3, last 2 in --2
+ *   n % 3 == 1, n≥4  → (n−4) in --3, last 4 in --2 (renders as 2 + 2)
+ *   n == 1           → 1 in --3 (lone card, kept simple)
+ */
+#}
+{% set total = rows|length %}
+{% set rem = total % 3 %}
+{% set tail = (rem == 1 and total >= 4) ? 4 : (rem == 2 ? 2 : 0) %}
+{% set head = total - tail %}
+
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+
+{% if head > 0 %}
+  <div class="program-grid program-grid--3">
+    {% for row in rows|slice(0, head) %}
+      <div{{ row.attributes.addClass('views-row') }}>
+        {{- row.content -}}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if tail > 0 %}
+  <div class="program-grid program-grid--2">
+    {% for row in rows|slice(head, tail) %}
+      <div{{ row.attributes.addClass('views-row') }}>
+        {{- row.content -}}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}

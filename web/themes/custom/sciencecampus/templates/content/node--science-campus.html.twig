@@ -58,9 +58,7 @@
       <span class="programs-intro__text">{{ programjaink_intro_text }}</span>
     </p>
 
-    <div class="program-grid program-grid--main">
-      {{ drupal_view('programjaink', 'block_1') }}
-    </div>
+    {{ drupal_view('programjaink', 'block_1') }}
 
     <div class="programs-cta">
       <a href="https://luma.com/bme_sc" class="btn btn--primary" target="_blank" rel="noopener">Programnaptár</a>
@@ -72,9 +70,7 @@
   <div class="container">
     <h2 class="section__title">További Programjaink</h2>
 
-    <div class="program-grid program-grid--extra">
-      {{ drupal_view('tovabbi_programok', 'block_1') }}
-    </div>
+    {{ drupal_view('tovabbi_programok', 'block_1') }}
   </div>
 </section>
 

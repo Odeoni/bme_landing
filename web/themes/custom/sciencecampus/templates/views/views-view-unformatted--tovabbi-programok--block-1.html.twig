@@ -1,0 +1,37 @@
+{#
+/**
+ * @file
+ * Same split-grid logic as views-view-unformatted--programjaink--block-1.
+ * Kept as a separate file because Drupal template suggestions are
+ * looked up by exact view+display name; symlinking would be fragile
+ * across deploys.
+ */
+#}
+{% set total = rows|length %}
+{% set rem = total % 3 %}
+{% set tail = (rem == 1 and total >= 4) ? 4 : (rem == 2 ? 2 : 0) %}
+{% set head = total - tail %}
+
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+
+{% if head > 0 %}
+  <div class="program-grid program-grid--3">
+    {% for row in rows|slice(0, head) %}
+      <div{{ row.attributes.addClass('views-row') }}>
+        {{- row.content -}}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if tail > 0 %}
+  <div class="program-grid program-grid--2">
+    {% for row in rows|slice(head, tail) %}
+      <div{{ row.attributes.addClass('views-row') }}>
+        {{- row.content -}}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
