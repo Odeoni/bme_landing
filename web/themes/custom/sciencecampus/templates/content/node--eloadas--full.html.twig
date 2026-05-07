@@ -21,10 +21,12 @@
  */
 #}
 
-<section class="hero" style="background-image: url('{{ base_path ~ directory }}/images/hero-eloadasok.jpg');">
+{% set eloadasok_hero = parent_hero_image_url ?: base_path ~ directory ~ '/images/hero-eloadasok.jpg' %}
+
+<section class="hero" style="background-image: url('{{ eloadasok_hero }}');">
   <div class="hero__content">
-    <h1 class="hero__title">Science Campus előadások</h1>
-    <p class="hero__subtitle">Ismeretterjesztő előadások a Műegyetemen</p>
+    <h1 class="hero__title">{{ parent_hero_title ?: 'Science Campus előadások' }}</h1>
+    <p class="hero__subtitle">{{ parent_hero_subtitle ?: 'Ismeretterjesztő előadások a Műegyetemen' }}</p>
   </div>
 </section>
 
@@ -39,12 +41,17 @@
             <p class="eloadas-detail__speaker">{{ content.field_speaker }}</p>
           {% endif %}
 
+          {% if content.field_titulus|render %}
+            <p class="eloadas-detail__titulus">{{ content.field_titulus }}</p>
+          {% endif %}
+
           {% if content.field_date|render %}
             <p class="eloadas-detail__date">{{ content.field_date }}</p>
           {% endif %}
 
           <p class="eloadas-detail__location">
-            <strong>Helyszín:</strong> <a href="/terkep">Térkép a termeinkhez</a>
+            <strong>Helyszín:</strong>
+            <a href="/terkep">{{ location_text }}</a>
           </p>
 
           {% if content.body|render %}

@@ -58,6 +58,34 @@ function sciencecampus_form_system_theme_settings_alter(&$form, \Drupal\Core\For
     ],
   ];
 
+  $form['sciencecampus_social'] = [
+    '#type' => 'details',
+    '#title' => t('Lábléc közösségi média linkek'),
+    '#description' => t('A láblécben megjelenő közösségi média ikonok URL-jei. Hagyd üresen, ha az adott ikon ne jelenjen meg.'),
+    '#open' => TRUE,
+  ];
+
+  $form['sciencecampus_social']['youtube_url'] = [
+    '#type' => 'url',
+    '#title' => t('YouTube URL'),
+    '#default_value' => theme_get_setting('youtube_url') ?: 'https://www.youtube.com/@BMETTK_1998',
+    '#placeholder' => 'https://www.youtube.com/@BMETTK_1998',
+  ];
+
+  $form['sciencecampus_social']['facebook_url'] = [
+    '#type' => 'url',
+    '#title' => t('Facebook URL'),
+    '#default_value' => theme_get_setting('facebook_url') ?: 'https://www.facebook.com/BME.TTK.ScienceCampus',
+    '#placeholder' => 'https://www.facebook.com/BME.TTK.ScienceCampus',
+  ];
+
+  $form['sciencecampus_social']['instagram_url'] = [
+    '#type' => 'url',
+    '#title' => t('Instagram URL'),
+    '#default_value' => theme_get_setting('instagram_url') ?: 'https://www.instagram.com/science_campus_bme_ttk/',
+    '#placeholder' => 'https://www.instagram.com/science_campus_bme_ttk/',
+  ];
+
   $form['sciencecampus_images']['campus_map'] = [
     '#type' => 'managed_file',
     '#title' => t('Campus térkép (lábléc)'),

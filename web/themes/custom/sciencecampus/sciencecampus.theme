@@ -37,6 +37,11 @@ function sciencecampus_preprocess_page(&$variables) {
     }
     $variables[$var_name] = '/' . $config['fallback'];
   }
+
+  // Footer social media URLs (editable via theme settings).
+  $variables['youtube_url']   = theme_get_setting('youtube_url')   ?: '';
+  $variables['facebook_url']  = theme_get_setting('facebook_url')  ?: '';
+  $variables['instagram_url'] = theme_get_setting('instagram_url') ?: '';
 }
 
 /**
@@ -55,10 +60,49 @@ function sciencecampus_preprocess_node(&$variables) {
     $url = $node->get('field_video_url')->uri ?? '';
     $variables['video_embed_url'] = _sciencecampus_video_embed_url($url);
   }
+  if ($node->bundle() === 'eloadas') {
+    // Editable Helyszín label (defaults to "Térkép a termeinkhez").
+    // Always renders as a link to /terkep.
+    $location_text = '';
+    if ($node->hasField('field_location_text')) {
+      $location_text = trim((string) $node->get('field_location_text')->value);
+    }
+    $variables['location_text'] = $location_text !== '' ? $location_text : 'Térkép a termeinkhez';
+
+    // Inherit hero (image + title + subtitle) from the Science Campus
+    // előadások landing node, so every eloadas subpage feels like a sub-page
+    // of the lectures section. Editor only has to update one node.
+    $parent = _sciencecampus_load_node_by_alias('/science-campus-eloadasok');
+    if ($parent) {
+      if ($parent->hasField('field_hero_image') && !$parent->get('field_hero_image')->isEmpty()) {
+        $file = $parent->get('field_hero_image')->entity;
+        if ($file) {
+          $variables['parent_hero_image_url'] = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+        }
+      }
+      if ($parent->hasField('field_hero_title')) {
+        $variables['parent_hero_title'] = $parent->get('field_hero_title')->value;
+      }
+      if ($parent->hasField('field_hero_subtitle')) {
+        $variables['parent_hero_subtitle'] = $parent->get('field_hero_subtitle')->value;
+      }
+    }
+  }
   if ($node->bundle() === 'landing_page') {
     $variables['programjaink_intro_text'] = theme_get_setting('programjaink_intro_text')
       ?: 'Vegyél részt a pöttyel ellátott programokon, és szerezz intézményi felvételi pontokat.';
   }
+}
+
+/**
+ * Load a node by its URL alias (e.g. /science-campus-eloadasok), or NULL.
+ */
+function _sciencecampus_load_node_by_alias($alias) {
+  $path = \Drupal::service('path_alias.manager')->getPathByAlias($alias);
+  if (!$path || $path === $alias || !preg_match('#^/node/(\d+)$#', $path, $m)) {
+    return NULL;
+  }
+  return \Drupal\node\Entity\Node::load($m[1]);
 }
 
 /**

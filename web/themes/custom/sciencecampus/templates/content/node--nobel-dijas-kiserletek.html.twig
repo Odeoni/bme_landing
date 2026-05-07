@@ -30,8 +30,21 @@
 <section class="section section--grey">
   <div class="container">
     <h2 class="section__title">Az alábbi témákban kísérletezhetsz</h2>
-    <div class="topics-grid">
+    <div class="topics-grid" data-scroll-target="#meresi-foglalkozasok">
       {{ drupal_view('temak', 'block_1') }}
+    </div>
+  </div>
+</section>
+
+<section class="section section--white">
+  <div class="container">
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/wYLcJvMlQ8w"
+              title="Science Campus – Nobel-díjas kísérletek"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen></iframe>
     </div>
   </div>
 </section>
@@ -48,7 +61,7 @@
   </div>
 </section>
 
-<section class="section section--grey">
+<section id="meresi-foglalkozasok" class="section section--grey">
   <div class="container">
     <h2 class="section__title">Mérési foglalkozásaink részletesen:</h2>
     <div class="accordion">

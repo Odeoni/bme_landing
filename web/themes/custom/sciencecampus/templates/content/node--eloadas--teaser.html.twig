@@ -19,7 +19,8 @@
     {% endif %}
 
     <p class="event-row__location">
-      <strong>Helyszín:</strong> <a href="/terkep">Térkép a termeinkhez</a>
+      <strong>Helyszín:</strong>
+      <a href="/terkep">{{ location_text }}</a>
     </p>
 
     {% if content.body|render %}
@@ -29,8 +30,11 @@
     <div class="event-row__links">
       {% if is_archived %}
         <a href="{{ node_url }}" class="btn btn--primary">Nézd vissza az előadást</a>
-      {% elseif content.field_registration_link[0]['#url'] %}
-        <a href="{{ content.field_registration_link[0]['#url'] }}" class="btn btn--primary">Regisztráció</a>
+      {% else %}
+        <a href="{{ node_url }}" class="btn btn--outline">Részletek</a>
+        {% if content.field_registration_link[0]['#url'] %}
+          <a href="{{ content.field_registration_link[0]['#url'] }}" class="btn btn--primary">Regisztráció</a>
+        {% endif %}
       {% endif %}
     </div>
   </div>

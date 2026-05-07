@@ -90,12 +90,18 @@
 }
 
 .program-card__title {
-  font-size: var(--font-size-base);
+  font-size: clamp(0.85rem, 3.4vw, var(--font-size-base));
   font-weight: 600;
   color: var(--color-blue);
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  line-height: 1.25;
+  min-width: 0;
 }
 
 /* "p" badge — marks programs/events that grant felvételi pontok */
@@ -261,6 +267,13 @@
   margin: 0;
 }
 
+.eloadas-detail__titulus {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  font-style: italic;
+  margin: 0;
+}
+
 .eloadas-detail__date {
   font-weight: 600;
   color: var(--color-text);
@@ -334,6 +347,14 @@
 
 .topic-card:hover { transform: translateY(-2px); }
 
+/* Topic cards are wired via JS to scroll to the lab section, so they
+   should look clickable. */
+[data-scroll-target] .topic-card { cursor: pointer; }
+[data-scroll-target] .topic-card:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
 .topic-card__image {
   width: 100%;
   aspect-ratio: 1;
@@ -342,9 +363,17 @@
 
 .topic-card__label {
   padding: var(--space-sm) var(--space-md);
-  font-size: var(--font-size-sm);
+  /* Use clamp() so long Hungarian words like "Folyadékkristályok" /
+     "Félvezetőtechnológia" shrink on narrow viewports instead of overflowing
+     a 2-col mobile grid. Allow hyphenation + word-break as a final fallback. */
+  font-size: clamp(0.7rem, 2.6vw, var(--font-size-sm));
   font-weight: 600;
   color: var(--color-blue);
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  line-height: 1.25;
 }
 
 /* Type Card */
