@@ -1,0 +1,18 @@
+langcode: hu
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_titulus
+    - node.type.eloadas
+id: node.eloadas.field_titulus
+field_name: field_titulus
+entity_type: node
+bundle: eloadas
+label: Titulus
+description: 'Az előadó titulusa, pl. „Dr.”, „Prof.”, „akadémikus”. A név alatt jelenik meg az aloldalon.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

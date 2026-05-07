@@ -38,10 +38,18 @@ function sciencecampus_preprocess_page(&$variables) {
     $variables[$var_name] = '/' . $config['fallback'];
   }
 
-  // Footer social media URLs (editable via theme settings).
-  $variables['youtube_url']   = theme_get_setting('youtube_url')   ?: '';
-  $variables['facebook_url']  = theme_get_setting('facebook_url')  ?: '';
-  $variables['instagram_url'] = theme_get_setting('instagram_url') ?: '';
+  // Footer social media URLs. Fall back to the official URLs when the
+  // theme setting is empty so icons stay visible on existing installs
+  // where the install-time defaults never seeded.
+  $social_defaults = [
+    'youtube_url'   => 'https://www.youtube.com/@BMETTK_1998',
+    'facebook_url'  => 'https://www.facebook.com/BME.TTK.ScienceCampus',
+    'instagram_url' => 'https://www.instagram.com/science_campus_bme_ttk/',
+  ];
+  foreach ($social_defaults as $var_name => $default) {
+    $value = theme_get_setting($var_name);
+    $variables[$var_name] = !empty($value) ? $value : $default;
+  }
 }
 
 /**
