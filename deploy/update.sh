@@ -38,6 +38,23 @@ echo "=== Applying pending Drupal database updates ==="
 docker exec sciencecampus-web drush updatedb -y
 
 # --------------------------------------------
+# Enable custom modules shipped in web/modules/custom/.
+#
+# `drush en` is idempotent — already-enabled modules are a no-op,
+# newly added ones get installed (which runs hook_install and imports
+# any config in the module's config/install/ directory). This is how
+# field configs like field_titulus / field_location_text on Eloadas
+# land on the live site without manual `drush en` on the VPS.
+# --------------------------------------------
+echo "=== Enabling custom modules ==="
+for module_dir in web/modules/custom/*/; do
+  [ -d "$module_dir" ] || continue
+  module_name=$(basename "$module_dir")
+  echo "  - $module_name"
+  docker exec sciencecampus-web drush en "$module_name" -y
+done
+
+# --------------------------------------------
 # Re-run the content scaffolding script.
 #
 # `drush updatedb` only runs Drupal update hooks, NOT arbitrary
@@ -82,6 +99,7 @@ echo ""
 echo "  Code:     pulled from origin"
 echo "  Deps:     composer in sync"
 echo "  Schema:   pending update hooks applied"
+echo "  Modules:  custom modules in web/modules/custom/ enabled"
 echo "  Content:  types/fields/views synced from setup-content.sh"
 echo "  Twig:     compiled templates dropped"
 echo "  CSS/JS:   aggregated bundles dropped"
