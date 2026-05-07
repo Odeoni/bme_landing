@@ -1,9 +1,0 @@
-name: 'Science Campus Content'
-type: module
-description: 'Adds Science Campus content-type fields (field_titulus, field_location_text on Előadás).'
-core_version_requirement: ^10 || ^11
-package: 'Science Campus'
-dependencies:
-  - drupal:node
-  - drupal:field
-  - drupal:text
