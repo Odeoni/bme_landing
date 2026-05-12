@@ -35,7 +35,19 @@
     <article class="eloadas-detail{{ is_archived ? ' eloadas-detail--archived' : '' }}">
       <h2 class="eloadas-detail__title">{{ label }}</h2>
 
+      {#
+        Image floats right (when present) and the body text flows around it.
+        Putting the <aside> FIRST in DOM order is required for float-right
+        to wrap correctly — text that follows wraps on its left and, once
+        taller than the image, continues across the full width.
+      #}
       <div class="eloadas-detail__layout">
+        {% if content.field_image|render %}
+          <aside class="eloadas-detail__sidebar">
+            <img src="{{ file_url(content.field_image[0]['#item'].entity.uri.value) }}" alt="{{ label }}" class="eloadas-detail__image" loading="lazy">
+          </aside>
+        {% endif %}
+
         <div class="eloadas-detail__main">
           {% if content.field_speaker|render %}
             <p class="eloadas-detail__speaker">{{ content.field_speaker }}</p>
@@ -58,12 +70,6 @@
             <div class="eloadas-detail__body">{{ content.body }}</div>
           {% endif %}
         </div>
-
-        {% if content.field_image|render %}
-          <aside class="eloadas-detail__sidebar">
-            <img src="{{ file_url(content.field_image[0]['#item'].entity.uri.value) }}" alt="{{ label }}" class="eloadas-detail__image" loading="lazy">
-          </aside>
-        {% endif %}
       </div>
 
       {% if video_embed_url %}

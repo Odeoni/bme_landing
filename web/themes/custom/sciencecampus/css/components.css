@@ -249,10 +249,20 @@
   margin-bottom: var(--space-lg);
 }
 
+/* Float-based layout so the body text wraps around the image:
+   - On tablet+ the image floats right; text fills the column to its left
+     and continues full-width once it's taller than the image.
+   - On mobile (<768px) the image stacks above the text.
+   - Clearfix on .eloadas-detail__layout keeps the video/CTA below from
+     riding up alongside the floated image. */
 .eloadas-detail__layout {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-lg);
+  display: block;
+}
+
+.eloadas-detail__layout::after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
 .eloadas-detail__main {
@@ -311,17 +321,20 @@
   border: 0;
 }
 
+/* Mobile: aside renders as a block above the text, image centered. */
 .eloadas-detail__sidebar {
-  display: flex;
-  justify-content: center;
+  display: block;
+  margin-bottom: var(--space-md);
+  text-align: center;
 }
 
 .eloadas-detail__image {
-  max-width: 280px;
-  width: 100%;
+  max-width: 100%;
+  width: auto;
   height: auto;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  display: inline-block;
 }
 
 .eloadas-detail__cta { margin-top: var(--space-xl); }
@@ -329,10 +342,20 @@
 .eloadas-detail--archived { opacity: 0.96; }
 
 @media (min-width: 768px) {
-  .eloadas-detail__layout {
-    grid-template-columns: 1fr 280px;
+  /* Tablet+: float the image right, let text wrap around it.
+     The image keeps its intrinsic aspect ratio up to 320px wide. */
+  .eloadas-detail__sidebar {
+    float: right;
+    margin-left: var(--space-lg);
+    margin-bottom: var(--space-md);
+    max-width: 320px;
+    width: 40%;
+    text-align: right;
   }
-  .eloadas-detail__sidebar { justify-content: flex-end; }
+  .eloadas-detail__image {
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
 /* Topic Card */
