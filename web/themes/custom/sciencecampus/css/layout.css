@@ -232,13 +232,24 @@
    the same vertical rhythm as the gap inside each grid. */
 .program-grid + .program-grid { margin-top: var(--space-lg); }
 
-/* Event list */
+/* Event list.
+   Drupal views wrap each row in .views-element-container > .view-content >
+   .views-row, so .article cards aren't direct flex children of .event-list
+   and the `gap` between them is dropped. Flatten those wrappers with
+   display: contents so the cards become direct children and the gap
+   applies between them. */
 .event-list {
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
   max-width: var(--container-max);
   margin-inline: auto;
+}
+.event-list .views-element-container,
+.event-list .views-element-container > div,
+.event-list .view-content,
+.event-list .views-row {
+  display: contents;
 }
 
 /* Two-card layout */

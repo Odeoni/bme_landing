@@ -23,9 +23,9 @@
       <a href="/terkep">{{ location_text }}</a>
     </p>
 
-    {% if content.body|render %}
-      <div class="event-row__body">{{ content.body }}</div>
-    {% endif %}
+    {# Tartalom (body) is intentionally NOT rendered on the teaser card —
+       it belongs on the full node page only. Editors may put long jargon
+       there without it leaking into the listing. #}
 
     <div class="event-row__links">
       {% if is_archived %}
