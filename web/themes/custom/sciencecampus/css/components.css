@@ -178,7 +178,7 @@
 }
 
 .event-row__title {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   color: var(--color-blue);
   margin: 0;
 }
@@ -195,12 +195,6 @@
 
 .event-row__image-link {
   display: block;
-}
-
-.event-row__location {
-  font-size: var(--font-size-sm);
-  color: var(--color-text);
-  margin: 0;
 }
 
 .event-row__speaker {

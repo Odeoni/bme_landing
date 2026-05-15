@@ -11,7 +11,8 @@
  * end up showing every Eloadas node regardless of archive status.
  *
  * This script rewrites the filter to use the correct boolean
- * plugin and rebuilds caches.
+ * plugin, removes the Archívum pager so the full archive renders
+ * on a single page, and rebuilds caches.
  *
  * Run via:
  *   docker exec sciencecampus-web drush php:script /opt/deploy/fix-views.php
@@ -48,6 +49,23 @@ foreach ($targets as $view_id => $expected_value) {
   echo "  - FIXED: '$view_id' filter is now boolean = $expected_value\n";
 }
 
+// Archívum: drop the pager so every archived lecture renders on one
+// page (no "next page" links). The page template lists the archive
+// straight under the heading, so paging would hide older lectures.
+$archivum = View::load('archivum');
+if ($archivum) {
+  $display = &$archivum->getDisplay('default');
+  $display['display_options']['pager'] = [
+    'type' => 'none',
+    'options' => ['offset' => 0],
+  ];
+  $archivum->save();
+  echo "  - FIXED: 'archivum' pager removed (shows all items).\n";
+}
+else {
+  echo "  - SKIP: view 'archivum' not found for pager fix.\n";
+}
+
 drupal_flush_all_caches();
 echo "  - Caches rebuilt.\n";
-echo "\nDone. Aktualis shows archive=0, Archivum shows archive=1.\n";
+echo "\nDone. Aktualis shows archive=0, Archivum shows archive=1 (no pager).\n";

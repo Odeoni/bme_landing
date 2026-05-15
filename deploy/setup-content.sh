@@ -572,6 +572,10 @@ if (!View::load("archivum")) {
               "plugin_id" => "standard",
             ],
           ],
+          "pager" => [
+            "type" => "none",
+            "options" => ["offset" => 0],
+          ],
           "style" => [
             "type" => "default",
           ],

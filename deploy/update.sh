@@ -68,6 +68,19 @@ done
 echo "=== Syncing content types, fields, displays & views ==="
 docker exec sciencecampus-web bash /opt/deploy/setup-content.sh
 
+# --------------------------------------------
+# Force-correct the eloadas views.
+#
+# setup-content.sh only *creates* views when they don't exist
+# (if (!View::load(...))), so view config committed alongside code
+# never reaches a site where the view already exists. fix-views.php
+# force-updates the existing aktualis_eloadasok / archivum views:
+# correct boolean archive filter + no pager on the Archívum block.
+# Idempotent — safe to run on every update.
+# --------------------------------------------
+echo "=== Correcting eloadas views (filters + pager) ==="
+docker exec sciencecampus-web drush php:script /opt/deploy/fix-views.php
+
 echo "=== Clearing compiled Twig templates and aggregated assets ==="
 # drush cache:rebuild does not always remove the on-disk compiled Twig
 # templates, and it cannot reset OPcache in the Apache worker processes
@@ -101,6 +114,7 @@ echo "  Deps:     composer in sync"
 echo "  Schema:   pending update hooks applied"
 echo "  Modules:  custom modules in web/modules/custom/ enabled"
 echo "  Content:  types/fields/views synced from setup-content.sh"
+echo "  Views:    eloadas filters + Archivum pager corrected"
 echo "  Twig:     compiled templates dropped"
 echo "  CSS/JS:   aggregated bundles dropped"
 echo "  Cache:    rebuilt"
