@@ -533,6 +533,17 @@
   margin-top: var(--space-lg);
 }
 
+/* Szöveges oldal (Impresszum stb.) */
+.text-page__title {
+  font-size: var(--font-size-3xl);
+  color: var(--color-blue);
+  margin-bottom: var(--space-lg);
+}
+
+.text-page__body {
+  margin-top: var(--space-lg);
+}
+
 /* Térkép page */
 .terkep-page__title {
   font-size: var(--font-size-3xl);

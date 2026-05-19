@@ -2,11 +2,12 @@
 # ============================================
 # BME Science Campus — Content Types & Fields
 #
-# Creates 6 content types with all fields,
+# Creates 7 content types with all fields,
 # form displays, view displays, teaser displays,
 # and 6 views (programjaink, aktualis_eloadasok,
 # archivum, meresi_foglalkozasok, temak,
-# program_tipusok).
+# program_tipusok). Also creates the Impresszum
+# page node + /impresszum URL alias.
 #
 # Run inside the Drupal container:
 #   docker exec sciencecampus-web bash /opt/deploy/setup-content.sh
@@ -67,6 +68,8 @@ $types = [
    "description" => "A Nobel-díjas kísérletek aloldal \"Az alábbi témákban kísérletezhetsz\" rácsában megjelenő téma kép."],
   ["type" => "program_tipus",      "name" => "Nobel program forma",
    "description" => "A Nobel-díjas kísérletek aloldal \"Program típusai\" szekciójában megjelenő részvételi forma (pl. heti mérés, kurzus)."],
+  ["type" => "szoveges_oldal",     "name" => "Szöveges oldal",
+   "description" => "Egyszerű szöveges oldal: cím + tartalom. Pl. Impresszum. Csak a címet és a tartalmat kell kitölteni."],
 ];
 foreach ($types as $t) {
   $existing = \Drupal\node\Entity\NodeType::load($t["type"]);
@@ -176,6 +179,8 @@ $fields = [
   ["bundle" => "program_tipus", "field_name" => "body",          "label" => "Tartalom"],
   ["bundle" => "program_tipus", "field_name" => "field_image",   "label" => "Kép"],
   ["bundle" => "program_tipus", "field_name" => "field_weight",  "label" => "Sorrend"],
+  // Szöveges oldal
+  ["bundle" => "szoveges_oldal", "field_name" => "body",         "label" => "Tartalom"],
 ];
 
 foreach ($fields as $f) {
@@ -242,6 +247,9 @@ $form_configs = [
     "field_image"  => ["type" => "image_image",              "weight" => 1, "settings" => ["preview_image_style" => "medium"]],
     "body"         => ["type" => "text_textarea_with_summary", "weight" => 2],
     "field_weight" => ["type" => "number",                   "weight" => 3],
+  ],
+  "szoveges_oldal" => [
+    "body"         => ["type" => "text_textarea_with_summary", "weight" => 1],
   ],
 ];
 
@@ -311,6 +319,9 @@ $view_configs = [
     "body"         => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
     "field_image"  => ["type" => "image",           "weight" => 0, "label" => "hidden", "settings" => ["image_style" => "", "image_link" => ""]],
     "field_weight" => ["type" => "number_integer",  "weight" => 2, "label" => "hidden"],
+  ],
+  "szoveges_oldal" => [
+    "body"         => ["type" => "text_default",    "weight" => 1, "label" => "hidden"],
   ],
 ];
 
@@ -913,12 +924,45 @@ echo "  Backfilled $updated program node(s).\n";
 '
 $DRUSH cr
 
+# --- Impresszum page (Szöveges oldal node at /impresszum) ---
+# The footer links to /impresszum. Create the node + URL alias once so the
+# link resolves immediately after deploy; the editor only has to adjust the
+# text afterwards. Idempotent: skipped if the alias already exists.
+echo "Creating Impresszum page..."
+$DRUSH php:eval '
+use Drupal\node\Entity\Node;
+use Drupal\path_alias\Entity\PathAlias;
+
+$alias = "/impresszum";
+$resolved = \Drupal::service("path_alias.manager")->getPathByAlias($alias);
+if ($resolved && $resolved !== $alias) {
+  echo "  Exists:  Impresszum page ($resolved)\n";
+} else {
+  $body = "<p><strong>A Budapesti Műszaki és Gazdaságtudományi Egyetem Természettudományi Karának honlapja.</strong></p>"
+    . "<p><strong>Felelős kiadó:</strong> a Kar mindenkori dékánja</p>"
+    . "<p><strong>Főszerkesztő:</strong> Dr. Halbritter András Ernő, igazgatóhelyettes, BME TTK Fizikai Intézet</p>"
+    . "<p>Ez a honlap a Budapesti Műszaki és Gazdaságtudományi Egyetem Természettudományi Karának (rövidítve: BME TTK) képzéseit bemutató honlapcsoport része, melynek célja a képzéseinkre jelentkezni kívánó hallgatók célzott tájékoztatása. Karunk, illetve Karunk szervezeti egységei további honlapokat üzemeltetnek, melyeken további szervezetiegység-specifikus információ található az oktatási, kutatási és egyéb tevékenységekről.</p>"
+    . "<p><strong>Copyright</strong> © 2023 Budapesti Műszaki és Gazdaságtudományi Egyetem, Természettudományi Kar, Minden jog fenntartva</p>"
+    . "<p>A honlapon található anyagok, információk alkalmazása a felhasználó saját felelősségére történhet! A lapok készítői, a szerver üzemeltetői, illetve a szerzői jog tulajdonosa semmilyen körülmények között nem tehető felelőssé az anyagok alkalmazásából származó bármiféle esetleges kárért!</p>";
+  $node = Node::create([
+    "type" => "szoveges_oldal",
+    "title" => "Impresszum",
+    "body" => ["value" => $body, "format" => "basic_html"],
+    "status" => 1,
+  ]);
+  $node->save();
+  PathAlias::create(["path" => "/node/" . $node->id(), "alias" => $alias])->save();
+  echo "  Created: Impresszum page (node " . $node->id() . " -> $alias)\n";
+}
+'
+$DRUSH cr
+
 echo ""
 echo "============================================"
 echo "Content types, fields, displays, and views ready."
 echo ""
 echo "Content types: landing_page, program, eloadas,"
-echo "  meresi_foglalkozas, tema, program_tipus"
+echo "  meresi_foglalkozas, tema, program_tipus, szoveges_oldal"
 echo ""
 echo "Views: programjaink, aktualis_eloadasok, archivum,"
 echo "  meresi_foglalkozasok, temak, program_tipusok"

@@ -220,6 +220,8 @@ Uj eloadas:                   /node/add/eloadas
 Uj tema:                      /node/add/tema
 Uj Nobel program forma:       /node/add/program_tipus
 Uj meresi foglalkozas:        /node/add/meresi_foglalkozas
+Uj szoveges oldal:            /node/add/szoveges_oldal
+Impresszum szerkesztese:      /impresszum -> Szerkesztes
 Tema beallitasai:             /admin/appearance/settings/sciencecampus
 Fooldal beallitasa:           /admin/config/system/site-information
 Tartalomtipusok kezelese:     /admin/structure/types

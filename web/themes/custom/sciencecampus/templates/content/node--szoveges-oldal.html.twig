@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * Szöveges oldal — egyszerű cím + tartalom oldal (pl. Impresszum).
+ *
+ * Editable fields:
+ *   title → oldal címe (a node neve)
+ *   body  → tartalom (bekezdések, listák, linkek)
+ *
+ * Nincs egyéb mező: ez egy sima szöveges oldal.
+ */
+#}
+
+<section class="section section--white" style="padding-top: var(--space-3xl);">
+  <div class="container">
+    <h1 class="text-page__title">{{ label }}</h1>
+
+    <div class="text-page__body description-section">
+      {{ content.body }}
+    </div>
+  </div>
+</section>

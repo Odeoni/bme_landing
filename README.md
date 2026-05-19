@@ -52,6 +52,7 @@ ddev drush cr
 | **Meresi foglalkozas** | Nobel page accordion | Detailed lab descriptions |
 | **Tema** | Nobel page topic grid | Image cards |
 | **Program tipus** (admin label: "Nobel program forma") | Nobel page "Program típusai" section | Participation formats (e.g. weekly sessions) |
+| **Szoveges oldal** | Plain text pages with their own URL alias (e.g. `/impresszum`) | Title + body only |
 
 See [ADMIN_GUIDE.md](ADMIN_GUIDE.md) for editor-facing details.
 
