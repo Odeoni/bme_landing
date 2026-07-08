@@ -1,13 +1,76 @@
-<section class="hero" style="background-image: url('{{ base_path ~ directory }}/images/hero-default.jpg');">
+{#
+/**
+ * @file
+ * Landing page — full view mode.
+ * Specific pages use alias-based templates (e.g. node--science-campus.html.twig).
+ *
+ * Editable fields:
+ *   field_hero_image      → Hero háttérkép (üresen: alap kép)
+ *   field_hero_title      → Hero cím (üresen: az oldal címe)
+ *   field_hero_subtitle   → Hero alcím
+ *   body                  → Tartalom
+ *   field_section_image   → Szekció kép (a Tartalom mellett)
+ *   field_section_body_2  → Második szekció szöveg
+ *   field_section_image_2 → Második szekció kép
+ *   field_cta_text        → CTA szöveg (kiemelt felhívás a lap alján)
+ */
+#}
+
+{% set hero_image_url = content.field_hero_image[0] ? file_url(content.field_hero_image[0]['#item'].entity.uri.value) : base_path ~ directory ~ '/images/hero-default.jpg' %}
+
+<section class="hero" style="background-image: url('{{ hero_image_url }}');">
   <div class="hero__content">
-    <h1 class="hero__title">{{ label }}</h1>
+    <h1 class="hero__title">{{ content.field_hero_title[0] ? content.field_hero_title : label }}</h1>
+    {% if content.field_hero_subtitle[0] %}
+      <p class="hero__subtitle">{{ content.field_hero_subtitle }}</p>
+    {% endif %}
   </div>
 </section>
 
 <section class="section section--white">
   <div class="container">
-    <div class="description-section">
-      {{ content.body }}
-    </div>
+    {% if content.field_section_image[0] %}
+      <div class="split">
+        <div class="split__text description-section">
+          {{ content.body }}
+        </div>
+        <div class="split__image">
+          {{ content.field_section_image }}
+        </div>
+      </div>
+    {% else %}
+      <div class="description-section">
+        {{ content.body }}
+      </div>
+    {% endif %}
   </div>
 </section>
+
+{% if content.field_section_body_2[0] or content.field_section_image_2[0] %}
+  <section class="section section--grey">
+    <div class="container">
+      {% if content.field_section_image_2[0] %}
+        <div class="split">
+          <div class="split__text description-section">
+            {{ content.field_section_body_2 }}
+          </div>
+          <div class="split__image">
+            {{ content.field_section_image_2 }}
+          </div>
+        </div>
+      {% else %}
+        <div class="description-section">
+          {{ content.field_section_body_2 }}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+{% if content.field_cta_text[0] %}
+  <section class="section section--white" style="text-align:center;">
+    <div class="container description-section">
+      {{ content.field_cta_text }}
+    </div>
+  </section>
+{% endif %}
